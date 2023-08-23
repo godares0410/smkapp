@@ -3,15 +3,33 @@
     <div class="box">
         <div class="box-body table-responsive">
             <div class="box-title">
+                <button id="listSoalBtn" class="btn btn-primary">List Soal</button>
 
                 <h3 id="hasilElement"></h3>
             </div>
             <div id="soalContainer" class="board">
             </div>
-            <div class="pagination">
+
+            {{-- <div class="box-title">
                 <button id="previous" class="hidden btn btn-primary">Sebelumnya</button>
-                <button id="next" class="btn btn-primary">Selanjutnya</button>
+                <label>
+                    <input type="checkbox"> Ragu-ragu</label>
+                <div class="pull-right">
+                    <button id="next" class="btn btn-primary">Selanjutnya</button>
+                </div>
+            </div> --}}
+            <div class="box-title d-flex justify-content-between align-items-center">
+                <button id="previous" class="btn btn-primary">Sebelumnya</button>
+                <div class="text-center">
+                    <label class="checkbox-label btn btn-warning">
+                        <input type="checkbox"> Ragu-ragu
+                    </label>
+                </div>
+                <div class="pull-right">
+                    <button id="next" class="btn btn-primary">Selanjutnya</button>
+                </div>
             </div>
+
         </div>
     </div>
 @endsection
@@ -152,5 +170,79 @@
         $(document).on("click", ".zoomable-image", function() {
             $(this).toggleClass("zoom-in zoom-out");
         });
+
+
+        //tombol ragu
+
+        var raguRaguChecked = false;
+        $("input[type='checkbox']").on("change", function() {
+            raguRaguChecked = $(this).is(":checked");
+        });
+
+        function perbaruiTombol() {
+            if (halamanAktif === 1) {
+                $("#previous").addClass("hidden");
+            } else {
+                $("#previous").removeClass("hidden");
+            }
+
+            if (halamanAktif === jumlahHalaman) {
+                $("#next").addClass("hidden");
+            } else {
+                $("#next").removeClass("hidden");
+            }
+
+            if (raguRaguChecked) {
+                $("input[type='checkbox']").prop("checked", false);
+            }
+        }
+
+
+        // list
+
+        // Tambahkan event click pada tombol "List Soal"
+        $("#listSoalBtn").on("click", function() {
+            tampilkanModalListSoal();
+        });
+
+        // Fungsi untuk menampilkan modal list soal
+        function tampilkanModalListSoal() {
+            var $modal = $(
+                "<div class='modal fade' id='listSoalModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel'>"
+            );
+            var $modalDialog = $("<div class='modal-dialog modal-dialog-centered' role='document'>");
+            var $modalContent = $("<div class='modal-content'>");
+
+            var $modalBody = $("<div class='modal-body'>");
+
+            // Loop melalui semua soal untuk membuat box nomor soal dalam modal
+            for (var i = 0; i < soal.length; i++) {
+                var $nomorSoalBox = $("<div class='nomor-soal-box' data-nomor='" + (i + 1) + "'>").text(i + 1);
+                $modalBody.append($nomorSoalBox);
+            }
+
+            // Tambahkan event click pada setiap box nomor soal
+            $modalBody.on("click", ".nomor-soal-box", function() {
+                var nomorSoal = $(this).data("nomor");
+                halamanAktif = nomorSoal;
+                tampilkanSoal();
+                perbaruiTombol();
+                $("#listSoalModal").modal("hide");
+            });
+
+            $modalContent.append($modalBody);
+            $modalDialog.append($modalContent);
+            $modal.append($modalDialog);
+
+            // Tampilkan modal list soal
+            $("body").append($modal);
+            $("#listSoalModal").modal("show");
+
+            // Hapus modal dari DOM setelah ditutup
+            $("#listSoalModal").on("hidden.bs.modal", function() {
+                $(this).remove();
+            });
+
+        }
     </script>
 @endpush
