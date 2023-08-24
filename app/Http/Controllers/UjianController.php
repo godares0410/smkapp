@@ -16,7 +16,7 @@ class UjianController extends Controller
     public function index()
     {
         $ujian = Ujian::all();
-        $soal = BankSoal::query()->where('id_mapel', 1)->take(100)->select('id_soal', 'id_mapel', 'soal', 'pil_a', 'pil_b', 'pil_c', 'pil_d', 'pil_e', 'file_1')->get();
+        $soal = BankSoal::query()->where('id_mapel', 1)->take(50)->select('id_soal', 'id_mapel', 'soal', 'pil_a', 'pil_b', 'pil_c', 'pil_d', 'pil_e', 'file_1')->get();
         return view('ujian.index', compact('soal'));
     }
 
