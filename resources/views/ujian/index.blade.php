@@ -3,9 +3,12 @@
     <div class="box">
         <div class="box-body table-responsive">
             <div class="box-title">
-                <button id="listSoalBtn" class="btn btn-primary">List Soal</button>
 
                 <h3 id="hasilElement"></h3>
+                <div class="pull-right">
+                    <button id="refreshButton" class="btn btn-success"><i class="fa fa-refresh"></i></button>
+                    <button id="listSoalBtn" class="btn btn-primary">List Soal</button>
+                </div>
             </div>
             <div id="soalContainer" class="board">
             </div>
@@ -60,7 +63,7 @@
                     var $soalElement = $("<div style='padding: 20px;'>");
                     var nomorElement = (i + 1);
                     var hasilElement = document.getElementById("hasilElement");
-                    hasilElement.innerHTML = "Soal : " + nomorElement;
+                    hasilElement.innerHTML = "Soal Nomor : " + nomorElement;
                     // var $soalElement.append("<h3>Soal " + (i + 1) + "</h3>");
                     // var soalElement = document.getElementById("soalElement");
                     // soalElement.setAttribute("value", nilai);
@@ -242,7 +245,14 @@
             $("#listSoalModal").on("hidden.bs.modal", function() {
                 $(this).remove();
             });
-
         }
+
+        //Refresh
+        var refreshButton = document.getElementById("refreshButton");
+        // Tambahkan event listener untuk meng-handle klik tombol
+        refreshButton.addEventListener("click", function() {
+            // Menggunakan metode location.reload() untuk mereload halaman
+            location.reload();
+        });
     </script>
 @endpush

@@ -1,15 +1,15 @@
 @extends('layout.master')
 
 @section('title')
-    jurusan
+    Bank Soal
 @endsection
 
 @php
     $title = View::getSections()['title'];
 @endphp
 
-@section('data-umum', 'active')
-@section('jurusan-active', 'active')
+@section('data-ujian', 'active')
+@section('banksoal-active', 'active')
 
 @section('badge')
     @parent
@@ -57,7 +57,7 @@
                         <i class="fa fa-upload"></i>
                     </button>
                     <button type="button" class="btn btn-primary" data-toggle="modal"
-                        data-target="#modalTambahJurusan">Tambah
+                        data-target="#modalTambahBankSoal">Tambah
                         <i class="fa fa-plus-circle"></i>
                     </button>
                 </div>
@@ -67,17 +67,18 @@
                     <thead>
                         <tr>
                             <th style="width: 20px">N0</th>
-                            <th>Nama Jurusan</th>
+                            <th>Nama {{ ucwords($title) }}</th>
+                            <th>Detail</th>
                         </tr>
                     </thead>
                     <tbody>
                         @php
                             $counter = 1;
                         @endphp
-                        @foreach ($jurusan as $data)
+                        @foreach ($banksoal as $data)
                             <tr>
                                 <td>{{ $counter++ }}</td>
-                                <td>{{ $data->kode_jurusan }}</td>
+                                <td>{{ $data->nama_bank_soal }}</td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -85,7 +86,7 @@
             </div>
         </div>
     </section>
-    @includeIf('data_umum.jurusan.modal')
+    @includeIf('data_ujian.bank_soal.modal')
 @endsection
 
 
@@ -105,7 +106,7 @@
             }
 
             // Menangkap event tombol dengan atribut data-target="#modalTambahjurusan"
-            $('button[data-target="#modalTambahJurusan"]').on('click', function() {
+            $('button[data-target="#modalTambahBankSoal"]').on('click', function() {
                 var title = "Tambah Jurusan";
                 openModal(title);
             });

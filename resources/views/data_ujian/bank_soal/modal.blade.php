@@ -1,7 +1,7 @@
 <!-- Modal -->
 
 {{-- <div class="modal fade" id="modal-form" tabindex="-1" role="dialog"> --}}
-<div class="modal fade" id="modalTambahJurusan" tabindex="-1" role="dialog" aria-labelledby="modalTambahJurusanLabel"
+<div class="modal fade" id="modalTambahBankSoal" tabindex="-1" role="dialog" aria-labelledby="modalTambahBankSoalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content ">
@@ -11,11 +11,27 @@
                 <h4 class="modal-title"></h4>
             </div>
             <div class="modal-body">
-                <form action="{{ route('jurusan.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('banksoal.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
-                        <label for="kode_jurusan">Nama Jurusan</label>
-                        <input type="text" class="form-control" id="kode_jurusan" name="kode_jurusan" required>
+                        <label for="nama_bank_soal">Nama Bank Soal</label>
+                        <input type="text" class="form-control" id="nama_bank_soal" name="nama_bank_soal" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="kelas">Kelas</label>
+                        <select class="form-control" id="kelas" name="kelas" required>
+                            @foreach ($kelas as $kls)
+                                <option value="{{ $kls->nama_kelas }}">{{ $kls->nama_kelas }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="jurusan">Jurusan</label>
+                        <select class="form-control" id="jurusan" name="jurusan" required>
+                            @foreach ($jurusan as $jrs)
+                                <option value="{{ $jrs->kode_jurusan }}">{{ $jrs->kode_jurusan }}</option>
+                            @endforeach
+                        </select>
                     </div>
             </div>
             <div class="modal-footer">
@@ -41,7 +57,7 @@
                 @csrf
                 <div class="modal-body md-10">
                     <div class="form-group">
-                        <label for="file">Upload File Harus Sesuai Template!</label>
+                        <label for="file">Upload File Harus Sesuai Templateeee!</label>
                         <a href="{{ url('/download-template-jurusan') }}" class="btn btn-success btn-xs">Download
                             Template
                             Excel

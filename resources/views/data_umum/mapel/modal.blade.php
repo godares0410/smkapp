@@ -14,38 +14,31 @@
                 <form action="{{ route('mapel.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
-                        <label for="nama_mapel">Nama Mapel</label>
-                        <input type="text" class="form-control" id="nama_mapel" name="nama_mapel" required>
+                        <label for="nama_mapel">Nama Mapel:</label>
+                        <input type="text" class="form-control" id="nama_mapel" name="nama_mapel" required><br>
                     </div>
                     <div class="form-group">
-                        <label for="kode_mapel">Kode Mapel</label>
-                        <input type="text" class="form-control" id="kode_mapel" name="kode_mapel" required>
+                        <label for="kode_mapel">Kode Mapel:</label>
+                        <input type="text" class="form-control" id="kode_mapel" name="kode_mapel" required><br>
                     </div>
                     <div class="form-group">
-                        <label for="kelas">Kelas</label>
-                        <select class="form-control" id="nama_kelas" name="nama_kelas" required>
-                            @foreach ($kelas as $kls)
-                                <option value="{{ $kls->nama_kelas }}">{{ $kls->nama_kelas }}</option>
+                        <label for="nama_kelas">Kelas Mapel:</label>
+                        <select id="nama_kelas" class="form-control" name="nama_kelas" required>
+                            @foreach ($kelas as $kelas_item)
+                                <option value="{{ $kelas_item->nama_kelas }}">{{ $kelas_item->nama_kelas }}</option>
                             @endforeach
-                        </select>
+                        </select><br>
                     </div>
-                    <div class="form-group">
-                        <label for="jurusan">Jurusan</label>
-                        <select class="form-control" id="kode_jurusan" name="kode_jurusan" required>
-                            @foreach ($jurusan as $jrs)
-                                <option value="{{ $jrs->kode_jurusan }}">{{ $jrs->kode_jurusan }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <input type="hidden" class="form-control" id="rombel" name="rombel" required>
-                    </div>
+                    {{-- <label for="jurusan_mapel">Jurusan Mapel:</label><br>
+                    <input type="checkbox" id="selectAll"> Select All<br>
+                    @foreach ($jurusan as $jurusan_item)
+                        <input type="checkbox" name="jurusan_mapel[]" value="{{ $jurusan_item->kode_jurusan }}">
+                        {{ $jurusan_item->kode_jurusan }}<br>
+                    @endforeach --}}
+
+                    <button type="submit">Simpan</button>
+                </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save changes</button>
-            </div>
-            </form>
         </div>
     </div>
 </div>
@@ -65,7 +58,8 @@
                 <div class="modal-body md-10">
                     <div class="form-group">
                         <label for="file">Upload File Harus Sesuai Template!</label>
-                        <a href="{{ url('/download-template-mapel') }}" class="btn btn-success btn-xs">Download Template
+                        <a href="{{ url('/download-template-mapel') }}" class="btn btn-success btn-xs">Download
+                            Template
                             Excel
                             <i class="fa fa-download"></i></a>
                     </div>

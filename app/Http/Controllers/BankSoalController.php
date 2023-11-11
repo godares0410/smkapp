@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kelas;
+use App\Models\Jurusan;
 use App\Models\BankSoal;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class BankSoalController extends Controller
 {
@@ -14,7 +17,10 @@ class BankSoalController extends Controller
      */
     public function index()
     {
-        //
+        $banksoal = BankSoal::all();
+        $kelas = Kelas::all();
+        $jurusan = Jurusan::all();
+        return view('data_ujian.bank_soal.index', compact('banksoal', 'kelas', 'jurusan'));
     }
 
     /**
@@ -35,7 +41,18 @@ class BankSoalController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validasi input
+        $validator = Validator::make($request->all(), [
+            'nama_siswa' => 'required',
+            'kelas' => 'required',
+            'jurusan' => 'required',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
+        $banksoal = new Banksoal;
+        $banksoal->nama_bank_soal = $request->nama_bank_soal;
+        $banksoal->kelas = $request->kelas;
+        $banksoal->jurusan = $request->jurusan;
+        $banksoal->save();
     }
 
     /**

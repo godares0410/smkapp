@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class BankSoal extends Model
+class Soal extends Model
 {
     use HasFactory;
 
-    protected $guarded = 'id_bank_soal';
-    protected $table = 'bank_soal';
-    protected $primaryKey = 'id_bank_soal';
+    protected $guarded = 'id_soal';
+    protected $table = 'soal';
+    protected $primaryKey = 'id_soal';
 }

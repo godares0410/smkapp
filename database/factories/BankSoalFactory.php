@@ -18,18 +18,9 @@ class BankSoalFactory extends Factory
      */
     public function definition()
     {
-        $jawaban = Arr::random(['A', 'B', 'C', 'D', 'E']);
-        $id_mapel = Arr::random([1, 2]);
-        $faker = faker::create();
+        $namabank = Arr::random(['PAIX', 'BINXI']);
         return [
-            'id_mapel' => $id_mapel,
-            'soal' => $faker->sentence(),
-            'pil_a' => $faker->sentence(),
-            'pil_b' => $faker->sentence(),
-            'pil_c' => $faker->sentence(),
-            'pil_d' => $faker->sentence(),
-            'pil_e' => $faker->sentence(),
-            'jawaban' => $jawaban,
+            'nama_bank_soal' => $namabank,
         ];
     }
 }

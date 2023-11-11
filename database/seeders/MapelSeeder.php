@@ -15,7 +15,7 @@ class MapelSeeder extends Seeder
     public function run()
     {
         // Mapel::factory(25)->create();
-        Mapel::factory()->count(30)->create();
+        Mapel::factory()->count(10)->create();
 
         // \App\Models\Mapel::factory()->create([
         //     'nama_mapel' => 'Bahasa Indo',

@@ -15,6 +15,8 @@ use App\Http\Controllers\MapelController;
 use App\Http\Controllers\SiswaController;
 use App\Http\Controllers\UjianController;
 use App\Http\Controllers\JurusanController;
+use App\Http\Controllers\BankSoalController;
+use App\Http\Controllers\SetUjianController;
 use App\Http\Controllers\GuruMapelController;
 use App\Http\Controllers\JenisUjianController;
 
@@ -87,4 +89,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('jenis_ujian', JenisUjianController::class);
     Route::resource('sesi', SesiController::class);
     Route::resource('ujian', UjianController::class);
+    Route::resource('banksoal', BankSoalController::class);
+    Route::resource('setujian', SetUjianController::class);
 });

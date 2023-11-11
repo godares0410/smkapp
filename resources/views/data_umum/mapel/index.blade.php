@@ -49,9 +49,6 @@
             <div class="box-header with-border">
                 <h3 class="box-title">Data {{ ucwords($title) }}</h3>
                 <div class="pull-right">
-                    {{-- <button onclick="addForm()" class="btn btn-success">Import
-                        <i class="fa fa-upload"></i>
-                    </button> --}}
                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#importModal">Import
                         Data
                         <i class="fa fa-upload"></i>
@@ -68,6 +65,7 @@
                         <tr>
                             <th style="width: 20px">N0</th>
                             <th>Nama Mapel</th>
+                            <th>Kode Mapel</th>
                             <th>Kelas</th>
                             <th>Jurusan</th>
                         </tr>
@@ -80,7 +78,8 @@
                             <tr>
                                 <td>{{ $counter++ }}</td>
                                 <td>{{ $data->nama_mapel }}</td>
-                                <td>{{ $data->kelas_mapel }}</td>
+                                <td>{{ $data->kode_mapel }}</td>
+                                <td>{{ $data->nama_kelas }}</td>
                                 <td>{{ $data->jurusan_mapel }}</td>
                                 </td>
                             </tr>
@@ -120,5 +119,14 @@
                 openModal(title);
             });
         });
+
+        // JavaScript untuk mengontrol checkbox "Select All"
+        // var selectAll = document.getElementById("selectAll");
+        // var checkboxes = document.querySelectorAll('input[name="jurusan_mapel[]"]');
+        // selectAll.addEventListener("change", function() {
+        //     checkboxes.forEach(function(checkbox) {
+        //         checkbox.checked = selectAll.checked;
+        //     });
+        // });
     </script>
 @endpush

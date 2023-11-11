@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('bank_soal', function (Blueprint $table) {
-            $table->increments('id_bank_soal');
-            $table->string('nama_bank_soal');
+        Schema::create('mapel_jurusan', function (Blueprint $table) {
+            $table->increments('id_mapel_jurusan');
             $table->integer('id_mapel');
-            $table->integer('kelas');
-            $table->integer('jurusan');
-            $table->timestamps();
+            $table->integer('id_jurusan');
         });
     }
 
@@ -30,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bank_soal');
+        Schema::dropIfExists('mapel_jurusan');
     }
 };

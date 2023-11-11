@@ -28,17 +28,15 @@ class MapelController extends Controller
             'nama_mapel' => 'required',
             'kode_mapel' => 'required',
             'nama_kelas' => 'required',
-            'kode_jurusan' => 'required',
         ]);
+
         $mapel = new Mapel;
         $mapel->nama_mapel = $request->nama_mapel;
         $mapel->kode_mapel = $request->kode_mapel;
-        $mapel->kelas_mapel = $request->nama_kelas;
-        $mapel->jurusan_mapel = $request->kode_jurusan;
+        $mapel->nama_kelas = $request->nama_kelas;
         $mapel->save();
 
-        // Tampilkan pesan success
-        return redirect()->route('mapel.index')->with('success', 'Data mapel berhasil ditambahkan.');
+        return redirect()->back()->with('success', 'Mapel berhasil ditambahkan');
     }
 
 

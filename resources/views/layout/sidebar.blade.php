@@ -78,8 +78,10 @@
                         <li class="@yield('jenis_ujian-active')"><a href="{{ route('jenis_ujian.index') }}"><i
                                     class="fa fa-circle-o"></i>
                                 Jenis Ujian</a></li>
-                        <li><a href="{{ route('ujian.index') }}"><i class="fa fa-circle-o"></i>
+                        <li class="@yield('banksoal-active')"><a href="{{ route('banksoal.index') }}"><i class="fa fa-circle-o"></i>
                                 Bank Soal</a></li>
+                        <li><a href="{{ route('setujian.index') }}"><i class="fa fa-circle-o"></i>
+                                Ujian</a></li>
                         <li class="@yield('sesi-active')"><a href="{{ route('sesi.index') }}"><i
                                     class="fa fa-circle-o"></i>
                                 Sesi</a></li>
