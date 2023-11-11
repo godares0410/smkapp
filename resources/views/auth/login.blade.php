@@ -16,7 +16,7 @@
         <span class="borderLine"></span>
         <form action="{{ route('login') }}" method="post">
             @csrf
-            <h2>Sign in</h2>
+            <h2>Sign ins</h2>
             <div class="inputBox">
                 <input type="text" name="login" required="required">
                 <span>Email</span>

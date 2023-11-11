@@ -16,7 +16,7 @@ class SiswaFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    
+
     public function definition()
     {
         $faker = faker::create();
@@ -26,7 +26,9 @@ class SiswaFactory extends Factory
             'nama_siswa' => $faker->name(),
             'kelas' => $kelas,
             'jurusan' => $jurusan,
-            'rombel' => $kelas. ' ' . $jurusan,
+            'rombel' => $kelas . ' ' . $jurusan,
+            'username' => $faker->word(),
+            'password' => $faker->numberBetween(1000, 9999),
         ];
     }
 }

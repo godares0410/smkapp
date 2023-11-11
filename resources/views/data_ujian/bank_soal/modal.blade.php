@@ -25,14 +25,14 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label for="jurusan">Jurusan</label>
                         <select class="form-control" id="jurusan" name="jurusan" required>
                             @foreach ($jurusan as $jrs)
                                 <option value="{{ $jrs->kode_jurusan }}">{{ $jrs->kode_jurusan }}</option>
                             @endforeach
                         </select>
-                    </div>
+                    </div> --}}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

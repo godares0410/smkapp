@@ -21,14 +21,7 @@
                         <label for="kode_mapel">Kode Mapel:</label>
                         <input type="text" class="form-control" id="kode_mapel" name="kode_mapel" required><br>
                     </div>
-                    <div class="form-group">
-                        <label for="nama_kelas">Kelas Mapel:</label>
-                        <select id="nama_kelas" class="form-control" name="nama_kelas" required>
-                            @foreach ($kelas as $kelas_item)
-                                <option value="{{ $kelas_item->nama_kelas }}">{{ $kelas_item->nama_kelas }}</option>
-                            @endforeach
-                        </select><br>
-                    </div>
+                     
                     {{-- <label for="jurusan_mapel">Jurusan Mapel:</label><br>
                     <input type="checkbox" id="selectAll"> Select All<br>
                     @foreach ($jurusan as $jurusan_item)

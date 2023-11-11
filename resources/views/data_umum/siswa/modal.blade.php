@@ -124,7 +124,7 @@
                     <p><strong>Kelas:</strong> {{ $data->kelas }}</p>
                     <p><strong>Jurusan:</strong> {{ $data->jurusan }}</p>
                     {{-- <img src="{{ asset('img/siswa/' . $data->foto) }}" alt="Foto Siswa" class="img-fluid" style="width: 100px"> --}}
-                    <img src="{{ $data->foto ? asset('img/siswa/' . $data->foto) : asset('img/siswa/man.png') }}"alt="Foto Siswa"
+                    <img src="{{ $data->foto ? asset('img/siswa/' . $data->foto) : asset('img/siswa/man.png') }}" alt="Foto Siswa"
                         class="img-fluid" style="width: 100px">
                 </div>
             </div>
