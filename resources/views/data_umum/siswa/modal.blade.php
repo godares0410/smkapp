@@ -100,7 +100,11 @@
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
+<<<<<<< HEAD
                                 <input type="text" class="form-control" id="password" name="password" value="{{$data->password_kartu}}">
+=======
+                                <input type="text" class="form-control" id="password" name="password">
+>>>>>>> 9f5d545 (first commitu)
                         </div>
                         <div class="form-group">
                             <label for="foto">Foto</label>

@@ -41,7 +41,11 @@
                 <!-- mini logo for sidebar mini 50x50 pixels -->
                 <span class="logo-mini"><b>A</b>LT</span>
                 <!-- logo for regular state and mobile devices -->
+<<<<<<< HEAD
                 <span class="logo-lg"><b>SMK</b>App</span>
+=======
+                <span class="logo-lg"><b>Admin</b>LTE</span>
+>>>>>>> 9f5d545 (first commitu)
             </a>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top">
@@ -147,7 +151,11 @@
                                     <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                                     <p>{{ auth('siswa')->user()->nama_siswa }}
+<<<<<<< HEAD
                                         {{-- <small>Member since Nov. 2012</small> --}}
+=======
+                                        <small>Member since Nov. 2012</small>
+>>>>>>> 9f5d545 (first commitu)
                                     </p>
                                 </li>
                                 <!-- Menu Body -->
@@ -171,16 +179,23 @@
                                         <a href="#" class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
+<<<<<<< HEAD
                                         <a href="#" class="btn btn-default btn-flat"
                                             onclick="document.getElementById('logout-form').submit()">Keluar</a>
+=======
+                                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
+>>>>>>> 9f5d545 (first commitu)
                                     </div>
                                 </li>
                             </ul>
                         </li>
+<<<<<<< HEAD
                         <form action="{{ route('logout') }}" method="post" id="logout-form" style="display: none">
                             @csrf
                         </form>
 
+=======
+>>>>>>> 9f5d545 (first commitu)
                         <!-- Control Sidebar Toggle Button -->
                         <li>
                             <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
@@ -195,9 +210,15 @@
             <div class="container">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
+<<<<<<< HEAD
                     {{-- <h1>
                         {{ $ujian->nama_mapel }}
                     </h1> --}}
+=======
+                    <h1>
+                        {{ $ujian->nama_mapel }}
+                    </h1>
+>>>>>>> 9f5d545 (first commitu)
 
                 </section>
 
@@ -205,7 +226,11 @@
                 <section class="content">
                     <div class="box">
                         <div class="box-header with-border">
+<<<<<<< HEAD
                             {{-- <h3 class="box-title">{{ $idUj }}</h3> --}}
+=======
+                            <h3 class="box-title">{{ $idUj }}</h3>
+>>>>>>> 9f5d545 (first commitu)
                             <!-- Button to trigger the modal -->
                             <div class="pull-right">
                                 <button class="btn btn-success" onclick="refreshHalaman()"><i
@@ -233,6 +258,7 @@
                                 @endphp
                                 @foreach ($soal as $sl)
                                     <div class="pertanyaan-{{ $sl->id_soal }}">
+<<<<<<< HEAD
                                         @php
                                             $idBankSoalArray = json_decode($ujian->id_bank_soal, true);
                                             $bank_soal = \App\Models\BankSoal::whereIn('id_bank_soal', $idBankSoalArray)
@@ -244,6 +270,8 @@
                                             <img src="{{ asset('bank_soal/' . $bank_soal . '/' . $sl->file_1) }}"
                                                 alt="Deskripsi Gambar" style="width: 100%">
                                         @endif
+=======
+>>>>>>> 9f5d545 (first commitu)
                                         <h3>{{ $counter++ }}. {{ $sl->soal }}</h3><br>
 
                                         <form class="answer-form">
@@ -278,8 +306,12 @@
                                                 data-answer="{{ encrypt($sl->pil_d) }}">D</button>
                                             {{ $sl->pil_d }}
                                         </form><br>
+<<<<<<< HEAD
                                         {{-- @if ($ujian->jumlah_opsi == 5) --}}
                                         @if ($sl->pil_e != null)
+=======
+                                        @if ($ujian->jumlah_opsi == 5)
+>>>>>>> 9f5d545 (first commitu)
                                             <form class="answer-form">
                                                 @csrf
                                                 <input type="hidden" name="id_soal" value="{{ $sl->id_soal }}">
@@ -550,7 +582,10 @@
                                     Swal.fire({
                                         title: 'Anda melakukan kecurangan, point akan dikurangi',
                                         icon: 'warning',
+<<<<<<< HEAD
                                         text: 'Pelanggaran kedua maka Akun akan di blokir!',
+=======
+>>>>>>> 9f5d545 (first commitu)
                                         confirmButtonText: 'OK'
                                     }).then(() => {
                                         // Setelah user menekan OK, kembali ke mode fullscreen

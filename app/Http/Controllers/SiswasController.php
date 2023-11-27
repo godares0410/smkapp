@@ -14,8 +14,11 @@ use App\Models\SiswaMulai;
 use App\Models\SiswaNilai;
 use App\Models\SiswaUjian;
 use App\Models\JadwalUjian;
+<<<<<<< HEAD
 use App\Models\AlokasiWaktu;
 use App\Models\SesiJadwalUjian;
+=======
+>>>>>>> 9f5d545 (first commitu)
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -35,6 +38,7 @@ class SiswasController extends Controller
             ->first();
 
         $today = Carbon::now();
+<<<<<<< HEAD
         // $ujian = JadwalUjian::select('jadwal_ujian.*', 'mapel.nama_mapel', 'kelas.nama_kelas', 'bank_ujian.*', 'sesi_jadwal_ujian.id_jadwal_ujian as ujian_id', 'sesi_jadwal_ujian.id_sesi', 'sesi_jadwal_ujian.jam_mulai', 'sesi_jadwal_ujian.jam_selesai', 'sesi.nama_sesi', 'jenis_ujian.id_jenis')
         //     ->join('bank_ujian', 'bank_ujian.id_bank_ujian', '=', 'jadwal_ujian.id_bank_ujian')
         //     ->join('mapel', 'mapel.id_mapel', '=', 'bank_ujian.id_mapel')
@@ -47,12 +51,16 @@ class SiswasController extends Controller
 
 
             $ujian = JadwalUjian::select('jadwal_ujian.*', 'mapel.nama_mapel', 'kelas.nama_kelas', 'bank_ujian.*', 'sesi_jadwal_ujian.id_jadwal_ujian as ujian_id', 'sesi_jadwal_ujian.id_sesi', 'alokasi_waktu.jam_mulai', 'alokasi_waktu.jam_selesai', 'sesi.nama_sesi', 'jenis_ujian.id_jenis')
+=======
+        $ujian = JadwalUjian::select('jadwal_ujian.*', 'mapel.nama_mapel', 'kelas.nama_kelas', 'bank_ujian.*', 'sesi_jadwal_ujian.id_jadwal_ujian as ujian_id', 'sesi_jadwal_ujian.id_sesi', 'sesi_jadwal_ujian.jam_mulai', 'sesi_jadwal_ujian.jam_selesai', 'sesi.nama_sesi', 'jenis_ujian.id_jenis')
+>>>>>>> 9f5d545 (first commitu)
             ->join('bank_ujian', 'bank_ujian.id_bank_ujian', '=', 'jadwal_ujian.id_bank_ujian')
             ->join('mapel', 'mapel.id_mapel', '=', 'bank_ujian.id_mapel')
             ->join('kelas', 'kelas.id_kelas', '=', 'bank_ujian.id_kelas')
             ->join('jenis_ujian', 'jenis_ujian.id_jenis', '=', 'bank_ujian.id_jenis')
             ->join('sesi_jadwal_ujian', 'sesi_jadwal_ujian.id_jadwal_ujian', '=', 'jadwal_ujian.id_jadwal_ujian')
             ->join('sesi', 'sesi_jadwal_ujian.id_sesi', '=', 'sesi.id_sesi')
+<<<<<<< HEAD
             ->join('alokasi_waktu', 'sesi_jadwal_ujian.id_alokasi_waktu', '=', 'alokasi_waktu.id_alokasi_waktu')
             ->where('bank_ujian.id_kelas', $kelas)
             ->get();
@@ -62,6 +70,15 @@ class SiswasController extends Controller
         $nilai = SiswaNilai::where('id_siswa', $idSiswa)->first();
 
         return view('siswa.ujian.indux', compact('ujian', 'kerjakan', 'sesi', 'nilai'));
+=======
+            ->where('bank_ujian.id_kelas', $kelas)
+            ->get();
+
+        $kerjakan = SiswaUjian::where('id_siswa', $idSiswa)->first();
+        $nilai = SiswaNilai::where('id_siswa', $idSiswa)->first();
+
+        return view('siswa.ujian.index', compact('ujian', 'kerjakan', 'sesi', 'nilai'));
+>>>>>>> 9f5d545 (first commitu)
     }
     public function dashboard()
     {
@@ -80,14 +97,21 @@ class SiswasController extends Controller
             $idUjian = $request->input('idUjian');
             $jumlahSoal = $request->input('jumlahSoal');
             $acakSoal = $request->input('acakSoal');
+<<<<<<< HEAD
             // $idBank 
+=======
+>>>>>>> 9f5d545 (first commitu)
 
             // Convert JSON string to an array
             $idBankSoalArray = json_decode($idBankSoal);
 
             // Retrieve soal based on conditions
             $soalQuery = DB::table('soal')
+<<<<<<< HEAD
                 ->where('id_bank_soal', $idBankSoalArray);
+=======
+                ->whereIn('id_bank_soal', $idBankSoalArray);
+>>>>>>> 9f5d545 (first commitu)
 
             if ($acakSoal == 1) {
                 $soalQuery->inRandomOrder();
@@ -135,6 +159,7 @@ class SiswasController extends Controller
             ->where('id_siswa', $idSiswa)
             ->orderByDesc('id_siswa_ujian')
             ->get();
+<<<<<<< HEAD
         $suul = JadwalUjian::where('id_jadwal_ujian', $idUjian)
         ->value('id_bank_ujian');
         $bs = BankUjian::select('id_bank_soal')
@@ -152,6 +177,18 @@ class SiswasController extends Controller
         $idUj = JadwalUjian::where('id_jadwal_ujian', $idUjian)
             ->value('id_jadwal_ujian');
         return view('siswa.kerjakan.index', compact('soal', 'ujian', 'idUj'))->with('success', 'Berhasil Masuk');
+=======
+
+        // Gunakan $idSoals untuk mengambil data dari tabel soal atau tabel lainnya
+        // $soal = Soal::whereIn('id_soal', $idSoals->pluck('id_soal'))->get();
+        $soal = Soal::join('siswa_ujian', 'soal.id_soal', '=', 'siswa_ujian.id_soal')
+            ->whereIn('soal.id_soal', $idSoals->pluck('id_soal'))
+            ->get(['soal.*', 'siswa_ujian.jawaban as soal_jawaban']);
+        $ujian = BankUjian::where('id_bank_ujian', $idUjian)->join('mapel', 'bank_ujian.id_mapel', '=', 'mapel.id_mapel')->select('bank_ujian.acak_opsi', 'bank_ujian.jumlah_opsi', 'mapel.nama_mapel')->first();
+        $idUj = JadwalUjian::where('id_jadwal_ujian', $idUjian)
+            ->value('id_jadwal_ujian');
+        return view('siswa.kerjakan.index', compact('soal', 'ujian', 'idUj'))->with('sukses', 'Berhasil Masuk');
+>>>>>>> 9f5d545 (first commitu)
     }
     public function update(Request $request)
 
@@ -228,7 +265,11 @@ class SiswasController extends Controller
             // Logout siswa
             auth('siswa')->logout();
 
+<<<<<<< HEAD
             return response()->json(['success' => true, 'message' => 'Akun Anda diblokir']);
+=======
+            return response()->json(['success' => true, 'message' => 'Status updated successfully']);
+>>>>>>> 9f5d545 (first commitu)
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'Failed to update status']);
         }
@@ -255,7 +296,11 @@ class SiswasController extends Controller
             $id_siswa = Auth::guard('siswa')->user()->id_siswa;
             $id_kelas = Auth::guard('siswa')->user()->id_kelas;
             $id_jurusan = Auth::guard('siswa')->user()->id_jurusan;
+<<<<<<< HEAD
             $id_jadwal = $request->input('idUj');
+=======
+            $id_jadwal = $request->idUj;
+>>>>>>> 9f5d545 (first commitu)
 
             $totalPoint = SiswaUjian::where('id_jadwal_ujian', $id_jadwal)
                 ->where('id_siswa', $id_siswa)

@@ -20,6 +20,7 @@ class LoginAuthController extends Controller
 
         if (Auth::guard('web')->attempt($credentials)) {
             return redirect()->route('admin.dashboard');
+<<<<<<< HEAD
         }
 
         if (Auth::guard('guru')->attempt($credentials)) {
@@ -73,6 +74,61 @@ class LoginAuthController extends Controller
         Auth::logout();
         return redirect('/login')->with('status', 'Anda telah dipaksa logout.');
     }
+=======
+        }
+
+        if (Auth::guard('guru')->attempt($credentials)) {
+            // LogLogin::create([
+            //     'nama_guru' => auth('guru')->user()->nama_guru,
+            //     'id_guru' => auth('guru')->user()->id
+            // ]);
+            return redirect()->route('guru.dashboard');
+        }
+
+        // if (Auth::guard('siswa')->attempt($credentials)) {
+        //     // Dapatkan alamat IP pengguna
+        //     $ip = $request->ip();
+
+        //     // LogLogin::create
+        //     LogLogin::create([
+        //         // 'nama_siswa' => auth('siswa')->user()->nama_siswa,
+        //         // 'id_siswa' => auth('siswa')->user()->id_siswa,
+        //         'nama_siswa' => auth('siswa')->user()->nama_siswa,
+        //         'id_siswa' => auth('siswa')->user()->id_siswa,
+        //         'ip' => $ip, // Menambahkan kolom IP
+        //     ]);
+
+        //     return redirect()->route('siswa.dashboard');
+        // }
+
+        if (Auth::guard('siswa')->attempt($credentials)) {
+            $user = Auth::guard('siswa')->user();
+    
+            // Periksa status siswa
+            if ($user->status) {
+                // Login berhasil
+                return redirect()->route('siswa.dashboard');
+            } else {
+                // Nonaktifkan login dan kembalikan pesan peringatan
+                Auth::guard('siswa')->logout();
+                return back()->with('gagal', 'Akun Anda dinonaktifkan. Silakan Hubungi Panitia!');
+            }
+        }
+
+
+        return back()->withErrors(['message' => 'Login gagal']);
+    }
+    // Logout siswa
+
+    public function forceLogout($userId)
+{
+    // Cek apakah user dengan $userId sedang login
+    $user = User::find($userId); // Gantilah dengan model dan kolom yang sesuai
+    if ($user && Auth::check() && Auth::id() == $userId) {
+        Auth::logout();
+        return redirect('/login')->with('status', 'Anda telah dipaksa logout.');
+    }
+>>>>>>> 9f5d545 (first commitu)
 
     return redirect('/dashboard')->with('status', 'User tidak sedang login atau tidak ditemukan.');
 }

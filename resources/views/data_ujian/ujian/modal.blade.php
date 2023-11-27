@@ -26,6 +26,7 @@
                                 <option value="{{ $kls->id_kelas }}">{{ $kls->nama_kelas }}</option>
                             @endforeach
                         </select>
+<<<<<<< HEAD
                     </div>
                     <div class="form-group">
                         <label for="mapel">Mapel</label>
@@ -86,6 +87,73 @@
                         </select>
                     </div>
                     <div class="form-group">
+=======
+                    </div>
+                    <div class="form-group">
+                        <label for="mapel">Mapel</label>
+                        <select class="form-control" id="mapel" name="mapel" required>
+                            <option value="pilih_kelas">Pilih Mapel</option>
+                            @foreach ($mapel as $mpl)
+                                @php
+                                    $decodedIdJurusanValues = json_decode($mpl->id_jurusan, true);
+                                    $matchingKodeJurusanValues = \App\Models\Jurusan::whereIn('id_jurusan', $decodedIdJurusanValues)
+                                        ->pluck('kode_jurusan')
+                                        ->toArray();
+                                @endphp
+                                <option class="mapel-option" value="{{ $mpl->id_mapel }}"
+                                    data-kelas="{{ $mpl->id_kelas }}">
+                                    {{ $mpl->nama_mapel }} (
+                                    @foreach ($matchingKodeJurusanValues as $index => $kodeJurusan)
+                                        {{ $kodeJurusan }}
+                                        @if ($index < count($matchingKodeJurusanValues) - 1)
+                                            ,
+                                        @endif
+                                    @endforeach
+                                    )
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bank_soal">Bank Soal</label><br>
+                        <div id="bankSoalContainer">
+                            <!-- Konten bank soal akan ditambahkan di sini secara dinamis -->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" id="selectAll" style="display: none">
+                        @foreach ($jurusan as $jurusan_item)
+                            <input type="checkbox" value="{{ $jurusan_item->id_jurusan }}" style="display: none">
+                        @endforeach
+                    </div>
+                    <div class="form-group">
+                        <label for="jurusan_mapel">Jurusan Mapel:</label><br>
+                        <input type="checkbox" id="pilihSemua"> Select All<br>
+                        @foreach ($jurusan as $jurusan_item)
+                            <input type="checkbox" name="jurusan_mapel[]" value="{{ $jurusan_item->id_jurusan }}">
+                            {{ $jurusan_item->kode_jurusan }}<br>
+                        @endforeach
+                    </div>
+                    {{-- <div class="form-group">
+                        <label for="durasi">Durasi</label>
+                        <input type="text" class="form-control" id="durasi" name="durasi" placeholder="Masukkan Jumlah Soal"
+                            required>
+                    </div> --}}
+                    <div class="form-group">
+                        <label for="jumlah_soal">Jumlah Soal</label>
+                        <input type="text" class="form-control" id="jumlah_soal" name="jumlah_soal"
+                            placeholder="Masukkan Jumlah Soal" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="jumlah_opsi">Jumlah Opsi</label>
+                        <select class="form-control" id="jumlah_opsi" name="jumlah_opsi" required>
+                            <option value=4>4</option>
+                            <option value=5 selected>5</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+>>>>>>> 9f5d545 (first commitu)
                         <label for="acak_soal">Acak Soal</label>
                         <select class="form-control" id="acak_soal" name="acak_soal" required>
                             <option value=1 selected>Acak</option>

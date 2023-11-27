@@ -56,6 +56,7 @@
             </div>
             <div class="box-body table-responsive">
                 <!-- /.col -->
+<<<<<<< HEAD
                 <div class="box-body">
                     @foreach ($jadwal as $data)
                         <div class="col-md-6 col-lg-4">
@@ -63,6 +64,14 @@
                                 <div class="box-header with-border">
                                     <h3 class="box-title">{{ $data->nama_mapel }} - {{ $data->nama_kelas }}
                                         {{ $data->id_jadwal_ujian }}</h3>
+=======
+                @foreach ($jadwal as $data)
+                    <div class="box-body">
+                        <div class="col-md-6 col-lg-4">
+                            <div class="box box-success box-solid">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">{{ $data->nama_mapel }} - {{ $data->nama_kelas }}</h3>
+>>>>>>> 9f5d545 (first commitu)
 
                                     <div class="box-tools pull-right">
                                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
@@ -153,6 +162,7 @@
                             <!-- /.box -->
                         </div>
                         <!-- /.col -->
+<<<<<<< HEAD
                     @endforeach
                 </div>
             </div>
@@ -165,6 +175,19 @@
         </div>
     </section>
     @includeIf('data_ujian.jadwal_ujian.modul')
+=======
+                    </div>
+                @endforeach
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    Footer
+                </div>
+                <!-- /.box-footer-->
+            </div>
+        </div>
+    </section>
+    @includeIf('data_ujian.jadwal_ujian.modal')
+>>>>>>> 9f5d545 (first commitu)
 @endsection
 
 @push('script')
@@ -195,8 +218,12 @@
                 openModal(title);
             });
         });
+<<<<<<< HEAD
 </script>
 <script>
+=======
+
+>>>>>>> 9f5d545 (first commitu)
         document.getElementById('pilihSemua').addEventListener('change', function() {
             var checkboxes = document.getElementsByClassName('sesi-checkbox');
             for (var i = 0; i < checkboxes.length; i++) {
@@ -222,6 +249,7 @@
             }
         }
     </script>
+<<<<<<< HEAD
    {{-- <script>
     $(document).ready(function () {
         // Handle checkbox change event
@@ -267,4 +295,6 @@
         });
     });
 </script> --}}
+=======
+>>>>>>> 9f5d545 (first commitu)
 @endpush

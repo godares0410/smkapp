@@ -20,11 +20,17 @@ class SiswaController extends Controller
 {
     public function index()
     {
+<<<<<<< HEAD
         
         $siswa = Siswa::select('siswa.*', 'kelas.nama_kelas', 'jurusan.nama_jurusan', 'siswa_kartu.password as password_kartu')
             ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
             ->join('jurusan', 'siswa.id_jurusan', '=', 'jurusan.id_jurusan')
             ->join('siswa_kartu', 'siswa.id_siswa', '=', 'siswa_kartu.id_siswa_kartu')
+=======
+        $siswa = Siswa::select('siswa.*', 'kelas.nama_kelas', 'jurusan.nama_jurusan')
+            ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+            ->join('jurusan', 'siswa.id_jurusan', '=', 'jurusan.id_jurusan')
+>>>>>>> 9f5d545 (first commitu)
             ->get();
         $kelas = Kelas::all();
         $jurusan = Jurusan::all();
@@ -111,12 +117,20 @@ class SiswaController extends Controller
 
         foreach (array_slice($data[0], 1) as $row) {
             $siswaId = DB::table('siswa')->insertGetId([
+<<<<<<< HEAD
                 'nama_siswa' => ucwords(strtolower($row[3])),
+=======
+                'nama_siswa' => $row[3],
+>>>>>>> 9f5d545 (first commitu)
                 'id_kelas' => $row[4],
                 'id_jurusan' => $row[6],
                 'username' => $row[9],
                 'password' => bcrypt($row[10]),
+<<<<<<< HEAD
                 'foto' => $row[11],
+=======
+                'foto' => $row[6],
+>>>>>>> 9f5d545 (first commitu)
                 'status' => $row[12] ?? 1,
             ]);
             DB::table('siswa_kartu')->insert([
@@ -128,10 +142,13 @@ class SiswaController extends Controller
                 'id_siswa' => $siswaId,
                 'id_sesi' => $row[7],
             ]);
+<<<<<<< HEAD
             DB::table('siswa_ruang')->insert([
                 'id_siswa' => $siswaId,
                 'id_ruang' => $row[8],
             ]);
+=======
+>>>>>>> 9f5d545 (first commitu)
         }
         // Redirect atau berikan respons sukses
         return redirect()->back()->with('success', 'Import berhasil.');
@@ -142,8 +159,13 @@ class SiswaController extends Controller
         $siswa = Siswa::where('id_siswa', $id);
         $data = [
             'nama_siswa'     => $request->nama_siswa,
+<<<<<<< HEAD
             'id_kelas'   => $request->kelas,
             'id_jurusan'   => $request->jurusan,
+=======
+            'kelas'   => $request->kelas,
+            'jurusan'   => $request->jurusan,
+>>>>>>> 9f5d545 (first commitu)
             'username'   => $request->username,
             'password'   => bcrypt($request->password),
         ];
@@ -183,6 +205,7 @@ class SiswaController extends Controller
         $kartu->delete();
 
         return redirect()->back()->with('success', 'Data Siswa Berhasil Dihapus');
+<<<<<<< HEAD
     }
     public function blokir($id)
     {
@@ -200,5 +223,7 @@ class SiswaController extends Controller
         $siswa->save();
 
         return redirect()->back()->with('success', 'Siswa Berhasil Diaktifkan');
+=======
+>>>>>>> 9f5d545 (first commitu)
     }
 }

@@ -63,7 +63,10 @@
                             <th>Nama Mapel</th>
                             <th>Kelas</th>
                             <th>Jurusan</th>
+<<<<<<< HEAD
                             <th>Bank Soal</th>
+=======
+>>>>>>> 9f5d545 (first commitu)
                             <th>Jumlah Soal</th>
                             <th>Acak Soal</th>
                             <th>Acak Jawaban</th>
@@ -97,6 +100,7 @@
                                         @endif
                                     @endforeach
                                 </td>
+<<<<<<< HEAD
                                 <td>{{ $data->id_bank_soal }}</td>
                                 <td>{{ $data->jumlah_soal }}</td>
                                 <td>
@@ -113,6 +117,21 @@
                                         {{ $soal = 'Tidak' }}
                                     @endif
                                 </td>
+=======
+                                <td>{{ $data->jumlah_soal }}</td>
+                                @if ($data->acak_soal == 1)
+                                    {{ $acak = 'Acak' }}
+                                @else
+                                    {{ $acak = 'Tidak' }}
+                                @endif
+                                <td>{{ $acak }}</td>
+                                @if ($data->acak_jawaban == 1)
+                                    {{ $soal = 'Acak' }}
+                                @else
+                                    {{ $soal = 'Tidak' }}
+                                @endif
+                                <td>{{ $soal }}</td>
+>>>>>>> 9f5d545 (first commitu)
                                 <td>
                                     <form action="{{ route('bank_ujian.destroy', $data->id_bank_ujian) }}" method="POST">
                                         @csrf

@@ -70,7 +70,10 @@
                             <th>Nama {{ ucwords($title) }}</th>
                             <th>Kelas</th>
                             <th>Nama Mapel</th>
+<<<<<<< HEAD
                             <th>Total Soal</th>
+=======
+>>>>>>> 9f5d545 (first commitu)
                             <th class="text-center">Detail</th>
                         </tr>
                     </thead>
@@ -96,7 +99,10 @@
                                 @endphp
                                 <td>{{ $keles }}</td>
                                 <td>{{ $data->nama_mapel }}
+<<<<<<< HEAD
                                 <td>{{ $data->total_soal }}
+=======
+>>>>>>> 9f5d545 (first commitu)
                                     (
                                     @foreach ($matchingKodeJurusanValues as $index => $kodeJurusan)
                                         {{ $kodeJurusan }}
@@ -109,7 +115,11 @@
                                 </td>
                                 <td>
                                     <div class="btn-group" style="display: flex;">
+<<<<<<< HEAD
                                         <a href="{{ route('soal.index', ['id_bank_soal' => $data->id_bank_soal]) }}" class="btn {{ $data->total_soal == 0 ? 'btn-warning' : 'btn-primary' }}"  style="margin-right: 5px;">Lihat Soal</a>
+=======
+                                        <a href="{{ route('soal.index', ['id_bank_soal' => $data->id_bank_soal]) }}" class="btn btn-primary" style="margin-right: 5px;">Lihat Soal</a>
+>>>>>>> 9f5d545 (first commitu)
                                         <form action="{{ route('bank_soal.destroy', $data->id_bank_soal) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
