@@ -21,6 +21,9 @@ class LoginAuthController extends Controller
         if (Auth::guard('web')->attempt($credentials)) {
             return redirect()->route('admin.dashboard');
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 25eed0c (first commitz)
         }
 
         if (Auth::guard('guru')->attempt($credentials)) {
@@ -57,11 +60,16 @@ class LoginAuthController extends Controller
             } else {
                 // Nonaktifkan login dan kembalikan pesan peringatan
                 Auth::guard('siswa')->logout();
+<<<<<<< HEAD
                 return back()->with('error', 'Akun Anda dinonaktifkan. Silakan Hubungi Panitia!');
+=======
+                return back()->with('gagal', 'Akun Anda dinonaktifkan. Silakan Hubungi Panitia!');
+>>>>>>> 25eed0c (first commitz)
             }
         }
 
 
+<<<<<<< HEAD
         return back()->with('error', 'Username atau Password Salah!');
     }
     // Logout siswa
@@ -116,6 +124,8 @@ class LoginAuthController extends Controller
         }
 
 
+=======
+>>>>>>> 25eed0c (first commitz)
         return back()->withErrors(['message' => 'Login gagal']);
     }
     // Logout siswa
@@ -128,7 +138,10 @@ class LoginAuthController extends Controller
         Auth::logout();
         return redirect('/login')->with('status', 'Anda telah dipaksa logout.');
     }
+<<<<<<< HEAD
 >>>>>>> 9f5d545 (first commitu)
+=======
+>>>>>>> 25eed0c (first commitz)
 
     return redirect('/dashboard')->with('status', 'User tidak sedang login atau tidak ditemukan.');
 }

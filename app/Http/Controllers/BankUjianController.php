@@ -33,9 +33,12 @@ class BankUjianController extends Controller
             ->join('kelas', 'bank_ujian.id_kelas', '=', 'kelas.id_kelas')
             ->join('mapel', 'bank_ujian.id_mapel', '=', 'mapel.id_mapel')
 <<<<<<< HEAD
+<<<<<<< HEAD
             ->orderBy('bank_ujian.id_bank_ujian', 'desc')
 =======
 >>>>>>> 9f5d545 (first commitu)
+=======
+>>>>>>> 25eed0c (first commitz)
             ->get();
         
         return view('data_ujian.ujian.index', compact('jenis','bankujian', 'kelas', 'jurusan', 'mapel', 'bank'));

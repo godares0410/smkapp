@@ -4,17 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Sesi;
 <<<<<<< HEAD
+<<<<<<< HEAD
 use App\Models\AlokasiWaktu;
 =======
 >>>>>>> 9f5d545 (first commitu)
+=======
+>>>>>>> 25eed0c (first commitz)
 use App\Models\BankUjian;
 use App\Models\JadwalUjian;
 use Illuminate\Http\Request;
 use App\Models\SesiJadwalUjian;
 <<<<<<< HEAD
+<<<<<<< HEAD
 use App\Models\SiswaUjian;
 =======
 >>>>>>> 9f5d545 (first commitu)
+=======
+>>>>>>> 25eed0c (first commitz)
 
 class JadwalUjianController extends Controller
 {
@@ -26,23 +32,32 @@ class JadwalUjianController extends Controller
     public function index()
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         // $jadwalujian = JadwalUjian::all();
         // $bankUjian = BankUjian::all();
 >>>>>>> 9f5d545 (first commitu)
+=======
+        // $jadwalujian = JadwalUjian::all();
+        // $bankUjian = BankUjian::all();
+>>>>>>> 25eed0c (first commitz)
         $bank = BankUjian::select('bank_ujian.*', 'kelas.nama_kelas', 'jenis_ujian.nama_ujian', 'mapel.nama_mapel')
             ->join('kelas', 'kelas.id_kelas', '=', 'bank_ujian.id_kelas')
             ->join('jenis_ujian', 'jenis_ujian.id_jenis', '=', 'bank_ujian.id_jenis')
             ->join('mapel', 'mapel.id_mapel', '=', 'bank_ujian.id_mapel')
 <<<<<<< HEAD
+<<<<<<< HEAD
             ->orderBy('bank_ujian.id_bank_ujian', 'desc')
 =======
 >>>>>>> 9f5d545 (first commitu)
+=======
+>>>>>>> 25eed0c (first commitz)
             ->get();
         $jadwal = JadwalUjian::select('jadwal_ujian.*', 'mapel.nama_mapel', 'kelas.nama_kelas', 'bank_ujian.id_jurusan', 'bank_ujian.jumlah_soal')
             ->join('bank_ujian', 'bank_ujian.id_bank_ujian', '=', 'jadwal_ujian.id_bank_ujian')
             ->join('mapel', 'mapel.id_mapel', '=', 'bank_ujian.id_mapel')
             ->join('kelas', 'kelas.id_kelas', '=', 'bank_ujian.id_kelas')
+<<<<<<< HEAD
 <<<<<<< HEAD
             ->orderBy('jadwal_ujian.id_jadwal_ujian', 'desc')
             ->get();
@@ -62,6 +77,11 @@ class JadwalUjianController extends Controller
         $sesi = Sesi::all();
         return view('data_ujian.jadwal_ujian.index', compact('bank', 'sesi', 'jadwal'));
 >>>>>>> 9f5d545 (first commitu)
+=======
+            ->get();
+        $sesi = Sesi::all();
+        return view('data_ujian.jadwal_ujian.index', compact('bank', 'sesi', 'jadwal'));
+>>>>>>> 25eed0c (first commitz)
     }
 
     /**
@@ -81,6 +101,7 @@ class JadwalUjianController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
+<<<<<<< HEAD
 <<<<<<< HEAD
 {
     // Insert data into the database
@@ -143,6 +164,8 @@ class JadwalUjianController extends Controller
     return redirect()->back()->with('success', 'Jadwal created successfully');
 }
 =======
+=======
+>>>>>>> 25eed0c (first commitz)
     {
         // Validate the form data
         $validator = $request->validate([
@@ -196,7 +219,10 @@ class JadwalUjianController extends Controller
         return redirect()->back()->with('success', 'Jadwal created successfully');
     }
 
+<<<<<<< HEAD
 >>>>>>> 9f5d545 (first commitu)
+=======
+>>>>>>> 25eed0c (first commitz)
 
 
 
@@ -245,6 +271,7 @@ class JadwalUjianController extends Controller
     public function destroy($id)
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
         JadwalUjian::where('id_jadwal_ujian', $id)->delete();
         SesiJadwalUjian::where('id_jadwal_ujian', $id)->delete();
         SiswaUjian::where('id_jadwal_ujian', $id)->delete();
@@ -259,5 +286,8 @@ class JadwalUjianController extends Controller
 =======
         //
 >>>>>>> 9f5d545 (first commitu)
+=======
+        //
+>>>>>>> 25eed0c (first commitz)
     }
 }

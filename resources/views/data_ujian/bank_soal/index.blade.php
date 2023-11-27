@@ -71,9 +71,12 @@
                             <th>Kelas</th>
                             <th>Nama Mapel</th>
 <<<<<<< HEAD
+<<<<<<< HEAD
                             <th>Total Soal</th>
 =======
 >>>>>>> 9f5d545 (first commitu)
+=======
+>>>>>>> 25eed0c (first commitz)
                             <th class="text-center">Detail</th>
                         </tr>
                     </thead>
@@ -100,9 +103,12 @@
                                 <td>{{ $keles }}</td>
                                 <td>{{ $data->nama_mapel }}
 <<<<<<< HEAD
+<<<<<<< HEAD
                                 <td>{{ $data->total_soal }}
 =======
 >>>>>>> 9f5d545 (first commitu)
+=======
+>>>>>>> 25eed0c (first commitz)
                                     (
                                     @foreach ($matchingKodeJurusanValues as $index => $kodeJurusan)
                                         {{ $kodeJurusan }}
@@ -116,10 +122,14 @@
                                 <td>
                                     <div class="btn-group" style="display: flex;">
 <<<<<<< HEAD
+<<<<<<< HEAD
                                         <a href="{{ route('soal.index', ['id_bank_soal' => $data->id_bank_soal]) }}" class="btn {{ $data->total_soal == 0 ? 'btn-warning' : 'btn-primary' }}"  style="margin-right: 5px;">Lihat Soal</a>
 =======
                                         <a href="{{ route('soal.index', ['id_bank_soal' => $data->id_bank_soal]) }}" class="btn btn-primary" style="margin-right: 5px;">Lihat Soal</a>
 >>>>>>> 9f5d545 (first commitu)
+=======
+                                        <a href="{{ route('soal.index', ['id_bank_soal' => $data->id_bank_soal]) }}" class="btn btn-primary" style="margin-right: 5px;">Lihat Soal</a>
+>>>>>>> 25eed0c (first commitz)
                                         <form action="{{ route('bank_soal.destroy', $data->id_bank_soal) }}" method="POST">
                                             @csrf
                                             @method('DELETE')

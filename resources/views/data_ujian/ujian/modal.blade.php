@@ -27,6 +27,7 @@
                             @endforeach
                         </select>
 <<<<<<< HEAD
+<<<<<<< HEAD
                     </div>
                     <div class="form-group">
                         <label for="mapel">Mapel</label>
@@ -88,6 +89,8 @@
                     </div>
                     <div class="form-group">
 =======
+=======
+>>>>>>> 25eed0c (first commitz)
                     </div>
                     <div class="form-group">
                         <label for="mapel">Mapel</label>
@@ -153,7 +156,10 @@
                         </select>
                     </div>
                     <div class="form-group">
+<<<<<<< HEAD
 >>>>>>> 9f5d545 (first commitu)
+=======
+>>>>>>> 25eed0c (first commitz)
                         <label for="acak_soal">Acak Soal</label>
                         <select class="form-control" id="acak_soal" name="acak_soal" required>
                             <option value=1 selected>Acak</option>

@@ -21,6 +21,7 @@ class SiswaController extends Controller
     public function index()
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
         
         $siswa = Siswa::select('siswa.*', 'kelas.nama_kelas', 'jurusan.nama_jurusan', 'siswa_kartu.password as password_kartu')
             ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
@@ -31,6 +32,11 @@ class SiswaController extends Controller
             ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
             ->join('jurusan', 'siswa.id_jurusan', '=', 'jurusan.id_jurusan')
 >>>>>>> 9f5d545 (first commitu)
+=======
+        $siswa = Siswa::select('siswa.*', 'kelas.nama_kelas', 'jurusan.nama_jurusan')
+            ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+            ->join('jurusan', 'siswa.id_jurusan', '=', 'jurusan.id_jurusan')
+>>>>>>> 25eed0c (first commitz)
             ->get();
         $kelas = Kelas::all();
         $jurusan = Jurusan::all();
@@ -118,19 +124,27 @@ class SiswaController extends Controller
         foreach (array_slice($data[0], 1) as $row) {
             $siswaId = DB::table('siswa')->insertGetId([
 <<<<<<< HEAD
+<<<<<<< HEAD
                 'nama_siswa' => ucwords(strtolower($row[3])),
 =======
                 'nama_siswa' => $row[3],
 >>>>>>> 9f5d545 (first commitu)
+=======
+                'nama_siswa' => $row[3],
+>>>>>>> 25eed0c (first commitz)
                 'id_kelas' => $row[4],
                 'id_jurusan' => $row[6],
                 'username' => $row[9],
                 'password' => bcrypt($row[10]),
 <<<<<<< HEAD
+<<<<<<< HEAD
                 'foto' => $row[11],
 =======
                 'foto' => $row[6],
 >>>>>>> 9f5d545 (first commitu)
+=======
+                'foto' => $row[6],
+>>>>>>> 25eed0c (first commitz)
                 'status' => $row[12] ?? 1,
             ]);
             DB::table('siswa_kartu')->insert([
@@ -143,12 +157,15 @@ class SiswaController extends Controller
                 'id_sesi' => $row[7],
             ]);
 <<<<<<< HEAD
+<<<<<<< HEAD
             DB::table('siswa_ruang')->insert([
                 'id_siswa' => $siswaId,
                 'id_ruang' => $row[8],
             ]);
 =======
 >>>>>>> 9f5d545 (first commitu)
+=======
+>>>>>>> 25eed0c (first commitz)
         }
         // Redirect atau berikan respons sukses
         return redirect()->back()->with('success', 'Import berhasil.');
@@ -165,7 +182,10 @@ class SiswaController extends Controller
 =======
             'kelas'   => $request->kelas,
             'jurusan'   => $request->jurusan,
+<<<<<<< HEAD
 >>>>>>> 9f5d545 (first commitu)
+=======
+>>>>>>> 25eed0c (first commitz)
             'username'   => $request->username,
             'password'   => bcrypt($request->password),
         ];
@@ -206,6 +226,7 @@ class SiswaController extends Controller
 
         return redirect()->back()->with('success', 'Data Siswa Berhasil Dihapus');
 <<<<<<< HEAD
+<<<<<<< HEAD
     }
     public function blokir($id)
     {
@@ -225,5 +246,7 @@ class SiswaController extends Controller
         return redirect()->back()->with('success', 'Siswa Berhasil Diaktifkan');
 =======
 >>>>>>> 9f5d545 (first commitu)
+=======
+>>>>>>> 25eed0c (first commitz)
     }
 }

@@ -15,10 +15,13 @@ use App\Models\SiswaNilai;
 use App\Models\SiswaUjian;
 use App\Models\JadwalUjian;
 <<<<<<< HEAD
+<<<<<<< HEAD
 use App\Models\AlokasiWaktu;
 use App\Models\SesiJadwalUjian;
 =======
 >>>>>>> 9f5d545 (first commitu)
+=======
+>>>>>>> 25eed0c (first commitz)
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -39,6 +42,7 @@ class SiswasController extends Controller
 
         $today = Carbon::now();
 <<<<<<< HEAD
+<<<<<<< HEAD
         // $ujian = JadwalUjian::select('jadwal_ujian.*', 'mapel.nama_mapel', 'kelas.nama_kelas', 'bank_ujian.*', 'sesi_jadwal_ujian.id_jadwal_ujian as ujian_id', 'sesi_jadwal_ujian.id_sesi', 'sesi_jadwal_ujian.jam_mulai', 'sesi_jadwal_ujian.jam_selesai', 'sesi.nama_sesi', 'jenis_ujian.id_jenis')
         //     ->join('bank_ujian', 'bank_ujian.id_bank_ujian', '=', 'jadwal_ujian.id_bank_ujian')
         //     ->join('mapel', 'mapel.id_mapel', '=', 'bank_ujian.id_mapel')
@@ -54,12 +58,16 @@ class SiswasController extends Controller
 =======
         $ujian = JadwalUjian::select('jadwal_ujian.*', 'mapel.nama_mapel', 'kelas.nama_kelas', 'bank_ujian.*', 'sesi_jadwal_ujian.id_jadwal_ujian as ujian_id', 'sesi_jadwal_ujian.id_sesi', 'sesi_jadwal_ujian.jam_mulai', 'sesi_jadwal_ujian.jam_selesai', 'sesi.nama_sesi', 'jenis_ujian.id_jenis')
 >>>>>>> 9f5d545 (first commitu)
+=======
+        $ujian = JadwalUjian::select('jadwal_ujian.*', 'mapel.nama_mapel', 'kelas.nama_kelas', 'bank_ujian.*', 'sesi_jadwal_ujian.id_jadwal_ujian as ujian_id', 'sesi_jadwal_ujian.id_sesi', 'sesi_jadwal_ujian.jam_mulai', 'sesi_jadwal_ujian.jam_selesai', 'sesi.nama_sesi', 'jenis_ujian.id_jenis')
+>>>>>>> 25eed0c (first commitz)
             ->join('bank_ujian', 'bank_ujian.id_bank_ujian', '=', 'jadwal_ujian.id_bank_ujian')
             ->join('mapel', 'mapel.id_mapel', '=', 'bank_ujian.id_mapel')
             ->join('kelas', 'kelas.id_kelas', '=', 'bank_ujian.id_kelas')
             ->join('jenis_ujian', 'jenis_ujian.id_jenis', '=', 'bank_ujian.id_jenis')
             ->join('sesi_jadwal_ujian', 'sesi_jadwal_ujian.id_jadwal_ujian', '=', 'jadwal_ujian.id_jadwal_ujian')
             ->join('sesi', 'sesi_jadwal_ujian.id_sesi', '=', 'sesi.id_sesi')
+<<<<<<< HEAD
 <<<<<<< HEAD
             ->join('alokasi_waktu', 'sesi_jadwal_ujian.id_alokasi_waktu', '=', 'alokasi_waktu.id_alokasi_waktu')
             ->where('bank_ujian.id_kelas', $kelas)
@@ -71,6 +79,8 @@ class SiswasController extends Controller
 
         return view('siswa.ujian.indux', compact('ujian', 'kerjakan', 'sesi', 'nilai'));
 =======
+=======
+>>>>>>> 25eed0c (first commitz)
             ->where('bank_ujian.id_kelas', $kelas)
             ->get();
 
@@ -78,7 +88,10 @@ class SiswasController extends Controller
         $nilai = SiswaNilai::where('id_siswa', $idSiswa)->first();
 
         return view('siswa.ujian.index', compact('ujian', 'kerjakan', 'sesi', 'nilai'));
+<<<<<<< HEAD
 >>>>>>> 9f5d545 (first commitu)
+=======
+>>>>>>> 25eed0c (first commitz)
     }
     public function dashboard()
     {
@@ -98,9 +111,12 @@ class SiswasController extends Controller
             $jumlahSoal = $request->input('jumlahSoal');
             $acakSoal = $request->input('acakSoal');
 <<<<<<< HEAD
+<<<<<<< HEAD
             // $idBank 
 =======
 >>>>>>> 9f5d545 (first commitu)
+=======
+>>>>>>> 25eed0c (first commitz)
 
             // Convert JSON string to an array
             $idBankSoalArray = json_decode($idBankSoal);
@@ -108,10 +124,14 @@ class SiswasController extends Controller
             // Retrieve soal based on conditions
             $soalQuery = DB::table('soal')
 <<<<<<< HEAD
+<<<<<<< HEAD
                 ->where('id_bank_soal', $idBankSoalArray);
 =======
                 ->whereIn('id_bank_soal', $idBankSoalArray);
 >>>>>>> 9f5d545 (first commitu)
+=======
+                ->whereIn('id_bank_soal', $idBankSoalArray);
+>>>>>>> 25eed0c (first commitz)
 
             if ($acakSoal == 1) {
                 $soalQuery->inRandomOrder();
@@ -160,6 +180,7 @@ class SiswasController extends Controller
             ->orderByDesc('id_siswa_ujian')
             ->get();
 <<<<<<< HEAD
+<<<<<<< HEAD
         $suul = JadwalUjian::where('id_jadwal_ujian', $idUjian)
         ->value('id_bank_ujian');
         $bs = BankUjian::select('id_bank_soal')
@@ -178,6 +199,8 @@ class SiswasController extends Controller
             ->value('id_jadwal_ujian');
         return view('siswa.kerjakan.index', compact('soal', 'ujian', 'idUj'))->with('success', 'Berhasil Masuk');
 =======
+=======
+>>>>>>> 25eed0c (first commitz)
 
         // Gunakan $idSoals untuk mengambil data dari tabel soal atau tabel lainnya
         // $soal = Soal::whereIn('id_soal', $idSoals->pluck('id_soal'))->get();
@@ -188,7 +211,10 @@ class SiswasController extends Controller
         $idUj = JadwalUjian::where('id_jadwal_ujian', $idUjian)
             ->value('id_jadwal_ujian');
         return view('siswa.kerjakan.index', compact('soal', 'ujian', 'idUj'))->with('sukses', 'Berhasil Masuk');
+<<<<<<< HEAD
 >>>>>>> 9f5d545 (first commitu)
+=======
+>>>>>>> 25eed0c (first commitz)
     }
     public function update(Request $request)
 
@@ -266,10 +292,14 @@ class SiswasController extends Controller
             auth('siswa')->logout();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
             return response()->json(['success' => true, 'message' => 'Akun Anda diblokir']);
 =======
             return response()->json(['success' => true, 'message' => 'Status updated successfully']);
 >>>>>>> 9f5d545 (first commitu)
+=======
+            return response()->json(['success' => true, 'message' => 'Status updated successfully']);
+>>>>>>> 25eed0c (first commitz)
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'Failed to update status']);
         }
@@ -297,10 +327,14 @@ class SiswasController extends Controller
             $id_kelas = Auth::guard('siswa')->user()->id_kelas;
             $id_jurusan = Auth::guard('siswa')->user()->id_jurusan;
 <<<<<<< HEAD
+<<<<<<< HEAD
             $id_jadwal = $request->input('idUj');
 =======
             $id_jadwal = $request->idUj;
 >>>>>>> 9f5d545 (first commitu)
+=======
+            $id_jadwal = $request->idUj;
+>>>>>>> 25eed0c (first commitz)
 
             $totalPoint = SiswaUjian::where('id_jadwal_ujian', $id_jadwal)
                 ->where('id_siswa', $id_siswa)

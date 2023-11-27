@@ -42,10 +42,14 @@
                 <span class="logo-mini"><b>A</b>LT</span>
                 <!-- logo for regular state and mobile devices -->
 <<<<<<< HEAD
+<<<<<<< HEAD
                 <span class="logo-lg"><b>SMK</b>App</span>
 =======
                 <span class="logo-lg"><b>Admin</b>LTE</span>
 >>>>>>> 9f5d545 (first commitu)
+=======
+                <span class="logo-lg"><b>Admin</b>LTE</span>
+>>>>>>> 25eed0c (first commitz)
             </a>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top">
@@ -152,10 +156,14 @@
 
                                     <p>{{ auth('siswa')->user()->nama_siswa }}
 <<<<<<< HEAD
+<<<<<<< HEAD
                                         {{-- <small>Member since Nov. 2012</small> --}}
 =======
                                         <small>Member since Nov. 2012</small>
 >>>>>>> 9f5d545 (first commitu)
+=======
+                                        <small>Member since Nov. 2012</small>
+>>>>>>> 25eed0c (first commitz)
                                     </p>
                                 </li>
                                 <!-- Menu Body -->
@@ -180,15 +188,20 @@
                                     </div>
                                     <div class="pull-right">
 <<<<<<< HEAD
+<<<<<<< HEAD
                                         <a href="#" class="btn btn-default btn-flat"
                                             onclick="document.getElementById('logout-form').submit()">Keluar</a>
 =======
                                         <a href="#" class="btn btn-default btn-flat">Sign out</a>
 >>>>>>> 9f5d545 (first commitu)
+=======
+                                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
+>>>>>>> 25eed0c (first commitz)
                                     </div>
                                 </li>
                             </ul>
                         </li>
+<<<<<<< HEAD
 <<<<<<< HEAD
                         <form action="{{ route('logout') }}" method="post" id="logout-form" style="display: none">
                             @csrf
@@ -196,6 +209,8 @@
 
 =======
 >>>>>>> 9f5d545 (first commitu)
+=======
+>>>>>>> 25eed0c (first commitz)
                         <!-- Control Sidebar Toggle Button -->
                         <li>
                             <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
@@ -211,6 +226,7 @@
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
 <<<<<<< HEAD
+<<<<<<< HEAD
                     {{-- <h1>
                         {{ $ujian->nama_mapel }}
                     </h1> --}}
@@ -219,6 +235,11 @@
                         {{ $ujian->nama_mapel }}
                     </h1>
 >>>>>>> 9f5d545 (first commitu)
+=======
+                    <h1>
+                        {{ $ujian->nama_mapel }}
+                    </h1>
+>>>>>>> 25eed0c (first commitz)
 
                 </section>
 
@@ -227,10 +248,14 @@
                     <div class="box">
                         <div class="box-header with-border">
 <<<<<<< HEAD
+<<<<<<< HEAD
                             {{-- <h3 class="box-title">{{ $idUj }}</h3> --}}
 =======
                             <h3 class="box-title">{{ $idUj }}</h3>
 >>>>>>> 9f5d545 (first commitu)
+=======
+                            <h3 class="box-title">{{ $idUj }}</h3>
+>>>>>>> 25eed0c (first commitz)
                             <!-- Button to trigger the modal -->
                             <div class="pull-right">
                                 <button class="btn btn-success" onclick="refreshHalaman()"><i
@@ -259,6 +284,7 @@
                                 @foreach ($soal as $sl)
                                     <div class="pertanyaan-{{ $sl->id_soal }}">
 <<<<<<< HEAD
+<<<<<<< HEAD
                                         @php
                                             $idBankSoalArray = json_decode($ujian->id_bank_soal, true);
                                             $bank_soal = \App\Models\BankSoal::whereIn('id_bank_soal', $idBankSoalArray)
@@ -272,6 +298,8 @@
                                         @endif
 =======
 >>>>>>> 9f5d545 (first commitu)
+=======
+>>>>>>> 25eed0c (first commitz)
                                         <h3>{{ $counter++ }}. {{ $sl->soal }}</h3><br>
 
                                         <form class="answer-form">
@@ -307,11 +335,15 @@
                                             {{ $sl->pil_d }}
                                         </form><br>
 <<<<<<< HEAD
+<<<<<<< HEAD
                                         {{-- @if ($ujian->jumlah_opsi == 5) --}}
                                         @if ($sl->pil_e != null)
 =======
                                         @if ($ujian->jumlah_opsi == 5)
 >>>>>>> 9f5d545 (first commitu)
+=======
+                                        @if ($ujian->jumlah_opsi == 5)
+>>>>>>> 25eed0c (first commitz)
                                             <form class="answer-form">
                                                 @csrf
                                                 <input type="hidden" name="id_soal" value="{{ $sl->id_soal }}">
@@ -583,9 +615,12 @@
                                         title: 'Anda melakukan kecurangan, point akan dikurangi',
                                         icon: 'warning',
 <<<<<<< HEAD
+<<<<<<< HEAD
                                         text: 'Pelanggaran kedua maka Akun akan di blokir!',
 =======
 >>>>>>> 9f5d545 (first commitu)
+=======
+>>>>>>> 25eed0c (first commitz)
                                         confirmButtonText: 'OK'
                                     }).then(() => {
                                         // Setelah user menekan OK, kembali ke mode fullscreen

@@ -17,6 +17,7 @@
         <!-- Small boxes (Stat box) -->
         <div class="row">
 <<<<<<< HEAD
+<<<<<<< HEAD
             <div class="pad margin no-print">
                 <div class="callout callout-info" style="margin-bottom: 0!important;">
                     <h4><i class="fa fa-info"></i> Note:</h4>
@@ -24,6 +25,8 @@
                 </div>
             </div>
 =======
+=======
+>>>>>>> 25eed0c (first commitz)
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-aqua">
@@ -84,7 +87,10 @@
                 </div>
             </div>
             <!-- ./col -->
+<<<<<<< HEAD
 >>>>>>> 9f5d545 (first commitu)
+=======
+>>>>>>> 25eed0c (first commitz)
         </div>
         <!-- right col -->
     </section>

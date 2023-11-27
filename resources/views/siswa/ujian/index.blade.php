@@ -38,6 +38,7 @@
                     @foreach ($ujian as $data)
                         {{-- @if (in_array(Auth::guard('siswa')->user()->id_jurusan, json_decode($data->id_jurusan))) --}}
 <<<<<<< HEAD
+<<<<<<< HEAD
                         @php
                         $jm_start = \App\Models\SesiJadwalUjian::where('id_sesi', $sesi->id_sesi)
                                         ->where('id_jadwal_ujian', $data->id_jadwal_ujian)
@@ -50,11 +51,16 @@
                                 $today->format('Y-m-d') <= $data->tgl_selesai && $jm_start->jam_mulai == $data->jam_mulai)
                             
 =======
+=======
+>>>>>>> 25eed0c (first commitz)
                         @if (in_array(Auth::guard('siswa')->user()->id_jurusan, json_decode($data->id_jurusan)) &&
                                 $data->id_jadwal_ujian == $data->ujian_id &&
                                 $data->id_sesi == $sesi->id_sesi &&
                                 $today->format('Y-m-d') <= $data->tgl_selesai)
+<<<<<<< HEAD
 >>>>>>> 9f5d545 (first commitu)
+=======
+>>>>>>> 25eed0c (first commitz)
                             <div class="col-md-6 col-lg-4">
                                 <div class="box box-success box-solid">
                                     <div class="box-header with-border">
@@ -100,9 +106,12 @@
                                                 </th>
                                             </tr>
 <<<<<<< HEAD
+<<<<<<< HEAD
                                             
 =======
 >>>>>>> 9f5d545 (first commitu)
+=======
+>>>>>>> 25eed0c (first commitz)
                                             <tr>
                                                 <th>Tanggal Pelaksanaan</th>
                                                 <th>:</th>
@@ -155,10 +164,14 @@
                                             </tr>
                                             <tr>
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                 <th>Jumlah Soal {{$data->jumlah_soal}}</th>
 =======
                                                 <th>Jumlah Soal</th>
 >>>>>>> 9f5d545 (first commitu)
+=======
+                                                <th>Jumlah Soal</th>
+>>>>>>> 25eed0c (first commitz)
                                                 <th>:</th>
                                                 <th class="text-right"><span class="label"
                                                         style="background-color: rgb(150, 32, 130)">{{ $data->jumlah_soal }}</span>
@@ -169,10 +182,14 @@
                                                 <th>:</th>
                                                 <th class="text-right"><span
 <<<<<<< HEAD
+<<<<<<< HEAD
                                                         class="label label-primary">{{ $data->id_sesi }}</span></th>
 =======
                                                         class="label label-primary">{{ $data->nama_sesi }}</span></th>
 >>>>>>> 9f5d545 (first commitu)
+=======
+                                                        class="label label-primary">{{ $data->nama_sesi }}</span></th>
+>>>>>>> 25eed0c (first commitz)
                                             </tr>
                                         </table>
                                         @php
@@ -181,6 +198,7 @@
 
                                         @if ($nilai != null && $nilai->id_jenis != null)
                                             @php
+<<<<<<< HEAD
 <<<<<<< HEAD
                                                 $sws = Auth::guard('siswa')->user()->id_siswa;
                                                 $sudah = \App\Models\SiswaNilai::where('id_jenis', $nilai->id_jenis)
@@ -191,6 +209,11 @@
                                                 $sudah = \App\Models\SiswaNilai::where('id_jenis', $nilai->id_jenis)
                                                     ->where('id_siswa', $sws)
 >>>>>>> 9f5d545 (first commitu)
+=======
+                                                $sws = Auth::guard('siswa')->user()->id_jurusan;
+                                                $sudah = \App\Models\SiswaNilai::where('id_jenis', $nilai->id_jenis)
+                                                    ->where('id_siswa', $sws)
+>>>>>>> 25eed0c (first commitz)
                                                     ->first();
                                             @endphp
                                         @endif
@@ -200,6 +223,7 @@
                                             $tglSelesai = \Carbon\Carbon::parse($data->tgl_selesai)->timezone('Asia/Jakarta');
                                             $batas = $tglSelesai->setTimeFromTimeString($waktuSelesai);
                                         @endphp
+<<<<<<< HEAD
 <<<<<<< HEAD
                                         @if ($sudah != null)
                                             <div class="containerz col-md-auto text-center">
@@ -214,12 +238,17 @@
     <button class="btn btn-primary" onclick="toggleElements()">Masukkan Token</button>
 </div>
 =======
+=======
+>>>>>>> 25eed0c (first commitz)
                                         @if ($kerjakan == null && $data->token == 1 && $woi >= $waktuMulai && $mula <= $batas && $sudah == null)
                                             <div class="containerz col-md-auto text-center">
                                                 <button class="btn btn-primary" onclick="toggleElements()">Masukkan
                                                     Token</button>
                                             </div>
+<<<<<<< HEAD
 >>>>>>> 9f5d545 (first commitu)
+=======
+>>>>>>> 25eed0c (first commitz)
 
                                             <form action="{{ route('siswas.store') }}" method="POST">
                                                 @csrf
@@ -251,12 +280,18 @@
                                                 <button class="btn btn-warning">Ujian Belum Dimulai</button>
                                             </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 25eed0c (first commitz)
                                         @elseif ($sudah != null)
                                             <div class="containerz col-md-auto text-center">
                                                 <button class="btn btn-success">Sudah Mengerjakan</button>
                                             </div>
+<<<<<<< HEAD
 >>>>>>> 9f5d545 (first commitu)
+=======
+>>>>>>> 25eed0c (first commitz)
                                         @elseif ($woi >= $waktuMulai && $mula >= $batas)
                                             <div class="containerz col-md-auto text-center">
                                                 <button class="btn btn-danger">Ujian Sudah Berakhir</button>
@@ -297,11 +332,17 @@
                                 </div>
                             </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
                         @else
                             {{-- Another content here --}}
                             <p>Tidak Ada Ujian</p>
 >>>>>>> 9f5d545 (first commitu)
+=======
+                        @else
+                            {{-- Another content here --}}
+                            <p>Tidak Ada Ujian</p>
+>>>>>>> 25eed0c (first commitz)
                         @endif
                     @endforeach
                 </div>
@@ -349,6 +390,7 @@
 
         function toggleElements() {
 <<<<<<< HEAD
+<<<<<<< HEAD
     var tokenForm = document.getElementById('tokenForm');
     var masukkanTokenBtn = document.getElementById('masukkanTokenSection');
     var tokenInput = document.getElementById('tokenInput');
@@ -378,6 +420,8 @@ function startExam() {
     </script>
    
 =======
+=======
+>>>>>>> 25eed0c (first commitz)
             var tokenForm = document.getElementById('tokenForm');
             var masukkanTokenBtn = document.querySelector('.containerz .btn-primary');
             var tokenInput = document.getElementById('tokenInput');
@@ -404,5 +448,8 @@ function startExam() {
             masukkanTokenBtn.style.display = 'block';
         }
     </script>
+<<<<<<< HEAD
 >>>>>>> 9f5d545 (first commitu)
+=======
+>>>>>>> 25eed0c (first commitz)
 @endpush
