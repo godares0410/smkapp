@@ -82,20 +82,31 @@
                             <tr>
                                 <td>{{ $counter++ }}</td>
                                 <td>{{ $data->nama_siswa }}</td>
-                                <td>{{ $data->kelas }}</td>
-                                <td>{{ $data->jurusan }}</td>
+                                <td>{{ $data->nama_kelas }}</td>
+                                <td>{{ $data->nama_jurusan }}</td>
                                 <td>
                                     <button type="button" class="btn btn-success" data-toggle="modal"
                                         data-target="#modalEdit{{ $data->id_siswa }}">
                                         Edit
                                     </button>
                                 </td>
-                                <td>
-                                    <button type="button"
+                                <td class="text-center">
+                                    {{-- <button type="button"
                                         class="btn btn-{{ $data->foto ? 'success' : 'secondary' }} btn-detail"
                                         data-toggle="modal" data-target="#modalDetail{{ $data->id_siswa }}">
                                         Detail
-                                    </button>
+                                    </button> --}}
+                                    @if ($data->status == 1)
+                                    <form action="{{ route('siswa.blokir', $data->id_siswa) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn-delete btn btn-danger">Blokir</button>
+                                    </form>
+                                    @else
+                                    <form action="{{ route('siswa.aktifkan', $data->id_siswa) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn-delete btn btn-success">Aktifkan</button>
+                                    </form>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
