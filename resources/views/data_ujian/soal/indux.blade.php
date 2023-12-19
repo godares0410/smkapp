@@ -1,11 +1,9 @@
 @php
-$counter = 1
+    $counter = 1;
 @endphp
 
 @foreach ($soal as $data)
-
-
-    <h3>{{$counter++}}. {{ $data->soal }} </h3>
+    <h3>{{ $counter++ }}. {{ $data->soal }} </h3>
     <p> A. {{ $data->pil_a }} </p>
     <p> B. {{ $data->pil_b }} </p>
     <p> C. {{ $data->pil_c }} </p>

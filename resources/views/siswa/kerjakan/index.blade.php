@@ -41,22 +41,7 @@
                 <!-- mini logo for sidebar mini 50x50 pixels -->
                 <span class="logo-mini"><b>A</b>LT</span>
                 <!-- logo for regular state and mobile devices -->
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                 <span class="logo-lg"><b>SMK</b>App</span>
-=======
-                <span class="logo-lg"><b>Admin</b>LTE</span>
->>>>>>> 9f5d545 (first commitu)
-=======
-                <span class="logo-lg"><b>Admin</b>LTE</span>
->>>>>>> 25eed0c (first commitz)
-=======
-                <span class="logo-lg"><b>Admin</b>LTE</span>
-=======
-                <span class="logo-lg"><b>SMK</b>App</span>
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
             </a>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top">
@@ -162,22 +147,7 @@
                                     <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                                     <p>{{ auth('siswa')->user()->nama_siswa }}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                                         {{-- <small>Member since Nov. 2012</small> --}}
-=======
-                                        <small>Member since Nov. 2012</small>
->>>>>>> 9f5d545 (first commitu)
-=======
-                                        <small>Member since Nov. 2012</small>
->>>>>>> 25eed0c (first commitz)
-=======
-                                        <small>Member since Nov. 2012</small>
-=======
-                                        {{-- <small>Member since Nov. 2012</small> --}}
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
                                     </p>
                                 </li>
                                 <!-- Menu Body -->
@@ -201,46 +171,16 @@
                                         <a href="#" class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                                         <a href="#" class="btn btn-default btn-flat"
                                             onclick="document.getElementById('logout-form').submit()">Keluar</a>
-=======
-                                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
->>>>>>> 9f5d545 (first commitu)
-=======
-                                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
->>>>>>> 25eed0c (first commitz)
-=======
-                                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
-=======
-                                        <a href="#" class="btn btn-default btn-flat"
-                                            onclick="document.getElementById('logout-form').submit()">Keluar</a>
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
                                     </div>
                                 </li>
                             </ul>
                         </li>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> e8f7dd6 (first commit)
                         <form action="{{ route('logout') }}" method="post" id="logout-form" style="display: none">
                             @csrf
                         </form>
 
-<<<<<<< HEAD
-=======
->>>>>>> 9f5d545 (first commitu)
-=======
->>>>>>> 25eed0c (first commitz)
-=======
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
                         <!-- Control Sidebar Toggle Button -->
                         <li>
                             <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
@@ -255,32 +195,9 @@
             <div class="container">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                     {{-- <h1>
                         {{ $ujian->nama_mapel }}
                     </h1> --}}
-=======
-                    <h1>
-                        {{ $ujian->nama_mapel }}
-                    </h1>
->>>>>>> 9f5d545 (first commitu)
-=======
-                    <h1>
-                        {{ $ujian->nama_mapel }}
-                    </h1>
->>>>>>> 25eed0c (first commitz)
-=======
-                    <h1>
-                        {{ $ujian->nama_mapel }}
-                    </h1>
-=======
-                    {{-- <h1>
-                        {{ $ujian->nama_mapel }}
-                    </h1> --}}
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
 
                 </section>
 
@@ -288,22 +205,7 @@
                 <section class="content">
                     <div class="box">
                         <div class="box-header with-border">
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                             {{-- <h3 class="box-title">{{ $idUj }}</h3> --}}
-=======
-                            <h3 class="box-title">{{ $idUj }}</h3>
->>>>>>> 9f5d545 (first commitu)
-=======
-                            <h3 class="box-title">{{ $idUj }}</h3>
->>>>>>> 25eed0c (first commitz)
-=======
-                            <h3 class="box-title">{{ $idUj }}</h3>
-=======
-                            {{-- <h3 class="box-title">{{ $idUj }}</h3> --}}
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
                             <!-- Button to trigger the modal -->
                             <div class="pull-right">
                                 <button class="btn btn-success" onclick="refreshHalaman()"><i
@@ -331,12 +233,6 @@
                                 @endphp
                                 @foreach ($soal as $sl)
                                     <div class="pertanyaan-{{ $sl->id_soal }}">
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> e8f7dd6 (first commit)
                                         @php
                                             $idBankSoalArray = json_decode($ujian->id_bank_soal, true);
                                             $bank_soal = \App\Models\BankSoal::whereIn('id_bank_soal', $idBankSoalArray)
@@ -345,17 +241,9 @@
                                         @endphp
 
                                         @if ($sl->file_1 != null && isset($bank_soal))
-                                            <img src="{{ asset('bank_soal/' . $bank_soal . '/' . $sl->file_1) }}"
+                                            <img src="{{ asset('bank_soal/' . $bank_soal->nama_bank_soal . '/' . $sl->file_1) }}"
                                                 alt="Deskripsi Gambar" style="width: 100%">
                                         @endif
-<<<<<<< HEAD
-=======
->>>>>>> 9f5d545 (first commitu)
-=======
->>>>>>> 25eed0c (first commitz)
-=======
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
                                         <h3>{{ $counter++ }}. {{ $sl->soal }}</h3><br>
 
                                         <form class="answer-form">
@@ -390,24 +278,8 @@
                                                 data-answer="{{ encrypt($sl->pil_d) }}">D</button>
                                             {{ $sl->pil_d }}
                                         </form><br>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                                         {{-- @if ($ujian->jumlah_opsi == 5) --}}
                                         @if ($sl->pil_e != null)
-=======
-                                        @if ($ujian->jumlah_opsi == 5)
->>>>>>> 9f5d545 (first commitu)
-=======
-                                        @if ($ujian->jumlah_opsi == 5)
->>>>>>> 25eed0c (first commitz)
-=======
-                                        @if ($ujian->jumlah_opsi == 5)
-=======
-                                        {{-- @if ($ujian->jumlah_opsi == 5) --}}
-                                        @if ($sl->pil_e != null)
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
                                             <form class="answer-form">
                                                 @csrf
                                                 <input type="hidden" name="id_soal" value="{{ $sl->id_soal }}">
@@ -678,19 +550,7 @@
                                     Swal.fire({
                                         title: 'Anda melakukan kecurangan, point akan dikurangi',
                                         icon: 'warning',
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                                         text: 'Pelanggaran kedua maka Akun akan di blokir!',
-=======
->>>>>>> 9f5d545 (first commitu)
-=======
->>>>>>> 25eed0c (first commitz)
-=======
-=======
-                                        text: 'Pelanggaran kedua maka Akun akan di blokir!',
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
                                         confirmButtonText: 'OK'
                                     }).then(() => {
                                         // Setelah user menekan OK, kembali ke mode fullscreen
@@ -769,7 +629,23 @@
             });
         }
     </script>
-
+    <script>
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+    </script>
+    <style>
+        body {
+            -webkit-user-select: none;
+            /* Safari 3.1+ */
+            -moz-user-select: none;
+            /* Firefox 2+ */
+            -ms-user-select: none;
+            /* IE 10+ */
+            user-select: none;
+            /* Standard syntax */
+        }
+    </style>
 
 
 </body>

@@ -44,27 +44,30 @@
                             {{ $ss->nama_sesi }}<br>
                         @endforeach
                     </div>
-                    
+
                     <div class="form-group">
                         <label for="durasi">Durasi</label>
-                        <input type="text" class="form-control" id="durasi" name="durasi" placeholder="Dalam Satuan Menit" required>
+                        <input type="text" class="form-control" id="durasi" name="durasi"
+                            placeholder="Dalam Satuan Menit" required>
                     </div>
                     <div class="form-group">
                         <label for="mulai">Tanggal Mulai</label>
-                        <input type="date" class="form-control" id="mulai" name="mulai" placeholder="UAS" required>
+                        <input type="date" class="form-control" id="mulai" name="mulai" placeholder="UAS"
+                            required>
                     </div>
                     <div class="form-group">
                         <label for="selesai">Tanggal Selesai</label>
-                        <input type="date" class="form-control" id="selesai" name="selesai" placeholder="UAS" required>
+                        <input type="date" class="form-control" id="selesai" name="selesai" placeholder="UAS"
+                            required>
                     </div>
-                    
+
                     @foreach ($sesi as $ss)
                         <div class="form-group jam-fields" id="jam-fields-{{ $ss->id_sesi }}" style="display: none;">
                             <h5>Atur Sesi {{ $ss->nama_sesi }}</h5>
                             <label for="jam_mulai_{{ $ss->id_sesi }}">Jam Mulai</label>
                             <input type="time" class="form-control" id="jam_mulai_{{ $ss->id_sesi }}"
                                 name="jam_mulai[]" placeholder="UAS" onchange="checkValue(this)">
-                    
+
                             <label for="jam_selesai_{{ $ss->id_sesi }}">Jam Selesai</label>
                             <input type="time" class="form-control" id="jam_selesai_{{ $ss->id_sesi }}"
                                 name="jam_selesai[]" placeholder="UAS" onchange="checkValue(this)">

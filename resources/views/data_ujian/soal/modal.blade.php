@@ -1,6 +1,5 @@
 <!-- Modal Import -->
-<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="importModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content ">
             <div class="modal-header">
@@ -8,7 +7,8 @@
                         aria-hidden="true">&times;</span></button>
                 <h3 class="modal-title"></h3>
             </div>
-            <form id="importForm" action="{{ route('soal.import', ['id_bank_soal' => $bank->id_bank_soal]) }}" method="post" enctype="multipart/form-data">
+            <form id="importForm" action="{{ route('soal.import', ['id_bank_soal' => $bank->id_bank_soal]) }}"
+                method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body md-10">
                     <div class="form-group">
@@ -42,7 +42,8 @@
                         aria-hidden="true">&times;</span></button>
                 <h3 class="modal-title"></h3>
             </div>
-            <form id="importForm" action="{{ route('soal_foto.upload', ['id_bank_soal' => $bank->id_bank_soal]) }}" method="post" enctype="multipart/form-data">
+            <form id="importForm" action="{{ route('soal_foto.upload', ['id_bank_soal' => $bank->id_bank_soal]) }}"
+                method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body md-10">
 
@@ -75,8 +76,8 @@
                         <button class="btn btn-primary zoom-in-btn">Zoom In</button>
                         <button class="btn btn-primary zoom-out-btn">Zoom Out</button>
                     </div>
-                    <img src="{{ $data->file_1 ? asset('bank_soal/'. $bank->nama_bank_soal . '/' . $data->file_1) : asset('img/siswa/man.png') }}" alt="Foto Siswa"
-                        class="img-fluid zoomable" style="width: 100%">
+                    <img src="{{ $data->file_1 ? asset('bank_soal/' . $bank->nama_bank_soal . '/' . $data->file_1) : asset('img/siswa/man.png') }}"
+                        alt="Foto Siswa" class="img-fluid zoomable" style="width: 100%">
                 </div>
             </div>
         </div>

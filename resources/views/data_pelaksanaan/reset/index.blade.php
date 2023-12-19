@@ -1,15 +1,15 @@
 @extends('layout.master')
 
 @section('title')
-    sesi
+    mapel
 @endsection
 
 @php
     $title = View::getSections()['title'];
 @endphp
 
-@section('data-ujian', 'active')
-@section('sesi-active', 'active')
+@section('data-pelaksanaan', 'active')
+@section('reset-active', 'active')
 
 @section('badge')
     @parent
@@ -49,7 +49,12 @@
             <div class="box-header with-border">
                 <h3 class="box-title">Data {{ ucwords($title) }}</h3>
                 <div class="pull-right">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTambahSesi">Tambah
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#importModal">Import
+                        Data
+                        <i class="fa fa-upload"></i>
+                    </button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                        data-target="#modalTambahMapel">Tambah
                         <i class="fa fa-plus-circle"></i>
                     </button>
                 </div>
@@ -59,45 +64,46 @@
                     <thead>
                         <tr>
                             <th style="width: 20px">N0</th>
-                            <th>Nama Sesi</th>
-                            <th>Kode Sesi</th>
-                            <th>Waktu</th>
-                            <th class="text-center" style="width: 2em">Aksi</th>
+                            <th>Nama Siswa</th>
+                            <th>Kelas</th>
+                            <th>Jurusan</th>
+                            <th>Jenis Ujian</th>
+                            <th>Mapel</th>
+                            <th>Nilai</th>
+                            <th class="text-center">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @php
                             $counter = 1;
                         @endphp
-                        @foreach ($sesi as $data)
+                        {{-- @dd($mapel) --}}
+                        @foreach ($reset as $data)
                             <tr>
                                 <td>{{ $counter++ }}</td>
-                                <td>{{ $data->nama_sesi }}</td>
-                                <td>{{ $data->kode_sesi }}</td>
-                                <td>{{ $data->mulai . ' s/d ' . $data->sampai }}</td>
-                                <td>
-                                    <a class="btn btn-xs btn-success" data-toggle="modal"
-                                        data-target="#modalEdit{{ $data->id_sesi }}">
-                                        <i class="fa fa-pencil"></i>
-                                    </a>
-                                    <form action="{{ route('sesi.destroy', $data->id_sesi) }}" method="POST">
+                                <td>{{ $data->nama_siswa }}</td>
+                                <td>{{ $data->nama_kelas }}</td>
+                                <td>{{ $data->nama_jurusan }}</td>
+                                <td>{{ $data->nama_ujian }}</td>
+                                <td>{{ $data->nama_mapel }}</td>
+                                <td>{{ $data->nilai }}</td>
+                                <td class="text-center">
+                                    <form action="{{ route('pelaksanaan.resetdestroy', $data->id_siswa_nilai) }}"
+                                        method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <a class="btn btn-xs btn-danger btn-delete" type="submit">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-
-
+                                        <button type="button" class="btn-delete btn btn-danger">Hapus</button>
+                                    </form>
                                 </td>
-                                </form>
                             </tr>
                         @endforeach
+
                     </tbody>
                 </table>
             </div>
         </div>
     </section>
-    @includeIf('data_ujian.sesi.modal')
+    {{-- @includeIf('data_umum.mapel.modal') --}}
 @endsection
 
 
@@ -116,47 +122,46 @@
                 // ...
             }
 
-            // Menangkap event tombol dengan atribut data-target="#modalTambahjurusan"
-            $('button[data-target="#modalTambahSesi"]').on('click', function() {
-                var title = "Tambah Sesi";
+            // Menangkap event tombol dengan atribut data-target="#modalTambahmapel"
+            $('button[data-target="#modalTambahMapel"]').on('click', function() {
+                var title = "Tambah Mapel";
                 openModal(title);
             });
-            // Menangkap event tombol dengan atribut data-target="#modalImportJurusan"
+            // Menangkap event tombol dengan atribut data-target="#modalImportmapel"
             $('button[data-target="#importModal"]').on('click', function() {
-                var title = "Import Data Jurusan";
+                var title = "Import Data Mapel";
                 openModal(title);
             });
         });
+
+        document.getElementById('selectAll').addEventListener('change', function() {
+            var checkboxes = document.querySelectorAll('input[name="jurusan_mapel[]"]');
+            checkboxes.forEach(function(checkbox) {
+                checkbox.checked = document.getElementById('selectAll').checked;
+            });
+        });
+    </script>
+    <script>
+        // <<HAPUS>>
         document.addEventListener('DOMContentLoaded', function() {
             const deleteButtons = document.querySelectorAll('.btn-delete');
 
-            deleteButtons.forEach(function(button) {
-                button.addEventListener('click', function(event) {
-                    event.preventDefault(); // Menghentikan tindakan default dari tombol
-
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function() {
                     Swal.fire({
-                        title: 'Konfirmasi',
+                        title: 'Konfirmasi Hapus',
                         text: 'Apakah Anda yakin ingin menghapus data ini?',
                         icon: 'warning',
                         showCancelButton: true,
-                        confirmButtonColor: '#DD6B55',
-                        confirmButtonText: 'Ya, Hapus',
+                        confirmButtonText: 'Ya, Hapus!',
                         cancelButtonText: 'Batal'
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            button.closest('form')
-                                .submit(); // Submit form terdekat yang mengandung tombol yang diklik
+                            button.parentNode.submit();
                         }
                     });
                 });
             });
-        });
-
-        //Timepicker
-        $('.timepicker').timepicker({
-            showMeridian: false, // Mengaktifkan format 24 jam
-            minuteStep: 5,
-            defaultTime: '07:00'
         });
     </script>
 @endpush

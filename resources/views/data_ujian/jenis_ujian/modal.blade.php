@@ -20,7 +20,8 @@
                     </div>
                     <div class="form-group">
                         <label for="kode_ujian">Kode Ujian</label>
-                        <input type="text" class="form-control" id="kode_ujian" name="kode_ujian" placeholder="UAS" required>
+                        <input type="text" class="form-control" id="kode_ujian" name="kode_ujian" placeholder="UAS"
+                            required>
                     </div>
             </div>
             <div class="modal-footer">

@@ -12,11 +12,6 @@
 
 <body>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> e8f7dd6 (first commit)
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -110,12 +105,6 @@
             }
         });
     </script>
-<<<<<<< HEAD
->>>>>>> 9f5d545 (first commitu)
-=======
-=======
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
 </body>
 <div class="wrapper">
     <form action="{{ route('siswa.login') }}" method="POST">

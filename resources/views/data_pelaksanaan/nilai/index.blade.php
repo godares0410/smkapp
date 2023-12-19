@@ -82,24 +82,32 @@
                         @foreach ($siswa as $data)
                             <tr>
                                 <td>{{ $counter++ }}</td>
-                                <td>{{ $data->nama_siswa}}</td>
-                                <td>{{ $data->nama_kelas}}</td>
-                                <td>{{ $data->nama_jurusan}}</td>
-                                <td>{{ $data->nama_mapel}}</td>
+                                <td>{{ $data->nama_siswa }}</td>
+                                <td>{{ $data->nama_kelas }}</td>
+                                <td>{{ $data->nama_jurusan }}</td>
+                                <td>{{ $data->nama_mapel }}</td>
                                 <td>
-                                    <span class="label" style="background-color: rgb(37, 0, 172)">{{ $data->total }}</span>
-                                    <span class="label" style="background-color: rgb(0, 133, 0)">{{ $data->tidak_terjawab }}</span>
-                                    <span class="label" style="background-color: rgb(255, 0, 0)">{{ $data->terjawab }}</span>
-                                    <span class="label" style="background-color: rgb(63, 0, 58)">{{ $data->nilai }}</span>
-                                
+                                    <span class="label"
+                                        style="background-color: rgb(37, 0, 172)">{{ $data->total }}</span>
+                                    <span class="label"
+                                        style="background-color: rgb(0, 133, 0)">{{ $data->tidak_terjawab }}</span>
+                                    <span class="label"
+                                        style="background-color: rgb(255, 0, 0)">{{ $data->terjawab }}</span>
+                                    <span class="label"
+                                        style="background-color: rgb(63, 0, 58)">{{ $data->nilai }}</span>
+
                                 </td>
                                 <td>
                                     <div class="btn-group" style="display: flex;">
-                                        <form action="{{ route('pelaksanaan.selesaikan', [$data->id_siswa, $data->id_jadwal_ujian]) }}" method="POST" style="margin-right: 3px">
+                                        <form
+                                            action="{{ route('pelaksanaan.selesaikan', [$data->id_siswa, $data->id_jadwal_ujian]) }}"
+                                            method="POST" style="margin-right: 3px">
                                             @csrf
                                             <button type="submit" class="btn btn-success">Paksa Selesai</button>
                                         </form>
-                                        <form action="{{ route('pelaksanaan.destroy', [$data->id_siswa, $data->id_jadwal_ujian]) }}" method="POST">
+                                        <form
+                                            action="{{ route('pelaksanaan.destroy', [$data->id_siswa, $data->id_jadwal_ujian]) }}"
+                                            method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="button" class="btn-delete btn btn-danger">Hapus</button>

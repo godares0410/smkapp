@@ -62,15 +62,16 @@
                             <div class="box box-success box-solid">
                                 <div class="box-header with-border">
                                     <h3 class="box-title">{{ $data->nama_mapel }} - {{ $data->nama_kelas }}
-                                        </h3>
+                                    </h3>
 
                                     <div class="box-tools pull-right">
-                                        <form action="{{ route('jadwal_ujian.destroy', $data->id_jadwal_ujian) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="button" class="btn-delete btn btn-box-tool"><i
-                                                        class="fa fa-trash"></i>
-                                                </button>
+                                        <form action="{{ route('jadwal_ujian.destroy', $data->id_jadwal_ujian) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button" class="btn-delete btn btn-box-tool"><i
+                                                    class="fa fa-trash"></i>
+                                            </button>
                                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
                                                     class="fa fa-minus"></i>
                                             </button>
@@ -79,7 +80,8 @@
                                     <!-- /.box-tools -->
                                 </div>
                                 <!-- /.box-header -->
-                                <div class="box-body" style="overflow: hidden; max-height: 140px;" onmouseover="this.style.overflow='scroll'" onmouseout="this.style.overflow='hidden'">
+                                <div class="box-body" style="overflow: hidden; max-height: 140px;"
+                                    onmouseover="this.style.overflow='scroll'" onmouseout="this.style.overflow='hidden'">
                                     <table class="table-striped" style="width: 100%">
                                         <tr>
                                             <th>Jurusan</th>
@@ -151,12 +153,13 @@
                                             <th>Sesi</th>
                                             <th>:</th>
                                             <th class="text-right">
-                                        @foreach ($sesiUjian as $ssi)
-                                            @if ($ssi->id_jadwal_ujian == $data->id_jadwal_ujian)
-                                            <span class="label"
-                                                    style="background-color: rgb(0, 168, 240)">{{ $ssi->nama_sesi}} ({{ $ssi->jam_mulai}} - {{ $ssi->jam_selesai}})</span><br>
-                                            @endif
-                                        @endforeach
+                                                @foreach ($sesiUjian as $ssi)
+                                                    @if ($ssi->id_jadwal_ujian == $data->id_jadwal_ujian)
+                                                        <span class="label"
+                                                            style="background-color: rgb(0, 168, 240)">{{ $ssi->nama_sesi }}
+                                                            ({{ $ssi->jam_mulai }} - {{ $ssi->jam_selesai }})</span><br>
+                                                    @endif
+                                                @endforeach
                                             </th>
                                         </tr>
                                     </table>
@@ -211,34 +214,35 @@
                 openModal(title);
             });
         });
-</script>
+    </script>
 
-<!-- Updated JavaScript code -->
-<script>
-    $(document).ready(function() {
-        // Show/hide and check/uncheck checkboxes for jam_ke based on sesi checkbox status
-        $('.sesi-checkbox').change(function() {
-            var sesiId = $(this).data('sesi');
-            var jamKeContainer = $('.jam-ke-container[data-jam-ke="' + sesiId + '"]');
+    <!-- Updated JavaScript code -->
+    <script>
+        $(document).ready(function() {
+            // Show/hide and check/uncheck checkboxes for jam_ke based on sesi checkbox status
+            $('.sesi-checkbox').change(function() {
+                var sesiId = $(this).data('sesi');
+                var jamKeContainer = $('.jam-ke-container[data-jam-ke="' + sesiId + '"]');
 
-            // Show/hide jam_ke-container
-            jamKeContainer.toggle(this.checked);
+                // Show/hide jam_ke-container
+                jamKeContainer.toggle(this.checked);
 
-            // Uncheck jam_ke-checkboxes
-            jamKeContainer.find('.jam-ke-checkbox').prop('checked', false).prop('hidden', !this.checked);
+                // Uncheck jam_ke-checkboxes
+                jamKeContainer.find('.jam-ke-checkbox').prop('checked', false).prop('hidden', !this
+                .checked);
+            });
+
+            // Select All functionality
+            $('#pilihSemua').change(function() {
+                var checked = this.checked;
+
+                // Check/uncheck sesi-checkboxes and trigger change event to update jam_ke-checkboxes
+                $('.sesi-checkbox').prop('checked', checked).trigger('change');
+            });
         });
-
-        // Select All functionality
-        $('#pilihSemua').change(function() {
-            var checked = this.checked;
-
-            // Check/uncheck sesi-checkboxes and trigger change event to update jam_ke-checkboxes
-            $('.sesi-checkbox').prop('checked', checked).trigger('change');
-        });
-    });
-</script>
- <script>
-    // <<HAPUS>>
+    </script>
+    <script>
+        // <<HAPUS>>
         document.addEventListener('DOMContentLoaded', function() {
             const deleteButtons = document.querySelectorAll('.btn-delete');
 

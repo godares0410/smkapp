@@ -70,19 +70,8 @@
                             <th>Nama {{ ucwords($title) }}</th>
                             <th>Kelas</th>
                             <th>Nama Mapel</th>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                             <th>Total Soal</th>
-=======
->>>>>>> 9f5d545 (first commitu)
-=======
->>>>>>> 25eed0c (first commitz)
-=======
-=======
                             <th>Total Soal</th>
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
                             <th class="text-center">Detail</th>
                         </tr>
                     </thead>
@@ -108,19 +97,8 @@
                                 @endphp
                                 <td>{{ $keles }}</td>
                                 <td>{{ $data->nama_mapel }}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                                 <td>{{ $data->total_soal }}
-=======
->>>>>>> 9f5d545 (first commitu)
-=======
->>>>>>> 25eed0c (first commitz)
-=======
-=======
                                 <td>{{ $data->total_soal }}
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
                                     (
                                     @foreach ($matchingKodeJurusanValues as $index => $kodeJurusan)
                                         {{ $kodeJurusan }}
@@ -133,9 +111,6 @@
                                 </td>
                                 <td>
                                     <div class="btn-group" style="display: flex;">
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                                         <a href="{{ route('soal.index', ['id_bank_soal' => $data->id_bank_soal]) }}" class="btn {{ $data->total_soal == 0 ? 'btn-warning' : 'btn-primary' }}"  style="margin-right: 5px;">Lihat Soal</a>
 =======
                                         <a href="{{ route('soal.index', ['id_bank_soal' => $data->id_bank_soal]) }}" class="btn btn-primary" style="margin-right: 5px;">Lihat Soal</a>

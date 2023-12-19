@@ -71,17 +71,17 @@
                             $counter = 1;
                         @endphp
                         @foreach ($alokasi as $data)
-                        @php
-                            $waktuMulai = $data->jam_mulai;
-                            $mulai = substr($waktuMulai, 0, 5);
-                            $waktuselesai = $data->jam_selesai;
-                            $selesai = substr($waktuselesai, 0, 5);
-                        @endphp
+                            @php
+                                $waktuMulai = $data->jam_mulai;
+                                $mulai = substr($waktuMulai, 0, 5);
+                                $waktuselesai = $data->jam_selesai;
+                                $selesai = substr($waktuselesai, 0, 5);
+                            @endphp
                             <tr>
                                 <td>{{ $counter++ }}</td>
                                 <td>{{ $data->nama_sesi }}</td>
                                 <td>{{ $data->id_jam_ke }}</td>
-                                <td>{{ $mulai ."-" . $selesai }}</td>
+                                <td>{{ $mulai . '-' . $selesai }}</td>
                                 <td>
                                     <button type="button" class="btn btn-success" data-toggle="modal"
                                         data-target="#modalEdit{{ $data->id_alokasi_waktu }}">

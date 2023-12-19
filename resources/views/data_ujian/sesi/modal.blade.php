@@ -81,7 +81,8 @@
                         <div class="bootstrap-timepicker">
                             <div class="form-group">
                                 <label for="sampai">Jam Mulai</label>
-                                <input type="time" name="sampai" class="form-control timepicker" value="{{ $data->sampai }}">
+                                <input type="time" name="sampai" class="form-control timepicker"
+                                    value="{{ $data->sampai }}">
                             </div>
                         </div>
                 </div>

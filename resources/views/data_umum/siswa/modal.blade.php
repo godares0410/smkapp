@@ -95,27 +95,13 @@
                         </div>
                         <div class="form-group">
                             <label for="username">User Name</label>
-                                <input type="text" class="form-control" id="username" name="username"
+                            <input type="text" class="form-control" id="username" name="username"
                                 value="{{ $data->username }}">
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                <input type="text" class="form-control" id="password" name="password" value="{{$data->password_kartu}}">
-=======
-                                <input type="text" class="form-control" id="password" name="password">
->>>>>>> 9f5d545 (first commitu)
-=======
-                                <input type="text" class="form-control" id="password" name="password">
->>>>>>> 25eed0c (first commitz)
-=======
-                                <input type="text" class="form-control" id="password" name="password">
-=======
-                                <input type="text" class="form-control" id="password" name="password" value="{{$data->password_kartu}}">
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
+                            <input type="text" class="form-control" id="password" name="password"
+                                value="{{ $data->password_kartu }}">
                         </div>
                         <div class="form-group">
                             <label for="foto">Foto</label>
@@ -150,8 +136,8 @@
                     <p><strong>Kelas:</strong> {{ $data->kelas }}</p>
                     <p><strong>Jurusan:</strong> {{ $data->jurusan }}</p>
                     {{-- <img src="{{ asset('img/siswa/' . $data->foto) }}" alt="Foto Siswa" class="img-fluid" style="width: 100px"> --}}
-                    <img src="{{ $data->foto ? asset('img/siswa/' . $data->foto) : asset('img/siswa/man.png') }}" alt="Foto Siswa"
-                        class="img-fluid" style="width: 100px">
+                    <img src="{{ $data->foto ? asset('img/siswa/' . $data->foto) : asset('img/siswa/man.png') }}"
+                        alt="Foto Siswa" class="img-fluid" style="width: 100px">
                 </div>
             </div>
         </div>

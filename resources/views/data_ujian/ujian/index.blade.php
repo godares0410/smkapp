@@ -63,19 +63,7 @@
                             <th>Nama Mapel</th>
                             <th>Kelas</th>
                             <th>Jurusan</th>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                             <th>Bank Soal</th>
-=======
->>>>>>> 9f5d545 (first commitu)
-=======
->>>>>>> 25eed0c (first commitz)
-=======
-=======
-                            <th>Bank Soal</th>
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
                             <th>Jumlah Soal</th>
                             <th>Acak Soal</th>
                             <th>Acak Jawaban</th>
@@ -109,9 +97,6 @@
                                         @endif
                                     @endforeach
                                 </td>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                                 <td>{{ $data->id_bank_soal }}</td>
                                 <td>{{ $data->jumlah_soal }}</td>
                                 <td>
@@ -128,49 +113,6 @@
                                         {{ $soal = 'Tidak' }}
                                     @endif
                                 </td>
-=======
-=======
->>>>>>> 25eed0c (first commitz)
-=======
->>>>>>> e8f7dd6 (first commit)
-                                <td>{{ $data->jumlah_soal }}</td>
-                                @if ($data->acak_soal == 1)
-                                    {{ $acak = 'Acak' }}
-                                @else
-                                    {{ $acak = 'Tidak' }}
-                                @endif
-                                <td>{{ $acak }}</td>
-                                @if ($data->acak_jawaban == 1)
-                                    {{ $soal = 'Acak' }}
-                                @else
-                                    {{ $soal = 'Tidak' }}
-                                @endif
-                                <td>{{ $soal }}</td>
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 9f5d545 (first commitu)
-=======
->>>>>>> 25eed0c (first commitz)
-=======
-=======
-                                <td>{{ $data->id_bank_soal }}</td>
-                                <td>{{ $data->jumlah_soal }}</td>
-                                <td>
-                                    @if ($data->acak_soal == 1)
-                                        {{ $acak = 'Acak' }}
-                                    @else
-                                        {{ $acak = 'Tidak' }}
-                                    @endif
-                                </td>
-                                <td>
-                                    @if ($data->acak_jawaban == 1)
-                                        {{ $soal = 'Acak' }}
-                                    @else
-                                        {{ $soal = 'Tidak' }}
-                                    @endif
-                                </td>
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
                                 <td>
                                     <form action="{{ route('bank_ujian.destroy', $data->id_bank_ujian) }}" method="POST">
                                         @csrf

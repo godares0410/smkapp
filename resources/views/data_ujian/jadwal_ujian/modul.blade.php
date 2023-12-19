@@ -39,74 +39,83 @@
 
                     <div class="form-group">
                         <label for="durasi">Durasi</label>
-                        <input type="text" class="form-control" id="durasi" name="durasi" placeholder="Dalam Satuan Menit" value="60" required>
+                        <input type="text" class="form-control" id="durasi" name="durasi"
+                            placeholder="Dalam Satuan Menit" value="60" required>
                     </div>
-                     @php
+                    @php
                         $today = \Carbon\Carbon::now()->timezone('Asia/Jakarta');
                         $formattedDate = $today->format('Y-m-d');
                         $tomorrow = $today->addDay(); // Add one day to get tomorrow's date
-                        $besok = $tomorrow->format('Y-m-d');
+$besok = $tomorrow->format('Y-m-d');
                     @endphp
                     <div class="form-group">
                         <label for="mulai">Tanggal Mulai</label>
-                        <input type="date" class="form-control" id="mulai" name="mulai" required value="{{$formattedDate}}">
+                        <input type="date" class="form-control" id="mulai" name="mulai" required
+                            value="{{ $formattedDate }}">
                     </div>
                     <div class="form-group">
                         <label for="selesai">Tanggal Selesai</label>
-                        <input type="date" class="form-control" id="selesai" name="selesai" required value="{{$besok}}">
+                        <input type="date" class="form-control" id="selesai" name="selesai" required
+                            value="{{ $besok }}">
                     </div>
-<div class="container">
-    <div class="form-group">
-        <label for="jurusan_mapel">Sesi :</label><br>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" id="pilihSemua"> Select All
-            </label>
-        </div>
+                    <div class="container">
+                        <div class="form-group">
+                            <label for="jurusan_mapel">Sesi :</label><br>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="pilihSemua"> Select All
+                                </label>
+                            </div>
 
-        @php
-            $alokasiArray = $alokasi->toArray();
-            $uniqueSesi = array_unique(array_column($alokasiArray, 'id_sesi'));
-        @endphp
+                            @php
+                                $alokasiArray = $alokasi->toArray();
+                                $uniqueSesi = array_unique(array_column($alokasiArray, 'id_sesi'));
+                            @endphp
 
-        @foreach ($uniqueSesi as $idSesi)
-            @php
-                $sesiDetails = array_filter($alokasiArray, function($item) use ($idSesi) {
-                    return $item['id_sesi'] == $idSesi;
-                });
-                $namaSesi = reset($sesiDetails)['nama_sesi'];
-            @endphp
+                            @foreach ($uniqueSesi as $idSesi)
+                                @php
+                                    $sesiDetails = array_filter($alokasiArray, function ($item) use ($idSesi) {
+                                        return $item['id_sesi'] == $idSesi;
+                                    });
+                                    $namaSesi = reset($sesiDetails)['nama_sesi'];
+                                @endphp
 
-            <div style="margin-left: 20px; margin-top: 10px;">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" name="sesi[]" value="{{ $idSesi }}" class="sesi-checkbox" data-sesi="{{ $idSesi }}">
-                        {{ $namaSesi }}
-                    </label>
-                </div>
+                                <div style="margin-left: 20px; margin-top: 10px;">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="sesi[]" value="{{ $idSesi }}"
+                                                class="sesi-checkbox" data-sesi="{{ $idSesi }}">
+                                            {{ $namaSesi }}
+                                        </label>
+                                    </div>
 
-                <div style="margin-left: 20px; display: none;" class="jam-ke-container" data-jam-ke="{{ $idSesi }}">
-                    <p>Jam ke:</p>
+                                    <div style="margin-left: 20px; display: none;" class="jam-ke-container"
+                                        data-jam-ke="{{ $idSesi }}">
+                                        <p>Jam ke:</p>
 
-                    @php
-                        $uniqueJamKe = array_unique(array_column($sesiDetails, 'id_jam_ke'));
-                    @endphp
+                                        @php
+                                            $uniqueJamKe = array_unique(array_column($sesiDetails, 'id_jam_ke'));
+                                        @endphp
 
-                    @foreach ($uniqueJamKe as $idJamKe)
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="jam_ke[]" value="{{ $idJamKe }}" class="jam-ke-checkbox" data-jam-ke="{{ $idJamKe }}" hidden>
-                                {{ $idJamKe }} ({{ date('H:i', strtotime(reset($sesiDetails)['jam_mulai'])) }} - {{ date('H:i', strtotime(reset($sesiDetails)['jam_selesai'])) }})
-                            </label>
+                                        @foreach ($uniqueJamKe as $idJamKe)
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="jam_ke[]" value="{{ $idJamKe }}"
+                                                        class="jam-ke-checkbox" data-jam-ke="{{ $idJamKe }}"
+                                                        hidden>
+                                                    {{ $idJamKe }}
+                                                    ({{ date('H:i', strtotime(reset($sesiDetails)['jam_mulai'])) }} -
+                                                    {{ date('H:i', strtotime(reset($sesiDetails)['jam_selesai'])) }})
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
-                    @endforeach
-                </div>
-            </div>
-        @endforeach
-    </div>
-</div>
+                    </div>
 
-                </div>
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary">Save changes</button>

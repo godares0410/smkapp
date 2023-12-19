@@ -44,11 +44,12 @@ use App\Http\Controllers\WebsiteController;
 |
 */
 
-Route::get('/', fn () => redirect()->route('login'));
+// Route::get('/', fn () => redirect()->route('login'));
 
 // Route::get('/login', [LoginAuthController::class, 'index'])->name('login');
 Route::post('/login', [LoginAuthController::class, 'login'])->name('siswa.login');
 Route::get('/logout', [LoginAuthController::class, 'logout']);
+Route::get('/', [WebsiteController::class, 'index']);
 Route::resource('website', WebsiteController::class);
 Route::resource('test', TestController::class);
 

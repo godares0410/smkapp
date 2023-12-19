@@ -37,50 +37,18 @@
                     @endphp
                     @foreach ($ujian as $data)
                         {{-- @if (in_array(Auth::guard('siswa')->user()->id_jurusan, json_decode($data->id_jurusan))) --}}
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                         @php
-                        $jm_start = \App\Models\SesiJadwalUjian::where('id_sesi', $sesi->id_sesi)
-                                        ->where('id_jadwal_ujian', $data->id_jadwal_ujian)
-                                        ->select('id_sesi', 'id_jadwal_ujian', 'jam_mulai')
-                                        ->first();
+                            $jm_start = \App\Models\SesiJadwalUjian::where('id_sesi', $sesi->id_sesi)
+                                ->where('id_jadwal_ujian', $data->id_jadwal_ujian)
+                                ->select('id_sesi', 'id_jadwal_ujian', 'jam_mulai')
+                                ->first();
                         @endphp
                         @if (in_array(Auth::guard('siswa')->user()->id_jurusan, json_decode($data->id_jurusan)) &&
                                 $data->id_jadwal_ujian == $data->ujian_id &&
                                 $jm_start->id_sesi == $sesi->id_sesi &&
-                                $today->format('Y-m-d') <= $data->tgl_selesai && $jm_start->jam_mulai == $data->jam_mulai)
-                            
-=======
-=======
->>>>>>> 25eed0c (first commitz)
-=======
->>>>>>> e8f7dd6 (first commit)
-                        @if (in_array(Auth::guard('siswa')->user()->id_jurusan, json_decode($data->id_jurusan)) &&
-                                $data->id_jadwal_ujian == $data->ujian_id &&
-                                $data->id_sesi == $sesi->id_sesi &&
-                                $today->format('Y-m-d') <= $data->tgl_selesai)
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 9f5d545 (first commitu)
-=======
->>>>>>> 25eed0c (first commitz)
-=======
-=======
-                        @php
-                        $jm_start = \App\Models\SesiJadwalUjian::where('id_sesi', $sesi->id_sesi)
-                                        ->where('id_jadwal_ujian', $data->id_jadwal_ujian)
-                                        ->select('id_sesi', 'id_jadwal_ujian', 'jam_mulai')
-                                        ->first();
-                        @endphp
-                        @if (in_array(Auth::guard('siswa')->user()->id_jurusan, json_decode($data->id_jurusan)) &&
-                                $data->id_jadwal_ujian == $data->ujian_id &&
-                                $jm_start->id_sesi == $sesi->id_sesi &&
-                                $today->format('Y-m-d') <= $data->tgl_selesai && $jm_start->jam_mulai == $data->jam_mulai)
-                            
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
-                            <div class="col-md-6 col-lg-4">
+                                $today->format('Y-m-d') <= $data->tgl_selesai &&
+                                $jm_start->jam_mulai == $data->jam_mulai)
+                            <div class="col-md-6 col-lg-4" id="ujian_{{ $data->id_jadwal_ujian }}">
                                 <div class="box box-success box-solid">
                                     <div class="box-header with-border">
                                         <h3 class="box-title">{{ $data->nama_mapel }}</h3>
@@ -124,19 +92,7 @@
                                                     </span>
                                                 </th>
                                             </tr>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                            
-=======
->>>>>>> 9f5d545 (first commitu)
-=======
->>>>>>> 25eed0c (first commitz)
-=======
-=======
-                                            
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
+
                                             <tr>
                                                 <th>Tanggal Pelaksanaan</th>
                                                 <th>:</th>
@@ -188,22 +144,7 @@
                                                 </th>
                                             </tr>
                                             <tr>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                                <th>Jumlah Soal {{$data->jumlah_soal}}</th>
-=======
-                                                <th>Jumlah Soal</th>
->>>>>>> 9f5d545 (first commitu)
-=======
-                                                <th>Jumlah Soal</th>
->>>>>>> 25eed0c (first commitz)
-=======
-                                                <th>Jumlah Soal</th>
-=======
-                                                <th>Jumlah Soal {{$data->jumlah_soal}}</th>
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
+                                                <th>Jumlah Soal {{ $data->jumlah_soal }}</th>
                                                 <th>:</th>
                                                 <th class="text-right"><span class="label"
                                                         style="background-color: rgb(150, 32, 130)">{{ $data->jumlah_soal }}</span>
@@ -213,22 +154,7 @@
                                                 <th>Sesi</th>
                                                 <th>:</th>
                                                 <th class="text-right"><span
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                                                         class="label label-primary">{{ $data->id_sesi }}</span></th>
-=======
-                                                        class="label label-primary">{{ $data->nama_sesi }}</span></th>
->>>>>>> 9f5d545 (first commitu)
-=======
-                                                        class="label label-primary">{{ $data->nama_sesi }}</span></th>
->>>>>>> 25eed0c (first commitz)
-=======
-                                                        class="label label-primary">{{ $data->nama_sesi }}</span></th>
-=======
-                                                        class="label label-primary">{{ $data->id_sesi }}</span></th>
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
                                             </tr>
                                         </table>
                                         @php
@@ -237,34 +163,10 @@
 
                                         @if ($nilai != null && $nilai->id_jenis != null)
                                             @php
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                                                 $sws = Auth::guard('siswa')->user()->id_siswa;
                                                 $sudah = \App\Models\SiswaNilai::where('id_jenis', $nilai->id_jenis)
                                                     ->where('id_siswa', $sws)
                                                     ->where('id_mapel', $data->id_mapel)
-=======
-                                                $sws = Auth::guard('siswa')->user()->id_jurusan;
-                                                $sudah = \App\Models\SiswaNilai::where('id_jenis', $nilai->id_jenis)
-                                                    ->where('id_siswa', $sws)
->>>>>>> 9f5d545 (first commitu)
-=======
-                                                $sws = Auth::guard('siswa')->user()->id_jurusan;
-                                                $sudah = \App\Models\SiswaNilai::where('id_jenis', $nilai->id_jenis)
-                                                    ->where('id_siswa', $sws)
->>>>>>> 25eed0c (first commitz)
-=======
-                                                $sws = Auth::guard('siswa')->user()->id_jurusan;
-                                                $sudah = \App\Models\SiswaNilai::where('id_jenis', $nilai->id_jenis)
-                                                    ->where('id_siswa', $sws)
-=======
-                                                $sws = Auth::guard('siswa')->user()->id_siswa;
-                                                $sudah = \App\Models\SiswaNilai::where('id_jenis', $nilai->id_jenis)
-                                                    ->where('id_siswa', $sws)
-                                                    ->where('id_mapel', $data->id_mapel)
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
                                                     ->first();
                                             @endphp
                                         @endif
@@ -274,9 +176,6 @@
                                             $tglSelesai = \Carbon\Carbon::parse($data->tgl_selesai)->timezone('Asia/Jakarta');
                                             $batas = $tglSelesai->setTimeFromTimeString($waktuSelesai);
                                         @endphp
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                                         @if ($sudah != null)
                                             <div class="containerz col-md-auto text-center">
                                                 <button class="btn btn-success">Sudah Mengerjakan</button>
@@ -287,44 +186,15 @@
                                                     Token</button>
                                             </div> --}}
                                             <div class="containerz col-md-auto text-center" id="masukkanTokenSection">
-    <button class="btn btn-primary" onclick="toggleElements()">Masukkan Token</button>
-</div>
-=======
-=======
->>>>>>> 25eed0c (first commitz)
-=======
->>>>>>> e8f7dd6 (first commit)
-                                        @if ($kerjakan == null && $data->token == 1 && $woi >= $waktuMulai && $mula <= $batas && $sudah == null)
-                                            <div class="containerz col-md-auto text-center">
-                                                <button class="btn btn-primary" onclick="toggleElements()">Masukkan
+                                                <button class="btn btn-primary"
+                                                    onclick="toggleElements('{{ $data->id_jadwal_ujian }}')">Masukkan
                                                     Token</button>
                                             </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 9f5d545 (first commitu)
-=======
->>>>>>> 25eed0c (first commitz)
-=======
-=======
-                                        @if ($sudah != null)
-                                            <div class="containerz col-md-auto text-center">
-                                                <button class="btn btn-success">Sudah Mengerjakan</button>
-                                            </div>
-                                        @elseif ($kerjakan == null && $data->token == 1 && $woi >= $waktuMulai && $mula <= $batas && $sudah == null)
-                                            {{-- <div class="containerz col-md-auto text-center">
-                                                <button class="btn btn-primary" onclick="toggleElements()">Masukkan
-                                                    Token</button>
-                                            </div> --}}
-                                            <div class="containerz col-md-auto text-center" id="masukkanTokenSection">
-    <button class="btn btn-primary" onclick="toggleElements()">Masukkan Token</button>
-</div>
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
 
                                             <form action="{{ route('siswas.store') }}" method="POST">
                                                 @csrf
-                                                <div class="containerz mt-5 text-center" id="tokenForm"
-                                                    style="display: none">
+                                                <div class="containerz mt-5 text-center"
+                                                    id="tokenForm_{{ $data->id_jadwal_ujian }}" style="display: none">
                                                     <h5><b>Token :</b></h5>
                                                     <input type="text" id="tokenInput" name="tokenInput">
                                                     {{-- <input type="hidden" id="siswa_mulai" name="siswa_mulai"
@@ -350,27 +220,6 @@
                                             <div class="containerz col-md-auto text-center">
                                                 <button class="btn btn-warning">Ujian Belum Dimulai</button>
                                             </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 25eed0c (first commitz)
-=======
->>>>>>> e8f7dd6 (first commit)
-                                        @elseif ($sudah != null)
-                                            <div class="containerz col-md-auto text-center">
-                                                <button class="btn btn-success">Sudah Mengerjakan</button>
-                                            </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 9f5d545 (first commitu)
-=======
->>>>>>> 25eed0c (first commitz)
-=======
-=======
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
                                         @elseif ($woi >= $waktuMulai && $mula >= $batas)
                                             <div class="containerz col-md-auto text-center">
                                                 <button class="btn btn-danger">Ujian Sudah Berakhir</button>
@@ -410,26 +259,6 @@
                                     <!-- /.box-body -->
                                 </div>
                             </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-                        @else
-                            {{-- Another content here --}}
-                            <p>Tidak Ada Ujian</p>
->>>>>>> 9f5d545 (first commitu)
-=======
-                        @else
-                            {{-- Another content here --}}
-                            <p>Tidak Ada Ujian</p>
->>>>>>> 25eed0c (first commitz)
-=======
-                        @else
-                            {{-- Another content here --}}
-                            <p>Tidak Ada Ujian</p>
-=======
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
                         @endif
                     @endforeach
                 </div>
@@ -475,60 +304,30 @@
 
         // Baru
 
-        function toggleElements() {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    var tokenForm = document.getElementById('tokenForm');
-    var masukkanTokenBtn = document.getElementById('masukkanTokenSection');
-    var tokenInput = document.getElementById('tokenInput');
-
-    if (tokenForm.style.display === 'none') {
-        tokenForm.style.display = 'block';
-        masukkanTokenBtn.style.display = 'none';
-        tokenInput.focus();
-    } else {
-        tokenForm.style.display = 'none';
-        masukkanTokenBtn.style.display = 'block';
-    }
-}
-
-function startExam() {
-    var tokenForm = document.getElementById('tokenForm');
-    var masukkanTokenBtn = document.getElementById('masukkanTokenSection');
-    var tokenInput = document.getElementById('tokenInput');
-
-    // Lakukan sesuatu saat tombol "Mulai Ujian" ditekan
-
-    // Contoh: Sembunyikan formulir dan tampilkan tombol kembali
-    tokenForm.style.display = 'none';
-    masukkanTokenBtn.style.display = 'block';
-}
-
-    </script>
-   
-=======
-=======
->>>>>>> 25eed0c (first commitz)
-=======
->>>>>>> e8f7dd6 (first commit)
-            var tokenForm = document.getElementById('tokenForm');
-            var masukkanTokenBtn = document.querySelector('.containerz .btn-primary');
+        function toggleElements(ujianId) {
+            var tokenForms = document.querySelectorAll('[id^="tokenForm_"]');
+            var masukkanTokenBtn = document.getElementById('masukkanTokenSection');
             var tokenInput = document.getElementById('tokenInput');
 
-            if (tokenForm.style.display === 'none') {
-                tokenForm.style.display = 'block';
-                masukkanTokenBtn.style.display = 'none';
-                tokenInput.focus(); // Fokus saat elemen ditampilkan
-            } else {
-                tokenForm.style.display = 'none';
-                masukkanTokenBtn.style.display = 'block';
-            }
+            // Hide all tokenForm divs
+            tokenForms.forEach(function(form) {
+                form.style.display = 'none';
+            });
+
+            // Show the selected tokenForm div
+            var selectedTokenForm = document.getElementById('tokenForm_' + ujianId);
+            selectedTokenForm.style.display = 'block';
+            masukkanTokenBtn.style.display = 'none';
+            tokenInput.focus();
+
+            // Log the ujianId for demonstration purposes
+            console.log('Ujian ID:', ujianId);
         }
+
 
         function startExam() {
             var tokenForm = document.getElementById('tokenForm');
-            var masukkanTokenBtn = document.querySelector('.container .btn-primary');
+            var masukkanTokenBtn = document.getElementById('masukkanTokenSection');
             var tokenInput = document.getElementById('tokenInput');
 
             // Lakukan sesuatu saat tombol "Mulai Ujian" ditekan
@@ -538,41 +337,4 @@ function startExam() {
             masukkanTokenBtn.style.display = 'block';
         }
     </script>
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 9f5d545 (first commitu)
-=======
->>>>>>> 25eed0c (first commitz)
-=======
-=======
-    var tokenForm = document.getElementById('tokenForm');
-    var masukkanTokenBtn = document.getElementById('masukkanTokenSection');
-    var tokenInput = document.getElementById('tokenInput');
-
-    if (tokenForm.style.display === 'none') {
-        tokenForm.style.display = 'block';
-        masukkanTokenBtn.style.display = 'none';
-        tokenInput.focus();
-    } else {
-        tokenForm.style.display = 'none';
-        masukkanTokenBtn.style.display = 'block';
-    }
-}
-
-function startExam() {
-    var tokenForm = document.getElementById('tokenForm');
-    var masukkanTokenBtn = document.getElementById('masukkanTokenSection');
-    var tokenInput = document.getElementById('tokenInput');
-
-    // Lakukan sesuatu saat tombol "Mulai Ujian" ditekan
-
-    // Contoh: Sembunyikan formulir dan tampilkan tombol kembali
-    tokenForm.style.display = 'none';
-    masukkanTokenBtn.style.display = 'block';
-}
-
-    </script>
-   
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
 @endpush

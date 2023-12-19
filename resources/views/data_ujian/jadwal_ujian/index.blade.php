@@ -56,9 +56,6 @@
             </div>
             <div class="box-body table-responsive">
                 <!-- /.col -->
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                 <div class="box-body">
                     @foreach ($jadwal as $data)
                         <div class="col-md-6 col-lg-4">
@@ -66,33 +63,6 @@
                                 <div class="box-header with-border">
                                     <h3 class="box-title">{{ $data->nama_mapel }} - {{ $data->nama_kelas }}
                                         {{ $data->id_jadwal_ujian }}</h3>
-=======
-=======
->>>>>>> 25eed0c (first commitz)
-=======
->>>>>>> e8f7dd6 (first commit)
-                @foreach ($jadwal as $data)
-                    <div class="box-body">
-                        <div class="col-md-6 col-lg-4">
-                            <div class="box box-success box-solid">
-                                <div class="box-header with-border">
-                                    <h3 class="box-title">{{ $data->nama_mapel }} - {{ $data->nama_kelas }}</h3>
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 9f5d545 (first commitu)
-=======
->>>>>>> 25eed0c (first commitz)
-=======
-=======
-                <div class="box-body">
-                    @foreach ($jadwal as $data)
-                        <div class="col-md-6 col-lg-4">
-                            <div class="box box-success box-solid">
-                                <div class="box-header with-border">
-                                    <h3 class="box-title">{{ $data->nama_mapel }} - {{ $data->nama_kelas }}
-                                        {{ $data->id_jadwal_ujian }}</h3>
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
 
                                     <div class="box-tools pull-right">
                                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
@@ -183,9 +153,6 @@
                             <!-- /.box -->
                         </div>
                         <!-- /.col -->
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                     @endforeach
                 </div>
             </div>
@@ -198,43 +165,6 @@
         </div>
     </section>
     @includeIf('data_ujian.jadwal_ujian.modul')
-=======
-=======
->>>>>>> 25eed0c (first commitz)
-=======
->>>>>>> e8f7dd6 (first commit)
-                    </div>
-                @endforeach
-                <!-- /.box-body -->
-                <div class="box-footer">
-                    Footer
-                </div>
-                <!-- /.box-footer-->
-            </div>
-        </div>
-    </section>
-    @includeIf('data_ujian.jadwal_ujian.modal')
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 9f5d545 (first commitu)
-=======
->>>>>>> 25eed0c (first commitz)
-=======
-=======
-                    @endforeach
-                </div>
-            </div>
-            <!-- /.box-body -->
-            <div class="box-footer">
-                Footer
-            </div>
-            <!-- /.box-footer-->
-        </div>
-        </div>
-    </section>
-    @includeIf('data_ujian.jadwal_ujian.modul')
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
 @endsection
 
 @push('script')
@@ -265,24 +195,8 @@
                 openModal(title);
             });
         });
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-</script>
-<script>
-=======
-
->>>>>>> 9f5d545 (first commitu)
-=======
-
->>>>>>> 25eed0c (first commitz)
-=======
-
-=======
-</script>
-<script>
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
+    </script>
+    <script>
         document.getElementById('pilihSemua').addEventListener('change', function() {
             var checkboxes = document.getElementsByClassName('sesi-checkbox');
             for (var i = 0; i < checkboxes.length; i++) {
@@ -308,13 +222,7 @@
             }
         }
     </script>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> e8f7dd6 (first commit)
-   {{-- <script>
+    {{-- <script>
     $(document).ready(function () {
         // Handle checkbox change event
         $('.sesi-checkbox').change(function () {
@@ -359,12 +267,4 @@
         });
     });
 </script> --}}
-<<<<<<< HEAD
-=======
->>>>>>> 9f5d545 (first commitu)
-=======
->>>>>>> 25eed0c (first commitz)
-=======
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
 @endpush

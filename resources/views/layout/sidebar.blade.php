@@ -97,26 +97,6 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-                            <li class="@yield('jenis_ujian-active')"><a href="{{ route('jenis_ujian.index') }}"><i
-                                        class="fa fa-circle-o"></i>
-                                    Jenis Ujian</a></li>
->>>>>>> 9f5d545 (first commitu)
-=======
-                            <li class="@yield('jenis_ujian-active')"><a href="{{ route('jenis_ujian.index') }}"><i
-                                        class="fa fa-circle-o"></i>
-                                    Jenis Ujian</a></li>
->>>>>>> 25eed0c (first commitz)
-=======
-                            <li class="@yield('jenis_ujian-active')"><a href="{{ route('jenis_ujian.index') }}"><i
-                                        class="fa fa-circle-o"></i>
-                                    Jenis Ujian</a></li>
-=======
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
                             <li class="@yield('banksoal-active')"><a href="{{ route('banksoal.index') }}"><i
                                         class="fa fa-circle-o"></i>
                                     Bank Soal</a></li>
@@ -126,52 +106,20 @@
                             <li class="@yield('jadwal_ujian-active')"><a href="{{ route('jadwal_ujian.index') }}"><i
                                         class="fa fa-circle-o"></i>
                                     Jadwal Ujian</a></li>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                             <li class="@yield('jenis_ujian-active')"><a href="{{ route('jenis_ujian.index') }}"><i
                                         class="fa fa-circle-o"></i>
                                     Jenis Ujian</a></li>
-=======
->>>>>>> 9f5d545 (first commitu)
-=======
->>>>>>> 25eed0c (first commitz)
-=======
-=======
-                            <li class="@yield('jenis_ujian-active')"><a href="{{ route('jenis_ujian.index') }}"><i
-                                        class="fa fa-circle-o"></i>
-                                    Jenis Ujian</a></li>
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
                             <li class="@yield('sesi-active')"><a href="{{ route('sesi.index') }}"><i
                                         class="fa fa-circle-o"></i>
                                     Sesi</a></li>
                             <li><a href="{{ asset('AdminLTE-2/pages/UI/general.html') }}"><i
                                         class="fa fa-circle-o"></i>
                                     Ruang</a></li>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                             {{-- <li><a href="{{ asset('AdminLTE-2/pages/UI/general.html') }}"><i
-=======
-                            <li><a href="{{ asset('AdminLTE-2/pages/UI/general.html') }}"><i
->>>>>>> 9f5d545 (first commitu)
-=======
-                            <li><a href="{{ asset('AdminLTE-2/pages/UI/general.html') }}"><i
->>>>>>> 25eed0c (first commitz)
-=======
-                            <li><a href="{{ asset('AdminLTE-2/pages/UI/general.html') }}"><i
-=======
-                            {{-- <li><a href="{{ asset('AdminLTE-2/pages/UI/general.html') }}"><i
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
                                         class="fa fa-circle-o"></i>
                                     Ruang dan Sesi</a></li>
                             <li><a href="{{ asset('AdminLTE-2/pages/UI/general.html') }}"><i
                                         class="fa fa-circle-o"></i>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                                     Nomor Peserta</a></li> --}}
                             <li class="@yield('alokasi-active')"><a href="{{ route('alokasi.index') }}"><i
                                         class="fa fa-circle-o"></i>
@@ -206,94 +154,15 @@
                     <li class="@yield('assesment') treeview">
                         <a href="#">
                             <i class="fa fa-table"></i> <span>Assessmen</span>
-=======
-=======
->>>>>>> 25eed0c (first commitz)
-=======
->>>>>>> e8f7dd6 (first commit)
-                                    Nomor Peserta</a></li>
-                            <li><a href="{{ asset('AdminLTE-2/pages/UI/general.html') }}"><i
-                                        class="fa fa-circle-o"></i>
-                                    Alokasi Waktu</a></li>
-                            <li><a href="{{ asset('AdminLTE-2/pages/UI/general.html') }}"><i
-                                        class="fa fa-circle-o"></i>
-                                    Token</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-edit"></i> <span>Buat Pengumuman</span>
-                        </a>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-table"></i> <span>Raport</span>
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 9f5d545 (first commitu)
-=======
->>>>>>> 25eed0c (first commitz)
-=======
-=======
-                                    Nomor Peserta</a></li> --}}
-                            <li class="@yield('alokasi-active')"><a href="{{ route('alokasi.index') }}"><i
-                                        class="fa fa-circle-o"></i>
-                                    Alokasi Waktu</a></li>
-                            {{-- <li><a href="{{ asset('AdminLTE-2/pages/UI/general.html') }}"><i
-                                        class="fa fa-circle-o"></i>
-                                    Token</a></li> --}}
-                        </ul>
-                    </li>
-                    <li class="@yield('data-pelaksanaan') treeview">
-                        <a href="#">
-                            <i class="fa fa-edit"></i>
-                            <span>Data Pelaksanaan</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li class="@yield('pelaksanaan-active')"><a href="{{ route('pelaksanaan.index') }}"><i
-                                        class="fa fa-circle-o"></i>
-                                    Pelaksanaan</a></li>
-                            <li class="@yield('reset-active')"><a href="{{ route('pelaksanaan.reset') }}"><i
-                                        class="fa fa-circle-o"></i>
-                                    Reset</a></li>
-                        </ul>
-                    </li>
-                    <li class="@yield('token-active')">
-                        <a href="{{ route('token.index') }}">
-                            <i class="fa fa-key"></i> <span>Token</span>
-                        </a>
-                    </li>
-                    <li class="@yield('assesment') treeview">
-                        <a href="#">
-                            <i class="fa fa-table"></i> <span>Assessmen</span>
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="{{ asset('AdminLTE-2/pages/UI/general.html') }}"><i
-                                        class="fa fa-circle-o"></i>Rekap Nilai</a></li>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+                            <li class="@yield('rekap-active')"><a href="{{ route('score.rekap') }}"><i
+                                        class="fa fa-circle-o"></i>Rekap Nilai</a>
+                            </li>
                             <li class="@yield('nilai-active')"><a href="{{ route('score.index') }}"><i
-=======
-                            <li><a href="{{ asset('AdminLTE-2/pages/UI/general.html') }}"><i
->>>>>>> 9f5d545 (first commitu)
-=======
-                            <li><a href="{{ asset('AdminLTE-2/pages/UI/general.html') }}"><i
->>>>>>> 25eed0c (first commitz)
-=======
-                            <li><a href="{{ asset('AdminLTE-2/pages/UI/general.html') }}"><i
-=======
-                            <li class="@yield('nilai-active')"><a href="{{ route('score.index') }}"><i
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
                                         class="fa fa-circle-o"></i>Hasil Ujian</a></li>
                             <li><a href="{{ asset('AdminLTE-2/pages/UI/general.html') }}"><i
                                         class="fa fa-circle-o"></i>Cetak Nilai</a></li>
@@ -319,12 +188,6 @@
                                         class="fa fa-circle-o"></i>Laporan</a></li>
                         </ul>
                     </li>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> e8f7dd6 (first commit)
                     <li class="@yield('data-website') treeview">
                         <a href="#">
                             <i class="fa fa-edit"></i>
@@ -342,14 +205,6 @@
                                     Berita</a></li>
                         </ul>
                     </li>
-<<<<<<< HEAD
-=======
->>>>>>> 9f5d545 (first commitu)
-=======
->>>>>>> 25eed0c (first commitz)
-=======
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
                 @endif
                 @if (auth('siswa')->check())
                     <li class="@yield('assesmen') treeview">

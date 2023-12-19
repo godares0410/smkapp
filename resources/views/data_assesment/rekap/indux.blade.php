@@ -1,7 +1,7 @@
 @extends('layout.master')
 
 @section('title')
-    Nilai
+    Rekap
 @endsection
 
 @php
@@ -9,7 +9,7 @@
 @endphp
 
 @section('assesment', 'active')
-@section('nilai-active', 'active')
+@section('rekap-active', 'active')
 
 @section('badge')
     @parent
@@ -47,25 +47,24 @@
         <!-- Small boxes (Stat box) -->
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Data {{ ucwords($title) }} {{ $idm->nama_mapel }} - {{ $idm->id_mapel }}</h3>
+                <h3 class="box-title">Data {{ ucwords($title) }}</h3>
                 <div class="pull-right">
-                    <form action="{{ route('nilai.export') }}" method="POST" style="margin-left: 10px;">
+                    <form action="{{ route('rekap.exportall') }}" method="POST" style="margin-left: 10px;">
                         @csrf
-                        <a href="/score" class="btn btn-warning">
+                        <a href="/rekap" class="btn btn-warning">
                             Kembali <i class="fa fa-arrow-left"></i>
                         </a>
 
                         <input type="hidden" name="jenis" value="{{ $jenis }}">
                         <input type="hidden" name="kelas" value="{{ $kelas }}">
                         <input type="hidden" name="jurusan" value="{{ $jurusan }}">
-                        <input type="hidden" name="mapel" value="{{ $mapel }}">
-                        <button type="submit" href="{{ route('nilai.export') }}" class="btn btn-success">Export Nilai
+                        <button type="submit" href="{{ route('rekap.exportall') }}" class="btn btn-success">Export Rekap
                             <i class="fa  fa-file-excel-o"></i>
                         </button>
                     </form>
                 </div>
             </div>
-            @include('data_assesment.nilai.table', $score)
+            @include('data_assesment.rekap.table', $score)
         </div>
     </section>
     {{-- @includeIf('data_umum.siswa.modal') --}}
