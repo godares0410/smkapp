@@ -48,8 +48,12 @@ class WebsiteController extends Controller
             $foto = $request->file('foto');
             // $namaFoto = $foto->getClientOriginalName();
             $namaFoto = $request->nama_siswa . '_' . time() . '.' . $request->foto->extension();
+<<<<<<< HEAD
             // $foto->move(public_path('img/website/landing'), $namaFoto);
             $foto->move(public_path('img/file'), $namaFoto);
+=======
+            $foto->move(public_path('img/website/landing'), $namaFoto);
+>>>>>>> 28119c6 (first commit)
             $web->foto = $namaFoto;
         }
         $web->save();

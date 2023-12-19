@@ -29,15 +29,21 @@ use App\Http\Controllers\JenisUjianController;
 use App\Http\Controllers\JadwalUjianController;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 28119c6 (first commit)
 use App\Http\Controllers\TokenController;
 use App\Http\Controllers\PelaksanaanController;
 use App\Http\Controllers\AlokasiController;
 use App\Http\Controllers\ScoreController;
 use App\Http\Controllers\WebsiteController;
+<<<<<<< HEAD
 =======
 >>>>>>> 9f5d545 (first commitu)
 =======
 >>>>>>> 25eed0c (first commitz)
+=======
+>>>>>>> 28119c6 (first commit)
 
 /*
 |--------------------------------------------------------------------------
@@ -50,11 +56,12 @@ use App\Http\Controllers\WebsiteController;
 |
 */
 
-Route::get('/', fn () => redirect()->route('login'));
+// Route::get('/', fn () => redirect()->route('login'));
 
 // Route::get('/login', [LoginAuthController::class, 'index'])->name('login');
 Route::post('/login', [LoginAuthController::class, 'login'])->name('siswa.login');
 Route::get('/logout', [LoginAuthController::class, 'logout']);
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 Route::get('/', [WebsiteController::class, 'index']);
@@ -64,6 +71,11 @@ Route::resource('test', TestController::class);
 >>>>>>> 9f5d545 (first commitu)
 =======
 >>>>>>> 25eed0c (first commitz)
+=======
+Route::get('/', [WebsiteController::class, 'index']);
+Route::resource('website', WebsiteController::class);
+Route::resource('test', TestController::class);
+>>>>>>> 28119c6 (first commit)
 
 
 // <<AUTH ADMIN>>
@@ -75,6 +87,13 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::resource('pelaksanaan', PelaksanaanController::class);
     Route::resource('alokasi', AlokasiController::class);
     Route::resource('score', ScoreController::class);
+<<<<<<< HEAD
+=======
+    Route::get('/rekap', [ScoreController::class, 'rekap'])->name('score.rekap');
+    Route::post('/rekap/nilai', [ScoreController::class, 'rekapnilai'])->name('score.rekapnilai');
+    Route::post('/rekap/export', [ScoreController::class, 'rekapeksport'])->name('rekap.export');
+    Route::post('/rekap/exportall', [ScoreController::class, 'exportRekap'])->name('rekap.exportall');
+>>>>>>> 28119c6 (first commit)
     Route::get('/fetch-mapel-options', [ScoreController::class, 'fetchMapelOptions'])->name('score.fetchMapelOptions');
     Route::post('/nilai/tampil', [ScoreController::class, 'nilai'])->name('nilai.cari');
     Route::post('/nilai/export', [ScoreController::class, 'exportData'])->name('nilai.export');
@@ -145,11 +164,15 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::resource('jadwal_ujian', JadwalUjianController::class);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     Route::delete('/jadwal_ujianhps/{id}', [JadwalUjianController::class, 'destroy'])->name('jadwal_ujian.destroy');
 =======
 >>>>>>> 9f5d545 (first commitu)
 =======
 >>>>>>> 25eed0c (first commitz)
+=======
+    Route::delete('/jadwal_ujianhps/{id}', [JadwalUjianController::class, 'destroy'])->name('jadwal_ujian.destroy');
+>>>>>>> 28119c6 (first commit)
     // });
 });
 
@@ -171,6 +194,7 @@ Route::group(['middleware' => ['auth:siswa', 'checkUserStatus']], function () {
     Route::post('/exam', [SiswasController::class, 'mengerjakan'])->name('siswas.mengerjakan');
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     Route::post('/exams', [SiswasController::class, 'mengerjakans'])->name('siswas.mengerjakans');
     Route::post('/done', [SiswasController::class, 'selesai'])->name('siswas.selesai');
     Route::post('/notoken', [SiswasController::class, 'no_token'])->name('siswas.notoken');
@@ -180,6 +204,11 @@ Route::group(['middleware' => ['auth:siswa', 'checkUserStatus']], function () {
 =======
     Route::post('/done', [SiswasController::class, 'selesai'])->name('siswas.selesai');
 >>>>>>> 25eed0c (first commitz)
+=======
+    Route::post('/exams', [SiswasController::class, 'mengerjakans'])->name('siswas.mengerjakans');
+    Route::post('/done', [SiswasController::class, 'selesai'])->name('siswas.selesai');
+    Route::post('/notoken', [SiswasController::class, 'no_token'])->name('siswas.notoken');
+>>>>>>> 28119c6 (first commit)
     Route::post('/siswas/updateStatus', [SiswasController::class, 'updateStatus']);
     Route::resource('siswas', SiswasController::class);
     Route::post('/exam/update', [SiswasController::class, 'update'])->name('siswas.update');
