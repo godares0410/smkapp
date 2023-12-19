@@ -78,6 +78,7 @@
                             <th>Opsi E</th>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                             {{-- <th>Kunci</th> --}}
 =======
                             <th>Kunci</th>
@@ -85,6 +86,12 @@
 =======
                             <th>Kunci</th>
 >>>>>>> 25eed0c (first commitz)
+=======
+                            <th>Kunci</th>
+=======
+                            {{-- <th>Kunci</th> --}}
+>>>>>>> 680cd4c (first commit)
+>>>>>>> e8f7dd6 (first commit)
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -102,6 +109,7 @@
                                 <td>{{ $data->pil_d }}</td>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                                 @if ($data->pil_e !== null)
                                 <td>{{ $data->pil_e }}</td>
                                 @else
@@ -116,10 +124,23 @@
                                 <td>{{ $data->pil_e }}</td>
                                 <td>{{ $data->jawaban }}</td>
 >>>>>>> 25eed0c (first commitz)
+=======
+                                <td>{{ $data->pil_e }}</td>
+                                <td>{{ $data->jawaban }}</td>
+=======
+                                @if ($data->pil_e !== null)
+                                <td>{{ $data->pil_e }}</td>
+                                @else
+                                    ''
+                                @endif
+                                {{-- <td>{{ $data->jawaban }}</td> --}}
+>>>>>>> 680cd4c (first commit)
+>>>>>>> e8f7dd6 (first commit)
                                 <td>
                                     <div class="btn-group" style="display: flex;">
                                         @if ($data->file_1 != null)
                                             <button type="button"
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
                                                 class="btn {{ file_exists(public_path('bank_soal/' . $bank->kode_mapel . '/' . $data->file_1)) ? 'btn-success' : 'btn-secondary' }} btn-detail"
@@ -129,6 +150,12 @@
 =======
                                                 class="btn btn-{{ $data->file_1 ? 'success' : 'secondary' }} btn-detail"
 >>>>>>> 25eed0c (first commitz)
+=======
+                                                class="btn btn-{{ $data->file_1 ? 'success' : 'secondary' }} btn-detail"
+=======
+                                                class="btn {{ file_exists(public_path('bank_soal/' . $bank->kode_mapel . '/' . $data->file_1)) ? 'btn-success' : 'btn-secondary' }} btn-detail"
+>>>>>>> 680cd4c (first commit)
+>>>>>>> e8f7dd6 (first commit)
                                                 data-toggle="modal" data-target="#modalDetail{{ $data->id_soal }}"
                                                 style="margin-right: 5px;">
                                                 Foto
@@ -208,6 +235,7 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         $(document).ready(function() {
             var zoomFactor = 1;
 
@@ -230,6 +258,8 @@
 =======
 =======
 >>>>>>> 25eed0c (first commitz)
+=======
+>>>>>>> e8f7dd6 (first commit)
         $(document).ready(function () {
         var zoomFactor = 1;
 
@@ -250,8 +280,32 @@
         }
     });
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 9f5d545 (first commitu)
 =======
 >>>>>>> 25eed0c (first commitz)
+=======
+=======
+        $(document).ready(function() {
+            var zoomFactor = 1;
+
+            $('.zoom-in-btn').on('click', function() {
+                zoomFactor += 0.1;
+                updateImageZoom();
+            });
+
+            $('.zoom-out-btn').on('click', function() {
+                if (zoomFactor > 0.2) {
+                    zoomFactor -= 0.1;
+                    updateImageZoom();
+                }
+            });
+
+            function updateImageZoom() {
+                $('.modal-body .zoomable').css('transform', 'scale(' + zoomFactor + ')');
+            }
+        });
+>>>>>>> 680cd4c (first commit)
+>>>>>>> e8f7dd6 (first commit)
     </script>
 @endpush

@@ -102,6 +102,7 @@
                             <label for="password">Password</label>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                                 <input type="text" class="form-control" id="password" name="password" value="{{$data->password_kartu}}">
 =======
                                 <input type="text" class="form-control" id="password" name="password">
@@ -109,6 +110,12 @@
 =======
                                 <input type="text" class="form-control" id="password" name="password">
 >>>>>>> 25eed0c (first commitz)
+=======
+                                <input type="text" class="form-control" id="password" name="password">
+=======
+                                <input type="text" class="form-control" id="password" name="password" value="{{$data->password_kartu}}">
+>>>>>>> 680cd4c (first commit)
+>>>>>>> e8f7dd6 (first commit)
                         </div>
                         <div class="form-group">
                             <label for="foto">Foto</label>

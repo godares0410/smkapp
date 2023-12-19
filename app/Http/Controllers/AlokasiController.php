@@ -2,18 +2,24 @@
 
 namespace App\Http\Controllers;
 
+<<<<<<< HEAD
 <<<<<<<< HEAD:app/Http/Controllers/AlokasiController.php
+=======
+>>>>>>> e8f7dd6 (first commit)
 use App\Models\AlokasiWaktu;
 use App\Models\Sesi;
 use Illuminate\Http\Request;
 
 class AlokasiController extends Controller
+<<<<<<< HEAD
 ========
 use App\Models\Makanan;
 use Illuminate\Http\Request;
 
 class MakananController extends Controller
 >>>>>>>> 25eed0c (first commitz):app/Http/Controllers/MakananController.php
+=======
+>>>>>>> e8f7dd6 (first commit)
 {
     /**
      * Display a listing of the resource.
@@ -22,13 +28,17 @@ class MakananController extends Controller
      */
     public function index()
     {
+<<<<<<< HEAD
 <<<<<<<< HEAD:app/Http/Controllers/AlokasiController.php
+=======
+>>>>>>> e8f7dd6 (first commit)
         $alokasi = AlokasiWaktu::select('sesi.nama_sesi', 'alokasi_waktu.*')
         ->join('sesi', 'alokasi_waktu.id_sesi', '=', 'sesi.id_sesi')
         ->get();
         $sesi = Sesi::all();
 
         return view ('data_ujian.alokasi_waktu.index', compact('alokasi', 'sesi'));
+<<<<<<< HEAD
 ========
         $tipeMakanan = request('tipe_makanan'); // Ambil parameter 'tipe_makanan' dari URL
         $makanans = Makanan::when($tipeMakanan, function ($query) use ($tipeMakanan) {
@@ -36,6 +46,8 @@ class MakananController extends Controller
         })->get();
         return view('test.test', compact('makanans'));
 >>>>>>>> 25eed0c (first commitz):app/Http/Controllers/MakananController.php
+=======
+>>>>>>> e8f7dd6 (first commit)
     }
 
     /**
@@ -56,7 +68,10 @@ class MakananController extends Controller
      */
     public function store(Request $request)
     {
+<<<<<<< HEAD
 <<<<<<<< HEAD:app/Http/Controllers/AlokasiController.php
+=======
+>>>>>>> e8f7dd6 (first commit)
         $alokasi = new AlokasiWaktu;
         $alokasi->id_sesi = $request->sesi;
         $alokasi->id_jam_ke = $request->jam_sesi;
@@ -65,6 +80,7 @@ class MakananController extends Controller
         $alokasi->save();
 
         return redirect()->back()->with('success', 'Alokasi berhasil ditambahkan');
+<<<<<<< HEAD
 ========
          // Validasi formulir
          $request->validate([
@@ -86,6 +102,8 @@ class MakananController extends Controller
         // Tampilkan pesan sukses
         return "Data Makanan berhasil disimpan!";
 >>>>>>>> 25eed0c (first commitz):app/Http/Controllers/MakananController.php
+=======
+>>>>>>> e8f7dd6 (first commit)
     }
 
     /**

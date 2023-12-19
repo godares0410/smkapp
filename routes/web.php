@@ -88,12 +88,20 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::resource('alokasi', AlokasiController::class);
     Route::resource('score', ScoreController::class);
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> e8f7dd6 (first commit)
     Route::get('/rekap', [ScoreController::class, 'rekap'])->name('score.rekap');
     Route::post('/rekap/nilai', [ScoreController::class, 'rekapnilai'])->name('score.rekapnilai');
     Route::post('/rekap/export', [ScoreController::class, 'rekapeksport'])->name('rekap.export');
     Route::post('/rekap/exportall', [ScoreController::class, 'exportRekap'])->name('rekap.exportall');
+<<<<<<< HEAD
 >>>>>>> 28119c6 (first commit)
+=======
+=======
+>>>>>>> 680cd4c (first commit)
+>>>>>>> e8f7dd6 (first commit)
     Route::get('/fetch-mapel-options', [ScoreController::class, 'fetchMapelOptions'])->name('score.fetchMapelOptions');
     Route::post('/nilai/tampil', [ScoreController::class, 'nilai'])->name('nilai.cari');
     Route::post('/nilai/export', [ScoreController::class, 'exportData'])->name('nilai.export');

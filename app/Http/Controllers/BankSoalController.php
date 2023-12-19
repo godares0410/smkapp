@@ -20,9 +20,25 @@ class BankSoalController extends Controller
      */
     public function index()
     {
-        $banksoal = BankSoal::select('bank_soal.*', 'mapel.nama_mapel', 'mapel.id_jurusan', 'mapel.id_kelas')
+        // $banksoal = BankSoal::select('bank_soal.*', 'mapel.nama_mapel', 'mapel.id_jurusan', 'mapel.id_kelas')
+        //     ->join('mapel', 'bank_soal.id_mapel', '=', 'mapel.id_mapel')
+        //     ->orderBy('bank_soal.id_bank_soal', 'desc')
+        //     ->get();
+
+        $banksoal = BankSoal::select(
+            'bank_soal.id_bank_soal',
+            'mapel.nama_mapel',
+            'mapel.id_jurusan',
+            'mapel.id_kelas',
+            'bank_soal.nama_bank_soal',
+            \DB::raw('COUNT(soal.id_bank_soal) as total_soal')
+        )
+            ->leftJoin('soal', 'bank_soal.id_bank_soal', '=', 'soal.id_bank_soal')
             ->join('mapel', 'bank_soal.id_mapel', '=', 'mapel.id_mapel')
+            ->groupBy('bank_soal.id_bank_soal', 'mapel.nama_mapel', 'mapel.id_jurusan', 'mapel.id_kelas', 'bank_soal.nama_bank_soal')
+            ->orderBy('bank_soal.id_bank_soal', 'desc')
             ->get();
+        
         $kelas = Kelas::all();
         $jurusan = Jurusan::all();
         $mapel = Mapel::select('mapel.*', 'kelas.nama_kelas')

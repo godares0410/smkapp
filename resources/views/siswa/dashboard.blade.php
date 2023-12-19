@@ -18,6 +18,7 @@
         <div class="row">
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             <div class="pad margin no-print">
                 <div class="callout callout-info" style="margin-bottom: 0!important;">
                     <h4><i class="fa fa-info"></i> Note:</h4>
@@ -27,6 +28,8 @@
 =======
 =======
 >>>>>>> 25eed0c (first commitz)
+=======
+>>>>>>> e8f7dd6 (first commit)
             <div class="col-lg-3 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-aqua">
@@ -88,9 +91,20 @@
             </div>
             <!-- ./col -->
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> 9f5d545 (first commitu)
 =======
 >>>>>>> 25eed0c (first commitz)
+=======
+=======
+            <div class="pad margin no-print">
+                <div class="callout callout-info" style="margin-bottom: 0!important;">
+                    <h4><i class="fa fa-info"></i> Note:</h4>
+                   Aplikasi ini akan digunakan seterusnya dalam proses pembelajaran di SMK Sabilillah. Pastikan Anda menggunakan akun login secara konsisten dan selalu ingat username serta password Anda.
+                </div>
+            </div>
+>>>>>>> 680cd4c (first commit)
+>>>>>>> e8f7dd6 (first commit)
         </div>
         <!-- right col -->
     </section>

@@ -49,11 +49,19 @@ class WebsiteController extends Controller
             // $namaFoto = $foto->getClientOriginalName();
             $namaFoto = $request->nama_siswa . '_' . time() . '.' . $request->foto->extension();
 <<<<<<< HEAD
+<<<<<<< HEAD
             // $foto->move(public_path('img/website/landing'), $namaFoto);
             $foto->move(public_path('img/file'), $namaFoto);
 =======
             $foto->move(public_path('img/website/landing'), $namaFoto);
 >>>>>>> 28119c6 (first commit)
+=======
+            $foto->move(public_path('img/website/landing'), $namaFoto);
+=======
+            // $foto->move(public_path('img/website/landing'), $namaFoto);
+            $foto->move(public_path('img/file'), $namaFoto);
+>>>>>>> 680cd4c (first commit)
+>>>>>>> e8f7dd6 (first commit)
             $web->foto = $namaFoto;
         }
         $web->save();
