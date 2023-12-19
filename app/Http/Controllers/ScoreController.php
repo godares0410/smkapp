@@ -10,6 +10,7 @@ use App\Models\Jurusan;
 use App\Models\JenisUjian;
 use App\Models\SiswaNilai;
 use App\Exports\ExportNilai;
+use App\Exports\ExportRekap;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
@@ -40,7 +41,7 @@ class ScoreController extends Controller
         $siswa = Siswa::select('siswa.*')
             ->where('id_kelas', $kelas)
             ->where('id_jurusan', $jurusan)
-            ->orderBy('id_siswa', 'asc')
+            ->orderBy('nama_siswa', 'asc')
             ->get();
         $nilai = SiswaNilai::select('mapel.nama_mapel', 'kelas.nama_kelas', 'jurusan.nama_jurusan', 'siswa_nilai.nilai', 'siswa_nilai.id_siswa')
             ->join('mapel', 'siswa_nilai.id_mapel', '=', 'mapel.id_mapel')
@@ -182,5 +183,93 @@ class ScoreController extends Controller
             })
             ->get();
         return response()->json($mapelOptions);
+    }
+    public function rekap()
+    {
+        $jenis = JenisUjian::all();
+        $kelas = Kelas::all();
+        $jurusan = Jurusan::all();
+        return view('data_assesment.rekap.index', compact('kelas', 'jurusan', 'jenis'));
+    }
+    public function rekapnilai(Request $request)
+    {
+        $jenis = $request->input('jenis');
+        $kelas = $request->input('kelas');
+        $jurusan = $request->input('jurusan');
+
+        $siswa = Siswa::select('siswa.*')
+            ->where('id_kelas', $kelas)
+            ->where('id_jurusan', $jurusan)
+            ->orderBy('nama_siswa', 'asc')
+            ->get();
+        $mapel = Mapel::select('mapel.*')
+        ->where('id_kelas', $kelas)
+        ->whereJsonContains('id_jurusan', $jurusan)
+        ->get();
+        $idMapels = $mapel->pluck('id_mapel');
+        $nilai = SiswaNilai::select('mapel.nama_mapel', 'kelas.nama_kelas', 'jurusan.nama_jurusan', 'siswa_nilai.nilai', 'siswa_nilai.id_siswa', 'siswa_nilai.id_mapel as idm')
+        ->join('mapel', 'siswa_nilai.id_mapel', '=', 'mapel.id_mapel')
+        ->join('jurusan', 'siswa_nilai.id_jurusan', '=', 'jurusan.id_jurusan')
+        ->join('kelas', 'siswa_nilai.id_kelas', '=', 'kelas.id_kelas')
+        ->join('siswa', 'siswa_nilai.id_siswa', '=', 'siswa.id_siswa')
+        ->where('siswa_nilai.id_jenis', $jenis)
+        ->where('siswa_nilai.id_kelas', $kelas)
+        ->where('siswa_nilai.id_jurusan', $jurusan)
+        ->whereIn('siswa_nilai.id_mapel', $idMapels)
+        ->whereIn('siswa_nilai.id_siswa', $siswa->pluck('id_siswa'))
+        ->get();
+        $score = [
+            'mapel' => $mapel,
+            'siswa' => $siswa,
+            'nilai' => $nilai,
+        ];
+        return view('data_assesment.rekap.indux', compact('siswa','jenis', 'kelas', 'jurusan', 'nilai', 'score', 'mapel'));
+    }
+    public function rekapeksport(Request $request)
+    {
+        $jenis = $request->input('jenis');
+        $kelas = $request->input('kelas');
+        $jurusan = $request->input('jurusan');
+    }
+    public function exportRekap(Request $request)
+    {
+        $jenis = $request->input('jenis');
+        $kelas = $request->input('kelas');
+        $jurusan = $request->input('jurusan');
+        $request->merge(['jenis' => $jenis, 'kelas' => $kelas, 'jurusan' => $jurusan,]);
+        $nama_jenis = JenisUjian::where('id_jenis', $jenis)
+            ->value('nama_ujian');
+        $nama_kelas = Kelas::where('id_kelas', $kelas)
+            ->value('nama_kelas');
+        $nama_jurusan = Jurusan::where('id_jurusan', $jurusan)
+            ->value('nama_jurusan');
+        $siswa = Siswa::select('siswa.*')
+            ->where('id_kelas', $kelas)
+            ->where('id_jurusan', $jurusan)
+            ->orderBy('id_siswa', 'asc')
+            ->get();
+            $mapel = Mapel::select('mapel.*')
+            ->where('id_kelas', $kelas)
+            ->whereJsonContains('id_jurusan', $jurusan)
+            ->get();
+            $idMapels = $mapel->pluck('id_mapel');
+            $nilai = SiswaNilai::select('mapel.nama_mapel', 'kelas.nama_kelas', 'jurusan.nama_jurusan', 'siswa_nilai.nilai', 'siswa_nilai.id_siswa', 'siswa_nilai.id_mapel as idm')
+            ->join('mapel', 'siswa_nilai.id_mapel', '=', 'mapel.id_mapel')
+            ->join('jurusan', 'siswa_nilai.id_jurusan', '=', 'jurusan.id_jurusan')
+            ->join('kelas', 'siswa_nilai.id_kelas', '=', 'kelas.id_kelas')
+            ->join('siswa', 'siswa_nilai.id_siswa', '=', 'siswa.id_siswa')
+            ->where('siswa_nilai.id_jenis', $jenis)
+            ->where('siswa_nilai.id_kelas', $kelas)
+            ->where('siswa_nilai.id_jurusan', $jurusan)
+            ->whereIn('siswa_nilai.id_mapel', $idMapels)
+            ->whereIn('siswa_nilai.id_siswa', $siswa->pluck('id_siswa'))
+            ->get();
+            $score = [
+                'mapel' => $mapel,
+                'siswa' => $siswa,
+                'nilai' => $nilai,
+            ];
+
+        return Excel::download(new ExportRekap($score), "{$nama_jenis}_{$nama_kelas}_{$nama_jurusan}.xlsx");
     }
 }

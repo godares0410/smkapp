@@ -164,6 +164,23 @@ class PelaksanaanController extends Controller
             // Tambahkan pengalihan ke halaman tujuan setelah menyimpan nilai
             return redirect()->back()->with('success', 'Berhasil ditambahkan');
     }
-
-    
+    public function reset()
+    {
+        $reset = SiswaNilai::select('siswa.nama_siswa', 'kelas.nama_kelas', 'jurusan.nama_jurusan', 'jenis_ujian.nama_ujian', 'mapel.nama_mapel', 'siswa_nilai.*')
+        ->join('siswa', 'siswa.id_siswa', '=', 'siswa_nilai.id_siswa')
+        ->join('kelas', 'siswa_nilai.id_kelas', '=', 'kelas.id_kelas')
+        ->join('jurusan', 'siswa_nilai.id_jurusan', '=', 'jurusan.id_jurusan')
+        ->join('jenis_ujian', 'siswa_nilai.id_jenis', '=', 'jenis_ujian.id_jenis')
+        ->join('mapel', 'mapel.id_mapel', '=', 'siswa_nilai.id_mapel')
+        ->orderBy('siswa_nilai.id_siswa_nilai', 'desc')
+        ->get();
+        // dd($reset);
+        return view('data_pelaksanaan.reset.index', compact('reset'));
+    }
+    public function resetdestroy($idSiswaUjian)
+    {
+        SiswaNilai::where('id_siswa_nilai', $idSiswaUjian)
+        ->delete();
+        return redirect()->back()->with('success', 'Berhasil Dihapus');
+    }
 }

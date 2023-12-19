@@ -2,18 +2,10 @@
 
 namespace App\Http\Controllers;
 
-<<<<<<<< HEAD:app/Http/Controllers/MakananController.php
 use App\Models\Makanan;
-========
->>>>>>>> 680cd4c (first commit):app/Http/Controllers/TokenController.php
 use Illuminate\Http\Request;
-use App\Models\Token;
 
-<<<<<<<< HEAD:app/Http/Controllers/MakananController.php
 class MakananController extends Controller
-========
-class TokenController extends Controller
->>>>>>>> 680cd4c (first commit):app/Http/Controllers/TokenController.php
 {
     /**
      * Display a listing of the resource.
@@ -22,16 +14,11 @@ class TokenController extends Controller
      */
     public function index()
     {
-<<<<<<<< HEAD:app/Http/Controllers/MakananController.php
         $tipeMakanan = request('tipe_makanan'); // Ambil parameter 'tipe_makanan' dari URL
         $makanans = Makanan::when($tipeMakanan, function ($query) use ($tipeMakanan) {
             return $query->whereJsonContains('tipe_makanan', $tipeMakanan);
         })->get();
         return view('test.test', compact('makanans'));
-========
-        $token = Token::value('token');
-        return view ('token.index', compact('token'));
->>>>>>>> 680cd4c (first commit):app/Http/Controllers/TokenController.php
     }
 
     /**
@@ -102,12 +89,9 @@ class TokenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $token = $request->input('token');
-
-        Token::where('id', 1)->update(['token' => $token]);
-        return redirect()->back()->with('success', 'Token Berhasil Dibuat');
+        //
     }
 
     /**

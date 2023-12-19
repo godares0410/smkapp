@@ -14,21 +14,8 @@ use App\Models\SiswaMulai;
 use App\Models\SiswaNilai;
 use App\Models\SiswaUjian;
 use App\Models\JadwalUjian;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 use App\Models\AlokasiWaktu;
 use App\Models\SesiJadwalUjian;
-=======
->>>>>>> 9f5d545 (first commitu)
-=======
->>>>>>> 25eed0c (first commitz)
-=======
-=======
-use App\Models\AlokasiWaktu;
-use App\Models\SesiJadwalUjian;
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -48,9 +35,6 @@ class SiswasController extends Controller
             ->first();
 
         $today = Carbon::now();
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
         // $ujian = JadwalUjian::select('jadwal_ujian.*', 'mapel.nama_mapel', 'kelas.nama_kelas', 'bank_ujian.*', 'sesi_jadwal_ujian.id_jadwal_ujian as ujian_id', 'sesi_jadwal_ujian.id_sesi', 'sesi_jadwal_ujian.jam_mulai', 'sesi_jadwal_ujian.jam_selesai', 'sesi.nama_sesi', 'jenis_ujian.id_jenis')
         //     ->join('bank_ujian', 'bank_ujian.id_bank_ujian', '=', 'jadwal_ujian.id_bank_ujian')
         //     ->join('mapel', 'mapel.id_mapel', '=', 'bank_ujian.id_mapel')
@@ -63,38 +47,12 @@ class SiswasController extends Controller
 
 
             $ujian = JadwalUjian::select('jadwal_ujian.*', 'mapel.nama_mapel', 'kelas.nama_kelas', 'bank_ujian.*', 'sesi_jadwal_ujian.id_jadwal_ujian as ujian_id', 'sesi_jadwal_ujian.id_sesi', 'alokasi_waktu.jam_mulai', 'alokasi_waktu.jam_selesai', 'sesi.nama_sesi', 'jenis_ujian.id_jenis')
-=======
-        $ujian = JadwalUjian::select('jadwal_ujian.*', 'mapel.nama_mapel', 'kelas.nama_kelas', 'bank_ujian.*', 'sesi_jadwal_ujian.id_jadwal_ujian as ujian_id', 'sesi_jadwal_ujian.id_sesi', 'sesi_jadwal_ujian.jam_mulai', 'sesi_jadwal_ujian.jam_selesai', 'sesi.nama_sesi', 'jenis_ujian.id_jenis')
->>>>>>> 9f5d545 (first commitu)
-=======
-        $ujian = JadwalUjian::select('jadwal_ujian.*', 'mapel.nama_mapel', 'kelas.nama_kelas', 'bank_ujian.*', 'sesi_jadwal_ujian.id_jadwal_ujian as ujian_id', 'sesi_jadwal_ujian.id_sesi', 'sesi_jadwal_ujian.jam_mulai', 'sesi_jadwal_ujian.jam_selesai', 'sesi.nama_sesi', 'jenis_ujian.id_jenis')
->>>>>>> 25eed0c (first commitz)
-=======
-        $ujian = JadwalUjian::select('jadwal_ujian.*', 'mapel.nama_mapel', 'kelas.nama_kelas', 'bank_ujian.*', 'sesi_jadwal_ujian.id_jadwal_ujian as ujian_id', 'sesi_jadwal_ujian.id_sesi', 'sesi_jadwal_ujian.jam_mulai', 'sesi_jadwal_ujian.jam_selesai', 'sesi.nama_sesi', 'jenis_ujian.id_jenis')
-=======
-        // $ujian = JadwalUjian::select('jadwal_ujian.*', 'mapel.nama_mapel', 'kelas.nama_kelas', 'bank_ujian.*', 'sesi_jadwal_ujian.id_jadwal_ujian as ujian_id', 'sesi_jadwal_ujian.id_sesi', 'sesi_jadwal_ujian.jam_mulai', 'sesi_jadwal_ujian.jam_selesai', 'sesi.nama_sesi', 'jenis_ujian.id_jenis')
-        //     ->join('bank_ujian', 'bank_ujian.id_bank_ujian', '=', 'jadwal_ujian.id_bank_ujian')
-        //     ->join('mapel', 'mapel.id_mapel', '=', 'bank_ujian.id_mapel')
-        //     ->join('kelas', 'kelas.id_kelas', '=', 'bank_ujian.id_kelas')
-        //     ->join('jenis_ujian', 'jenis_ujian.id_jenis', '=', 'bank_ujian.id_jenis')
-        //     ->join('sesi_jadwal_ujian', 'sesi_jadwal_ujian.id_jadwal_ujian', '=', 'jadwal_ujian.id_jadwal_ujian')
-        //     ->join('sesi', 'sesi_jadwal_ujian.id_sesi', '=', 'sesi.id_sesi')
-        //     ->where('bank_ujian.id_kelas', $kelas)
-        //     ->get();
-
-
-            $ujian = JadwalUjian::select('jadwal_ujian.*', 'mapel.nama_mapel', 'kelas.nama_kelas', 'bank_ujian.*', 'sesi_jadwal_ujian.id_jadwal_ujian as ujian_id', 'sesi_jadwal_ujian.id_sesi', 'alokasi_waktu.jam_mulai', 'alokasi_waktu.jam_selesai', 'sesi.nama_sesi', 'jenis_ujian.id_jenis')
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
             ->join('bank_ujian', 'bank_ujian.id_bank_ujian', '=', 'jadwal_ujian.id_bank_ujian')
             ->join('mapel', 'mapel.id_mapel', '=', 'bank_ujian.id_mapel')
             ->join('kelas', 'kelas.id_kelas', '=', 'bank_ujian.id_kelas')
             ->join('jenis_ujian', 'jenis_ujian.id_jenis', '=', 'bank_ujian.id_jenis')
             ->join('sesi_jadwal_ujian', 'sesi_jadwal_ujian.id_jadwal_ujian', '=', 'jadwal_ujian.id_jadwal_ujian')
             ->join('sesi', 'sesi_jadwal_ujian.id_sesi', '=', 'sesi.id_sesi')
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
             ->join('alokasi_waktu', 'sesi_jadwal_ujian.id_alokasi_waktu', '=', 'alokasi_waktu.id_alokasi_waktu')
             ->where('bank_ujian.id_kelas', $kelas)
             ->get();
@@ -104,123 +62,66 @@ class SiswasController extends Controller
         $nilai = SiswaNilai::where('id_siswa', $idSiswa)->first();
 
         return view('siswa.ujian.indux', compact('ujian', 'kerjakan', 'sesi', 'nilai'));
-=======
-=======
->>>>>>> 25eed0c (first commitz)
-=======
->>>>>>> e8f7dd6 (first commit)
-            ->where('bank_ujian.id_kelas', $kelas)
-            ->get();
-
-        $kerjakan = SiswaUjian::where('id_siswa', $idSiswa)->first();
-        $nilai = SiswaNilai::where('id_siswa', $idSiswa)->first();
-
-        return view('siswa.ujian.index', compact('ujian', 'kerjakan', 'sesi', 'nilai'));
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 9f5d545 (first commitu)
-=======
->>>>>>> 25eed0c (first commitz)
-=======
-=======
-            ->join('alokasi_waktu', 'sesi_jadwal_ujian.id_alokasi_waktu', '=', 'alokasi_waktu.id_alokasi_waktu')
-            ->where('bank_ujian.id_kelas', $kelas)
-            ->get();
-
-
-        $kerjakan = SiswaUjian::where('id_siswa', $idSiswa)->first();
-        $nilai = SiswaNilai::where('id_siswa', $idSiswa)->first();
-
-        return view('siswa.ujian.indux', compact('ujian', 'kerjakan', 'sesi', 'nilai'));
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
     }
     public function dashboard()
     {
         return view('siswa.dashboard');
     }
-    public function store(Request $request)
-    {
-        // dd($request->all());
-        $tokenInput = $request->input('tokenInput');
-        $token = Token::where('token', $tokenInput)->first();
-        // $mula = $request->input('siswa_mulai');
+    // public function store(Request $request)
+    // {
+    //     // dd($request->all());
+    //     $tokenInput = $request->input('tokenInput');
+    //     $token = Token::where('token', $tokenInput)->first();
+    //     // $mula = $request->input('siswa_mulai');
 
-        if ($token) {
-            $idSiswa = Auth::guard('siswa')->user()->id_siswa;
-            $idBankSoal = $request->input('idbank');
-            $idUjian = $request->input('idUjian');
-            $jumlahSoal = $request->input('jumlahSoal');
-            $acakSoal = $request->input('acakSoal');
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-            // $idBank 
-=======
->>>>>>> 9f5d545 (first commitu)
-=======
->>>>>>> 25eed0c (first commitz)
-=======
-=======
-            // $idBank 
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
+    //     if ($token) {
+    //         $idSiswa = Auth::guard('siswa')->user()->id_siswa;
+    //         $idBankSoal = $request->input('idbank');
+    //         $idUjian = $request->input('idUjian');
+    //         $jumlahSoal = $request->input('jumlahSoal');
+    //         $acakSoal = $request->input('acakSoal');
+    //         // $idBank 
 
-            // Convert JSON string to an array
-            $idBankSoalArray = json_decode($idBankSoal);
+    //         // Convert JSON string to an array
+    //         $idBankSoalArray = json_decode($idBankSoal);
 
-            // Retrieve soal based on conditions
-            $soalQuery = DB::table('soal')
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                ->where('id_bank_soal', $idBankSoalArray);
-=======
-                ->whereIn('id_bank_soal', $idBankSoalArray);
->>>>>>> 9f5d545 (first commitu)
-=======
-                ->whereIn('id_bank_soal', $idBankSoalArray);
->>>>>>> 25eed0c (first commitz)
-=======
-                ->whereIn('id_bank_soal', $idBankSoalArray);
-=======
-                ->where('id_bank_soal', $idBankSoalArray);
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
+    //         // Retrieve soal based on conditions
+    //         $soalQuery = DB::table('soal')
+    //             ->where('id_bank_soal', $idBankSoalArray);
 
-            if ($acakSoal == 1) {
-                $soalQuery->inRandomOrder();
-            }
+    //         if ($acakSoal == 1) {
+    //             $soalQuery->inRandomOrder();
+    //         }
 
-            $soalRecords = $soalQuery->take($jumlahSoal)->get();
+    //         $soalRecords = $soalQuery->take($jumlahSoal)->get();
 
-            // Create an array to store multiple records
-            $siswaData = [];
+    //         // Create an array to store multiple records
+    //         $siswaData = [];
 
-            // Add records to the array
-            foreach ($soalRecords as $soal) {
-                $siswaData[] = [
-                    'id_jadwal_ujian' => $idUjian,
-                    'id_siswa' => $idSiswa,
-                    'id_soal' => $soal->id_soal,
-                    // 'kunci' => $soal->jawaban,
-                ];
-            }
-            // Save all records in the array to the database
-            SiswaUjian::insert($siswaData);
+    //         // Add records to the array
+    //         foreach ($soalRecords as $soal) {
+    //             $siswaData[] = [
+    //                 'id_jadwal_ujian' => $idUjian,
+    //                 'id_siswa' => $idSiswa,
+    //                 'id_soal' => $soal->id_soal,
+    //                 // 'kunci' => $soal->jawaban,
+    //             ];
+    //         }
+    //         // Save all records in the array to the database
+    //         SiswaUjian::insert($siswaData);
 
-            $mulai = new SiswaMulai;
-            $mulai->id_jadwal_ujian = $idUjian;
-            $mulai->id_siswa = $idSiswa;
-            // $mulai->mulai = $request->mula;
-            $mulai->save();
+    //         $mulai = new SiswaMulai;
+    //         $mulai->id_jadwal_ujian = $idUjian;
+    //         $mulai->id_siswa = $idSiswa;
+    //         // $mulai->mulai = $request->mula;
+    //         $mulai->save();
 
-            $kode = Crypt::encryptString($idUjian);
-            return redirect('/detail/' . $kode)->with('sukses', 'Data berhasil ditambahkan');
-        } else {
-            return redirect()->back()->with('error', 'Token Salah!');
-        }
-    }
+    //         $kode = Crypt::encryptString($idUjian);
+    //         return redirect('/detail/' . $kode)->with('sukses', 'Data berhasil ditambahkan');
+    //     } else {
+    //         return redirect()->back()->with('error', 'Token Salah!');
+    //     }
+    // }
     public function mengerjakan(Request $request)
     {
         // Dapatkan id_siswa dari user yang login
@@ -234,9 +135,6 @@ class SiswasController extends Controller
             ->where('id_siswa', $idSiswa)
             ->orderByDesc('id_siswa_ujian')
             ->get();
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
         $suul = JadwalUjian::where('id_jadwal_ujian', $idUjian)
         ->value('id_bank_ujian');
         $bs = BankUjian::select('id_bank_soal')
@@ -254,47 +152,6 @@ class SiswasController extends Controller
         $idUj = JadwalUjian::where('id_jadwal_ujian', $idUjian)
             ->value('id_jadwal_ujian');
         return view('siswa.kerjakan.index', compact('soal', 'ujian', 'idUj'))->with('success', 'Berhasil Masuk');
-=======
-=======
->>>>>>> 25eed0c (first commitz)
-=======
->>>>>>> e8f7dd6 (first commit)
-
-        // Gunakan $idSoals untuk mengambil data dari tabel soal atau tabel lainnya
-        // $soal = Soal::whereIn('id_soal', $idSoals->pluck('id_soal'))->get();
-        $soal = Soal::join('siswa_ujian', 'soal.id_soal', '=', 'siswa_ujian.id_soal')
-            ->whereIn('soal.id_soal', $idSoals->pluck('id_soal'))
-            ->get(['soal.*', 'siswa_ujian.jawaban as soal_jawaban']);
-        $ujian = BankUjian::where('id_bank_ujian', $idUjian)->join('mapel', 'bank_ujian.id_mapel', '=', 'mapel.id_mapel')->select('bank_ujian.acak_opsi', 'bank_ujian.jumlah_opsi', 'mapel.nama_mapel')->first();
-        $idUj = JadwalUjian::where('id_jadwal_ujian', $idUjian)
-            ->value('id_jadwal_ujian');
-        return view('siswa.kerjakan.index', compact('soal', 'ujian', 'idUj'))->with('sukses', 'Berhasil Masuk');
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 9f5d545 (first commitu)
-=======
->>>>>>> 25eed0c (first commitz)
-=======
-=======
-        $suul = JadwalUjian::where('id_jadwal_ujian', $idUjian)
-        ->value('id_bank_ujian');
-        $bs = BankUjian::select('id_bank_soal')
-        ->get();
-
-        // Gunakan $idSoals untuk mengambil data dari tabel soal atau tabel lainnya
-        $soal = Soal::join('siswa_ujian', 'soal.id_soal', '=', 'siswa_ujian.id_soal')
-            ->whereIn('soal.id_soal', $idSoals->pluck('id_soal'))
-            ->where('siswa_ujian.id_siswa', $idSiswa)
-            ->get(['soal.*', 'siswa_ujian.jawaban as soal_jawaban']);
-        $ujian = BankUjian::where('id_bank_ujian', $suul)
-        ->join('mapel', 'bank_ujian.id_mapel', '=', 'mapel.id_mapel')
-        // ->join('bank_soal', 'bank_ujian.id_bank_soal', '=', 'bank_soal.id_bank_soal')
-        ->select('bank_ujian.acak_opsi', 'bank_ujian.jumlah_opsi', 'mapel.nama_mapel', 'mapel.kode_mapel', 'bank_ujian.id_bank_soal')->first();
-        $idUj = JadwalUjian::where('id_jadwal_ujian', $idUjian)
-            ->value('id_jadwal_ujian');
-        return view('siswa.kerjakan.index', compact('soal', 'ujian', 'idUj'))->with('success', 'Berhasil Masuk');
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
     }
     public function update(Request $request)
 
@@ -371,22 +228,7 @@ class SiswasController extends Controller
             // Logout siswa
             auth('siswa')->logout();
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
             return response()->json(['success' => true, 'message' => 'Akun Anda diblokir']);
-=======
-            return response()->json(['success' => true, 'message' => 'Status updated successfully']);
->>>>>>> 9f5d545 (first commitu)
-=======
-            return response()->json(['success' => true, 'message' => 'Status updated successfully']);
->>>>>>> 25eed0c (first commitz)
-=======
-            return response()->json(['success' => true, 'message' => 'Status updated successfully']);
-=======
-            return response()->json(['success' => true, 'message' => 'Akun Anda diblokir']);
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'Failed to update status']);
         }
@@ -413,22 +255,7 @@ class SiswasController extends Controller
             $id_siswa = Auth::guard('siswa')->user()->id_siswa;
             $id_kelas = Auth::guard('siswa')->user()->id_kelas;
             $id_jurusan = Auth::guard('siswa')->user()->id_jurusan;
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
             $id_jadwal = $request->input('idUj');
-=======
-            $id_jadwal = $request->idUj;
->>>>>>> 9f5d545 (first commitu)
-=======
-            $id_jadwal = $request->idUj;
->>>>>>> 25eed0c (first commitz)
-=======
-            $id_jadwal = $request->idUj;
-=======
-            $id_jadwal = $request->input('idUj');
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
 
             $totalPoint = SiswaUjian::where('id_jadwal_ujian', $id_jadwal)
                 ->where('id_siswa', $id_siswa)
@@ -469,4 +296,64 @@ class SiswasController extends Controller
             return back()->withError($e->getMessage())->withInput();
         }
     }
+    public function store(Request $request)
+    {
+    $tokenInput = $request->input('tokenInput');
+    $token = Token::where('token', $tokenInput)->first();
+
+    if ($token) {
+        $idSiswa = Auth::guard('siswa')->user()->id_siswa;
+        $idBankSoal = $request->input('idbank');
+        $idUjian = $request->input('idUjian');
+        $jumlahSoal = $request->input('jumlahSoal');
+        $acakSoal = $request->input('acakSoal');
+
+        $idBankSoalArray = json_decode($idBankSoal);
+
+        $soalQuery = DB::table('soal')
+            ->whereIn('id_bank_soal', $idBankSoalArray);
+
+        if ($acakSoal == 1) {
+            $soalQuery->inRandomOrder();
+        }
+
+        $soalRecords = $soalQuery->take($jumlahSoal)->get();
+
+        $siswaData = [];
+
+        foreach ($soalRecords as $soal) {
+            // Check if the record already exists
+            $existingRecord = SiswaUjian::where([
+                'id_jadwal_ujian' => $idUjian,
+                'id_siswa' => $idSiswa,
+                'id_soal' => $soal->id_soal,
+            ])->first();
+
+            if (!$existingRecord) {
+                // If the record doesn't exist, add it to the array
+                $siswaData[] = [
+                    'id_jadwal_ujian' => $idUjian,
+                    'id_siswa' => $idSiswa,
+                    'id_soal' => $soal->id_soal,
+                ];
+            }
+        }
+
+        // Insert only if there are new records to add
+        if (!empty($siswaData)) {
+            SiswaUjian::insert($siswaData);
+        }
+
+        $mulai = new SiswaMulai;
+        $mulai->id_jadwal_ujian = $idUjian;
+        $mulai->id_siswa = $idSiswa;
+        $mulai->save();
+
+        $kode = Crypt::encryptString($idUjian);
+        return redirect('/detail/' . $kode)->with('sukses', 'Data berhasil ditambahkan');
+    } else {
+        return redirect()->back()->with('error', 'Token Salah!');
+    }
+}
+
 }

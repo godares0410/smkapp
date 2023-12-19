@@ -20,29 +20,9 @@ class SoalController extends Controller
     {
         $id_bank_soal = $request->input('id_bank_soal');
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
         $bank = BankSoal::where('bank_soal.id_bank_soal', $id_bank_soal)
         ->join('mapel', 'bank_soal.id_mapel', '=', 'mapel.id_mapel')
             ->select('bank_soal.nama_bank_soal', 'bank_soal.id_bank_soal', 'mapel.kode_mapel')
-=======
-        $bank = BankSoal::where('id_bank_soal', $id_bank_soal)
-            ->select('nama_bank_soal', 'id_bank_soal')
->>>>>>> 9f5d545 (first commitu)
-=======
-        $bank = BankSoal::where('id_bank_soal', $id_bank_soal)
-            ->select('nama_bank_soal', 'id_bank_soal')
->>>>>>> 25eed0c (first commitz)
-=======
-        $bank = BankSoal::where('id_bank_soal', $id_bank_soal)
-            ->select('nama_bank_soal', 'id_bank_soal')
-=======
-        $bank = BankSoal::where('bank_soal.id_bank_soal', $id_bank_soal)
-        ->join('mapel', 'bank_soal.id_mapel', '=', 'mapel.id_mapel')
-            ->select('bank_soal.nama_bank_soal', 'bank_soal.id_bank_soal', 'mapel.kode_mapel')
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
             ->first();
         $soal = Soal::where('id_bank_soal', $id_bank_soal)
             ->get();
@@ -153,22 +133,7 @@ class SoalController extends Controller
                 'pil_b' => $row[3],
                 'pil_c' => $row[4],
                 'pil_d' => $row[5],
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
                 'pil_e' => $row[6] ?? null,
-=======
-                'pil_e' => $row[6],
->>>>>>> 9f5d545 (first commitu)
-=======
-                'pil_e' => $row[6],
->>>>>>> 25eed0c (first commitz)
-=======
-                'pil_e' => $row[6],
-=======
-                'pil_e' => $row[6] ?? null,
->>>>>>> 680cd4c (first commit)
->>>>>>> e8f7dd6 (first commit)
                 'jawaban' => $fileName, // Store the modified file name in 'jawaban' field
                 'file_1' => $row[9], // Keep the original file name in 'file_1' field
             ]);

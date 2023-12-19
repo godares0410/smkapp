@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\Jurusan;
+use App\Models\SiswaKartu;
 use App\Imports\SiswaImport;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,33 +20,21 @@ class SiswaController extends Controller
 {
     public function index()
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
         
         $siswa = Siswa::select('siswa.*', 'kelas.nama_kelas', 'jurusan.nama_jurusan', 'siswa_kartu.password as password_kartu')
             ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
             ->join('jurusan', 'siswa.id_jurusan', '=', 'jurusan.id_jurusan')
             ->join('siswa_kartu', 'siswa.id_siswa', '=', 'siswa_kartu.id_siswa_kartu')
-=======
-        $siswa = Siswa::select('siswa.*', 'kelas.nama_kelas', 'jurusan.nama_jurusan')
-            ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
-            ->join('jurusan', 'siswa.id_jurusan', '=', 'jurusan.id_jurusan')
->>>>>>> 9f5d545 (first commitu)
-=======
-        $siswa = Siswa::select('siswa.*', 'kelas.nama_kelas', 'jurusan.nama_jurusan')
-            ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
-            ->join('jurusan', 'siswa.id_jurusan', '=', 'jurusan.id_jurusan')
->>>>>>> 25eed0c (first commitz)
             ->get();
-=======
-        $siswa = Siswa::all();
->>>>>>> e8f7dd6 (first commit)
         $kelas = Kelas::all();
         $jurusan = Jurusan::all();
         return view('data_umum.siswa.index', compact('siswa', 'kelas', 'jurusan'));
     }
-
+    public function dashboard()
+    {
+        // $guru = Guru::all();
+        return view('siswa.dashboard');
+    }
     public function store(Request $request)
     {
 
@@ -70,9 +60,11 @@ class SiswaController extends Controller
 
         $siswa = new Siswa;
         $siswa->nama_siswa = $request->nama_siswa;
-        $siswa->kelas = $request->kelas;
-        $siswa->jurusan = $request->jurusan;
-        $siswa->rombel = $request->rombel ?? $request->kelas . ' ' . $request->jurusan;
+        $siswa->id_kelas = $request->kelas;
+        $siswa->id_jurusan = $request->jurusan;
+        $siswa->username = $request->username;
+        $siswa->password = bcrypt($request->password);
+        // $siswa->rombel = $request->rombel ?? $request->kelas . ' ' . $request->jurusan;
         // $siswa->foto = $fotoName;
 
         if ($request->hasFile('foto')) {
@@ -83,13 +75,17 @@ class SiswaController extends Controller
             $siswa->foto = $namaFoto;
         }
         $siswa->save();
-
+        $id_siswa = $siswa->id_siswa;
         if (session()->has('error')) {
             $errorMessage = session()->get('error');
             session()->forget('error');
             return redirect()->back()->with('error', $errorMessage);
         }
-
+        $kartu = new SiswaKartu;
+        $kartu->id_siswa = $id_siswa;
+        $kartu->username = $request->username;
+        $kartu->password = $request->password;
+        $kartu->save();
         // Tampilkan pesan success
         return redirect()->route('siswa.index')->with('success', 'Data siswa berhasil ditambahkan.');
     }
@@ -98,48 +94,29 @@ class SiswaController extends Controller
 
     public function import(Request $request)
     {
+        // Validasi file Excel
         $validator = Validator::make($request->all(), [
             'file' => 'required|mimes:xls,xlsx',
-        ], [
-            'file.required' => 'File tidak boleh kosong.',
-            'file.mimes' => 'Format file salah! Masukkan File Sesuai Format',
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('siswa.index')->withErrors($validator);
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        try {
-            Excel::import(new SiswaImport, $request->file('file'));
+        // Ambil file yang diupload
+        $file = $request->file('file');
 
-<<<<<<< HEAD
         // Baca file Excel
         $data = \Excel::toArray([], $file);
 
         foreach (array_slice($data[0], 1) as $row) {
             $siswaId = DB::table('siswa')->insertGetId([
-<<<<<<< HEAD
-<<<<<<< HEAD
                 'nama_siswa' => ucwords(strtolower($row[3])),
-=======
-                'nama_siswa' => $row[3],
->>>>>>> 9f5d545 (first commitu)
-=======
-                'nama_siswa' => $row[3],
->>>>>>> 25eed0c (first commitz)
                 'id_kelas' => $row[4],
                 'id_jurusan' => $row[6],
                 'username' => $row[9],
                 'password' => bcrypt($row[10]),
-<<<<<<< HEAD
-<<<<<<< HEAD
                 'foto' => $row[11],
-=======
-                'foto' => $row[6],
->>>>>>> 9f5d545 (first commitu)
-=======
-                'foto' => $row[6],
->>>>>>> 25eed0c (first commitz)
                 'status' => $row[12] ?? 1,
             ]);
             DB::table('siswa_kartu')->insert([
@@ -151,52 +128,25 @@ class SiswaController extends Controller
                 'id_siswa' => $siswaId,
                 'id_sesi' => $row[7],
             ]);
-<<<<<<< HEAD
-<<<<<<< HEAD
             DB::table('siswa_ruang')->insert([
                 'id_siswa' => $siswaId,
                 'id_ruang' => $row[8],
             ]);
-=======
->>>>>>> 9f5d545 (first commitu)
-=======
->>>>>>> 25eed0c (first commitz)
-=======
-            return redirect()->route('siswa.index')->with('success', 'Data siswa berhasil diimport.');
-        } catch (\Exception $e) {
-            return redirect()->route('siswa.index')->with('error', 'Terjadi kesalahan saat mengimpor data: ' . $e->getMessage());
->>>>>>> e8f7dd6 (first commit)
         }
+        // Redirect atau berikan respons sukses
+        return redirect()->back()->with('success', 'Import berhasil.');
     }
+
     public function update(Request $request, $id)
     {
         $siswa = Siswa::where('id_siswa', $id);
         $data = [
             'nama_siswa'     => $request->nama_siswa,
-<<<<<<< HEAD
             'id_kelas'   => $request->kelas,
             'id_jurusan'   => $request->jurusan,
-=======
-            'kelas'   => $request->kelas,
-            'jurusan'   => $request->jurusan,
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 9f5d545 (first commitu)
-=======
->>>>>>> 25eed0c (first commitz)
             'username'   => $request->username,
             'password'   => bcrypt($request->password),
-=======
->>>>>>> e8f7dd6 (first commit)
         ];
-
-        // if ($request->hasFile('foto')) {
-        //     $fotoLama = $siswa->foto;
-        //     if ($fotoLama) {
-        //         // Hapus foto lama dari penyimpanan
-        //         Storage::delete(public_path('img/siswa'), $fotoLama);
-        //     }
-        // }
 
         $siswu = Siswa::where('id_siswa', $id)->first();
         $fotoLama = $siswu->foto;
@@ -213,12 +163,19 @@ class SiswaController extends Controller
             $data['foto'] = $namaFoto;
         }
         $siswa->update($data);
+
+        $kartu = SiswaKartu::where('id_siswa', $id);
+        $data2 = [
+            'username'   => $request->username,
+            'password'   => $request->password,
+        ];
+        $kartu->update($data2);
+
         return redirect()->route('siswa.index')->with('success', 'Data siswa berhasil di edit.');
     }
 
-    public function destroy()
+    public function destroy($id)
     {
-<<<<<<< HEAD
         // Temukan BankSoal berdasarkan ID
         $siswa = Siswa::findOrFail($id);
         $siswa->delete();
@@ -226,8 +183,6 @@ class SiswaController extends Controller
         $kartu->delete();
 
         return redirect()->back()->with('success', 'Data Siswa Berhasil Dihapus');
-<<<<<<< HEAD
-<<<<<<< HEAD
     }
     public function blokir($id)
     {
@@ -245,12 +200,5 @@ class SiswaController extends Controller
         $siswa->save();
 
         return redirect()->back()->with('success', 'Siswa Berhasil Diaktifkan');
-=======
->>>>>>> 9f5d545 (first commitu)
-=======
->>>>>>> 25eed0c (first commitz)
-=======
-        //
->>>>>>> e8f7dd6 (first commit)
     }
 }
