@@ -48,19 +48,19 @@
                     @foreach ($ujian as $data)
                         {{-- @if (in_array(Auth::guard('siswa')->user()->id_jurusan, json_decode($data->id_jurusan))) --}}
                         @php
-                        $jm_start = \App\Models\SesiJadwalUjian::where('sesi_jadwal_ujian.id_sesi', $sesi->id_sesi)
-                                        ->where('sesi_jadwal_ujian.id_jadwal_ujian', $data->id_jadwal_ujian)
-                                        ->join('alokasi_waktu', 'alokasi_waktu.id_alokasi_waktu', '=', 'sesi_jadwal_ujian.id_alokasi_waktu')
-                                        ->select('sesi_jadwal_ujian.id_sesi', 'sesi_jadwal_ujian.id_jadwal_ujian', 'alokasi_waktu.jam_mulai')
-                                        ->first();
-                                        
+                            $jm_start = \App\Models\SesiJadwalUjian::where('sesi_jadwal_ujian.id_sesi', $sesi->id_sesi)
+                                ->where('sesi_jadwal_ujian.id_jadwal_ujian', $data->id_jadwal_ujian)
+                                ->join('alokasi_waktu', 'alokasi_waktu.id_alokasi_waktu', '=', 'sesi_jadwal_ujian.id_alokasi_waktu')
+                                ->select('sesi_jadwal_ujian.id_sesi', 'sesi_jadwal_ujian.id_jadwal_ujian', 'alokasi_waktu.jam_mulai')
+                                ->first();
                         @endphp
                         {{-- @dd($data->id_sesi) --}}
                         @if (in_array(Auth::guard('siswa')->user()->id_jurusan, json_decode($data->id_jurusan)) &&
-                                $data->id_jadwal_ujian == $data->ujian_id &&  $today->format('Y-m-d') >= $data->tgl_mulai &&
-                                
-                                $today->format('Y-m-d') <= $data->tgl_selesai && $jm_start->jam_mulai == $data->jam_mulai && $data->id_sesi == $jm_start->id_sesi)
-                            
+                                $data->id_jadwal_ujian == $data->ujian_id &&
+                                $today->format('Y-m-d') >= $data->tgl_mulai &&
+                                $today->format('Y-m-d') <= $data->tgl_selesai &&
+                                $jm_start->jam_mulai == $data->jam_mulai &&
+                                $data->id_sesi == $jm_start->id_sesi)
                             <div class="col-md-6 col-lg-4" id="ujian_{{ $data->id_jadwal_ujian }}">
                                 <div class="box box-success box-solid">
                                     <div class="box-header with-border">
@@ -105,7 +105,7 @@
                                                     </span>
                                                 </th>
                                             </tr>
-                                            
+
                                             <tr>
                                                 <th>Tanggal Pelaksanaan</th>
                                                 <th>:</th>
@@ -199,12 +199,15 @@
                                                     Token</button>
                                             </div> --}}
                                             <div class="containerz col-md-auto text-center" id="masukkanTokenSection">
-                <button class="btn btn-primary" onclick="toggleElements('{{ $data->id_jadwal_ujian }}')">Masukkan Token</button>
-            </div>
+                                                <button class="btn btn-primary"
+                                                    onclick="toggleElements('{{ $data->id_jadwal_ujian }}')">Masukkan
+                                                    Token</button>
+                                            </div>
 
                                             <form action="{{ route('siswas.store') }}" method="POST">
                                                 @csrf
-                                                <div class="containerz mt-5 text-center" id="tokenForm_{{ $data->id_jadwal_ujian }}" style="display: none">
+                                                <div class="containerz mt-5 text-center"
+                                                    id="tokenForm_{{ $data->id_jadwal_ujian }}" style="display: none">
                                                     <h5><b>Token :</b></h5>
                                                     <input type="text" id="tokenInput" name="tokenInput">
                                                     {{-- <input type="hidden" id="siswa_mulai" name="siswa_mulai"
@@ -315,37 +318,36 @@
         // Baru
 
         function toggleElements(ujianId) {
-    var tokenForms = document.querySelectorAll('[id^="tokenForm_"]');
-    var masukkanTokenBtn = document.getElementById('masukkanTokenSection');
-    var tokenInput = document.getElementById('tokenInput');
+            var tokenForms = document.querySelectorAll('[id^="tokenForm_"]');
+            var masukkanTokenBtn = document.getElementById('masukkanTokenSection');
+            var tokenInput = document.getElementById('tokenInput');
 
-    // Hide all tokenForm divs
-    tokenForms.forEach(function(form) {
-        form.style.display = 'none';
-    });
+            // Hide all tokenForm divs
+            tokenForms.forEach(function(form) {
+                form.style.display = 'none';
+            });
 
-    // Show the selected tokenForm div
-    var selectedTokenForm = document.getElementById('tokenForm_' + ujianId);
-    selectedTokenForm.style.display = 'block';
-    masukkanTokenBtn.style.display = 'none';
-    tokenInput.focus();
+            // Show the selected tokenForm div
+            var selectedTokenForm = document.getElementById('tokenForm_' + ujianId);
+            selectedTokenForm.style.display = 'block';
+            masukkanTokenBtn.style.display = 'none';
+            tokenInput.focus();
 
-    // Log the ujianId for demonstration purposes
-    console.log('Ujian ID:', ujianId);
-}
+            // Log the ujianId for demonstration purposes
+            console.log('Ujian ID:', ujianId);
+        }
 
 
-function startExam() {
-    var tokenForm = document.getElementById('tokenForm');
-    var masukkanTokenBtn = document.getElementById('masukkanTokenSection');
-    var tokenInput = document.getElementById('tokenInput');
+        function startExam() {
+            var tokenForm = document.getElementById('tokenForm');
+            var masukkanTokenBtn = document.getElementById('masukkanTokenSection');
+            var tokenInput = document.getElementById('tokenInput');
 
-    // Lakukan sesuatu saat tombol "Mulai Ujian" ditekan
+            // Lakukan sesuatu saat tombol "Mulai Ujian" ditekan
 
-    // Contoh: Sembunyikan formulir dan tampilkan tombol kembali
-    tokenForm.style.display = 'none';
-    masukkanTokenBtn.style.display = 'block';
-}
-
+            // Contoh: Sembunyikan formulir dan tampilkan tombol kembali
+            tokenForm.style.display = 'none';
+            masukkanTokenBtn.style.display = 'block';
+        }
     </script>
 @endpush

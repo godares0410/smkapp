@@ -78,7 +78,7 @@
                                         @csrf
                                         <input type="hidden" id="id_ujian" name="id_ujian"
                                             value="{{ $data->id_jadwal_ujian }}">
-                                            <button class="btn btn-primary btn-block" type="submit">Mulai</button>
+                                        <button class="btn btn-primary btn-block" type="submit">Mulai</button>
                                     </form>
                                 </div>
                             </div>
