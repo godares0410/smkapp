@@ -26,7 +26,7 @@ class WebsiteController extends Controller
             // 'nama_siswa' => 'required',
             // 'kelas' => 'required',
             // 'jurusan' => 'required',
-            'foto' => 'image|mimes:jpeg,png,jpg',
+            // 'foto' => 'image|mimes:jpeg,png,jpg',
         ]);
 
         if ($validator->fails()) {
@@ -48,7 +48,7 @@ class WebsiteController extends Controller
             $foto = $request->file('foto');
             // $namaFoto = $foto->getClientOriginalName();
             $namaFoto = $request->nama_siswa . '_' . time() . '.' . $request->foto->extension();
-            $foto->move(public_path('img/website/landing'), $namaFoto);
+            $foto->move(public_path('img/website/logo'), $namaFoto);
             $web->foto = $namaFoto;
         }
         $web->save();

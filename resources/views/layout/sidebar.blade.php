@@ -225,6 +225,20 @@
                                     E-Learning</a></li>
                         </ul>
                     </li>
+                    <li class="@yield('assesmen') treeview">
+                        <a href="#">
+                            <i class="fa fa-edit"></i>
+                            <span>Kelas</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="@yield('assesmen-active')"><a href="{{ route('siswas.absen') }}"><i
+                                        class="fa fa-circle-o"></i>
+                                    Absen</a></li>
+                        </ul>   
+                    </li>
                 @endif
         </section>
         <!-- /.sidebar -->

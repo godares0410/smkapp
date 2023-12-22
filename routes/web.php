@@ -153,6 +153,7 @@ Route::middleware('auth.guru')->get('/login', function () {
 Route::group(['middleware' => ['auth:siswa', 'checkUserStatus']], function () {
     Route::get('/menu', [SiswasController::class, 'dashboard'])->name('siswa.dashboard');
     Route::get('/assesmen', [SiswasController::class, 'index'])->name('siswas.index');
+    Route::get('/absen', [SiswasController::class, 'absen'])->name('siswas.absen');
     Route::get('/detail/{kode}', [SiswasController::class, 'detail'])->name('siswas.detail');
     Route::post('/exam', [SiswasController::class, 'mengerjakan'])->name('siswas.mengerjakan');
     Route::post('/exams', [SiswasController::class, 'mengerjakans'])->name('siswas.mengerjakans');

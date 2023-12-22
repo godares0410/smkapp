@@ -355,5 +355,8 @@ class SiswasController extends Controller
         return redirect()->back()->with('error', 'Token Salah!');
     }
 }
-
+public function absen()
+{
+    return view('siswa.absen.index');
+}
 }

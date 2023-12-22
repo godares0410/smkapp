@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>SMK Sabilillah</title>
     {{-- My CSS --}}
-    <link rel="stylesheet" href="{{ asset('css/stylenew.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/styleweb.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -20,8 +20,8 @@
     <header>
         <div class="navbar">
             <div class="logo">
-                <img src="{{ asset('img/bank_soal/website/logo/_1702460950.png') }}" alt="">
-                <a href="">SMK Sabilillah</a>
+                <img src="{{ asset('img/website/logo/_1703127569.svg') }}" alt="">
+                {{-- <a href="">SMK Sabilillah</a> --}}
             </div>
             <ul class="links">
                 <li><a href="beranda">Beranda</a></li>
@@ -69,53 +69,54 @@
         </div>
         <div class="konten">
             <div class="profile" id="profile">
-                <h2>Profil SMK Sabilillah</h2>
-                <p>Merupakan salah satu SMK yang difasilitasi oleh Direktorat
-                    Jenderal Vokasi Kementerian Pendidikan dan Kebudayaan melalui Direktorat Sekolah Menengah
-                    Kejuruan untuk dikembangkan menjadi SMK sebagai Pusat Keunggulan (Center Of Excellent)
-                    Kerjasama Luar Negeri. Pegembangan tersebut difokuskan pada peningkatan kualitas pendidikan SMK
-                    sebagai pusat keunggulan (Center of Excellence = COE) yang nantinya dapat menjadi Sekolah
-                    Penggerak yang mampu mendemonstrasikan kepemimpinan pembelajaran (instructional leadership)
-                    terutama dari kepala sekolah beserta guru di dalamnya.</p>
-                <div class="video-container">
+          <div class="box-profil">
+                <div class="boxtop">
+                  <div class="logo">
+                      <a href="">Profile</a>
+                      <img src="{{ asset('img/website/logo/1.svg') }}" alt="">
+                      <a href="">Visi</a>
+                      <a href="" style="margin-left : -10px">Misi</a>
+                  </div>
+                    <div class="boxp">
+                            <h2>Profil SMK Sabilillah</h2>
+                            <div class="boxpr">
+                            <p>
+                                SMK Sabilillah merupakan salah satu SMK yang terpilih menjadi SMK Pusat Keunggulan oleh Direktorat Jenderal Vokasi Kementerian Pendidikan dan Kebudayaan melalui Direktorat Sekolah Menengah Kejuruan.
+                            </p>
+                            <p>
+                                Pegembangan tersebut difokuskan pada peningkatan kualitas pendidikan SMK sebagai pusat keunggulan (Center of Excellence = COE) yang dapat menjadi Sekolah Penggerak.  
+                            </p>
+                            <p> 
+                                SMK Sabilillah memiliki tujuan utama yakni memutus mata rantai kemiskinan melalui lembaga pendidikan serta pelatihan profesional dengan memiliki daya saing ditengah masyarakat miskin, supaya menjadi pengusaha handal dalam menaikkan taraf hidup bermasyarakat
+                            </p>
+                        </div>
+                        </div>
+                    </div>
+            <div class="video-container">
+              <div class="boxframe">
+                <div class="lbl">
+                  <h1>Video Profil</h1>
+                </div>
+                <div class="bxfr">
                     <iframe src="https://www.youtube.com/embed/mkpa_Menlf4" frameborder="0" allowfullscreen></iframe>
-                    <iframe src="https://www.youtube.com/embed/553DJSCg-5Q" frameborder="0" allowfullscreen></iframe>
-                </div>
+                  </div>
+              </div>
+            <div class="boxframe">
+              <div class="lbl">
+                <h1>Film SMK</h1>
+              </div>
+              <div class="bxfr">
+              <iframe
+                src="https://www.youtube.com/embed/553DJSCg-5Q"
+                frameborder="0"
+                allowfullscreen
+              ></iframe>
             </div>
-            <div class="visimisi" id="visimisi">
-            <div class="boxed">
-                    <div class="box">
-                        <h3>Visi</h3>
-                        <p>TERWUJUDNYA TAMATAN YANG BERKAH (BERAKHLAK MULIA, ENTERPRENEUR, RELIGIUS, KREATIF, AKTIF DAN HANDAL)</p>
-                    </div>
-                    <div class="box">
-                        <h3>Visi</h3>
-                        <ul>
-                            <li>1. Mewujudkan Akhlaqul Karimah bagi seluruh warga sekolah sesuai dengan norma agama dan budaya bangsa</li>
-                            <li>2. Mewujudkan peserta didik yang berwawasan entrepreneurship, kompeten, dan profesional</li>
-                            <li>3. Menerapkan religiositas dalam proses pendidikan yang beriman, bertaqwa, dan berbudi luhur</li>
-                            <li>4. Mengembangkan sikap kreatif dalam berbagai inovasi kedalam diri peserta didik</li>
-                            <li>5. Menciptakan karakter pribadi yang memiliki kesadaran tinggi dalam berintegritas, berkedisiplinan, cekatan, dan mandiri, sehingga mampu beradaptasi dalam menghadapi tantangan zaman</li>
-                            <li>6. Mendukung dan berupaya dalam mewujudkan tanggungjawab, meningkatkan mutu, SDM yang profesional, dedikasi, etos kerja dalam berprilaku untuk bisa bekerja di dunia Usaha dan Dunia Industri</li>
-                        </ul>
-                    </div>
-                </div>
             </div>
-            {{-- <article class="card">
-                <div class="card-int">
-                    <span class="card__span">Category</span>
-                    <div class="img"></div>
-                    <div class="card-data">
-                        <p class="title">This is a test title
-                        </p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                            ut
-                            labore et dolore magna aliqua.</p>
-                        <button class="button">More info</button>
-                    </div>
-                </div>
-            </article> --}}
+            </div>
+          </div>
         </div>
+      </div>
     </div>
     <script>
         let list = document.querySelector('.slider .list');
