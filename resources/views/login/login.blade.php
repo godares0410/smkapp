@@ -50,7 +50,7 @@
             <div class="wrapper">
     <form action="{{ route('siswa.login') }}" method="POST">
         @csrf
-        <h1>SMK Appz</h1>
+        <h1>SMK App</h1>
         <div class="input-box">
             <input type="text" id="username" name="username" class="form-control" placeholder="Username">
             {{-- <span class="glyphicon glyphicon-envelope form-control-feedback"></span> --}}
