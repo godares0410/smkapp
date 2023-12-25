@@ -47,32 +47,30 @@
                     });
                 </script>
             @endif
-            <form action="{{ route('siswa.login') }}" method="POST">
-                @csrf
-                <div class="form-group has-feedback">
-                    <input type="text" id="username" name="username" class="form-control" placeholder="Username">
-                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                </div>
-                <div class="form-group has-feedback">
-                    <input type="password" id="password" name="password" class="form-control" placeholder="Password">
-                    <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                </div>
-                <div class="row">
-                    <div class="col-xs-8">
-                        <div class="icheck-primary">
-                            <input type="checkbox" id="showPassword">
-                            <label for="showPassword">
-                                Tampilkan Password
-                            </label>
-                        </div>
-                    </div>
-                    <!-- /.col -->
-                    <div class="col-xs-4">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
-                    </div>
-                    <!-- /.col -->
-                </div>
-            </form>
+            <div class="wrapper">
+    <form action="{{ route('siswa.login') }}" method="POST">
+        @csrf
+        <h1>SMK App</h1>
+        <div class="input-box">
+            <input type="text" id="username" name="username" class="form-control" placeholder="Username">
+            {{-- <span class="glyphicon glyphicon-envelope form-control-feedback"></span> --}}
+            <box-icon type='solid' name='user'></box-icon>
+        </div>
+        <div class="input-box">
+            <input type="password" id="password" name="password" class="form-control" placeholder="Password">
+            {{-- <span class="glyphicon glyphicon-lock form-control-feedback"></span> --}}
+            <box-icon name='lock-alt' type='solid'></box-icon>
+        </div>
+        <div class="show">
+            {{-- <input type="checkbox" id="showPassword"> --}}
+            <label for="showPassword">
+                Tampilkan Password
+            </label>
+        </div>
+        <button type="submit" class="btn">Login</button>
+
+</div>
+</form>
         </div>
         <!-- /.login-box-body -->
     </div>
@@ -106,30 +104,7 @@
         });
     </script>
 </body>
-<div class="wrapper">
-    <form action="{{ route('siswa.login') }}" method="POST">
-        @csrf
-        <h1>SMK App</h1>
-        <div class="input-box">
-            <input type="text" id="username" name="username" class="form-control" placeholder="Username">
-            {{-- <span class="glyphicon glyphicon-envelope form-control-feedback"></span> --}}
-            <box-icon type='solid' name='user'></box-icon>
-        </div>
-        <div class="input-box">
-            <input type="password" id="password" name="password" class="form-control" placeholder="Password">
-            {{-- <span class="glyphicon glyphicon-lock form-control-feedback"></span> --}}
-            <box-icon name='lock-alt' type='solid'></box-icon>
-        </div>
-        <div class="show">
-            <input type="checkbox" id="showPassword">
-            <label for="showPassword">
-                Tampilkan Password
-            </label>
-        </div>
-        <button type="submit" class="btn">Login</button>
 
-</div>
-</form>
 </div>
 
 </html>

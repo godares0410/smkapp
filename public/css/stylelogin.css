@@ -11,7 +11,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url("/img/website/1.jpeg") no-repeat;
+    background: url('/img/website/bg/_1703127815.jpg');
     background-size: cover;
     background-position: center;
 }
@@ -30,8 +30,8 @@ body::before {
     ); /* Adjust the alpha value for darkness */
 }
 .wrapper {
-    width: 30%;
-    height: 60%;
+    width: 50vh;
+    height: 80%;
     background-color: transparent;
     border: 2px solid rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(20px);
