@@ -41,7 +41,7 @@
             <li><a href="#visimisi">Visi Misi</a></li>
             <li><a href="">Galeri</a></li>
             <li><a href="">Contact</a></li>
-            <li><a href="{{ route('siswa.login')}}" class="action_btn">Login</a></li>
+            <a href="{{ route('login') }}" class="action_btn">Login</a>
         </div>
     </header>
     <div class="beranda" id="beranda">
