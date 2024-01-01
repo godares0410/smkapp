@@ -16,6 +16,7 @@ use App\Models\SiswaUjian;
 use App\Models\JadwalUjian;
 use App\Models\AlokasiWaktu;
 use App\Models\SesiJadwalUjian;
+use App\Models\SiswaAbsen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -359,22 +360,80 @@ public function absen()
 {
     $kelas = Auth::guard('siswa')->user()->id_kelas;
     $jurusan = Auth::guard('siswa')->user()->id_jurusan;
+    $absen = SiswaAbsen::all();
     $siswa = Siswa::select('siswa.*', 'kelas.nama_kelas', 'jurusan.nama_jurusan')
     ->where('siswa.id_kelas', $kelas)
     ->where('siswa.id_jurusan', $jurusan)
     ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
     ->join('jurusan', 'siswa.id_jurusan', '=', 'jurusan.id_jurusan')
     ->get();
-    return view('siswa.absen.index', compact('siswa'));
+    return view('siswa.absen.index', compact('siswa', 'absen'));
 }
 public function absens(Request $request, $id)
 {
-    $siswa = Siswa::where('id_siswa', $id)
-    ->whereDate('tanggal', Carbon::today())
-    ->get();
-    if ($siswa->isNotEmpty()) {
-        $siswa->first()->delete();
+
+    $siswa = SiswaAbsen::where('id_siswa', $id)
+    ->whereDate('tanggal', Carbon::now('Asia/Jakarta')->toDateString())
+    ->delete();
+    $keterangan = $request->input('keterangan');
+    $selectedJam = $request->input('jam', []);
+
+    foreach ($selectedJam as $jam) {
+        $absen = new SiswaAbsen;
+        $absen->id_siswa = $id;
+        $absen->keterangan = $keterangan;
+        $absen->jam_ke = $jam;
+        $absen->tanggal = Carbon::now('Asia/Jakarta');
+        $absen->save();
     }
-    return view('siswa.absen.index');
+    return redirect()->back()->with('success', 'Mapel berhasil ditambahkan');
+}
+public function absenlaporan(){
+    $kelas = Auth::guard('siswa')->user()->id_kelas;
+    $jurusan = Auth::guard('siswa')->user()->id_jurusan;
+    $nama = SiswaAbsen::select('siswa.id_siswa', 'siswa.nama_siswa', 'siswa_absen.keterangan')
+    ->join('siswa', 'siswa.id_siswa', '=', 'siswa_absen.id_siswa')
+    ->where('siswa.id_kelas', $kelas)
+    ->where('siswa.id_jurusan', $jurusan)
+    ->whereDate('siswa_absen.tanggal', Carbon::now('Asia/Jakarta')->toDateString())
+    ->groupBy('siswa.id_siswa', 'siswa.nama_siswa', 'siswa_absen.keterangan')
+    ->get();
+    $total_absen = SiswaAbsen::join('siswa', 'siswa.id_siswa', '=', 'siswa_absen.id_siswa')
+    ->where('siswa.id_kelas', $kelas)
+    ->where('siswa.id_jurusan', $jurusan)
+    ->whereDate('siswa_absen.tanggal', Carbon::now('Asia/Jakarta')->toDateString())
+    ->distinct()
+    ->count('siswa.id_siswa');
+
+    $name = Siswa::select('kelas.nama_kelas', 'jurusan.kode_jurusan')
+    ->join('kelas', 'kelas.id_kelas', '=', 'siswa.id_kelas')
+    ->join('jurusan', 'jurusan.id_jurusan', '=', 'siswa.id_jurusan')
+    ->where('siswa.id_kelas', $kelas)
+    ->where('siswa.id_jurusan', $jurusan)
+    ->first();
+    $absens = SiswaAbsen::select('siswa_absen.*', 'siswa.nama_siswa')
+    ->join('siswa', 'siswa.id_siswa', '=', 'siswa_absen.id_siswa')
+    ->where('siswa.id_kelas', $kelas)
+    ->where('siswa.id_jurusan', $jurusan)
+    ->whereDate('siswa_absen.tanggal', Carbon::now('Asia/Jakarta')->toDateString())
+    ->get();
+    $siswa = Siswa::select('siswa.*', 'kelas.nama_kelas', 'jurusan.nama_jurusan')
+    ->where('siswa.id_kelas', $kelas)
+    ->where('siswa.id_jurusan', $jurusan)
+    ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+    ->join('jurusan', 'siswa.id_jurusan', '=', 'jurusan.id_jurusan')
+    ->get();
+    // foreach ($siswa as $singleSiswa) {
+    //     $rekap = SiswaAbsen::select('id_siswa') // Tambahkan kolom id_siswa ke dalam select
+    //         ->where('id_siswa', $singleSiswa->id_siswa)
+    //         ->where('keterangan', "A")
+    //         ->count();
+    //     }
+    $total_siswa = Siswa::where('siswa.id_kelas', $kelas)
+    ->where('siswa.id_jurusan', $jurusan)
+    ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+    ->join('jurusan', 'siswa.id_jurusan', '=', 'jurusan.id_jurusan')
+    ->count();
+    return view('siswa.laporan.index', compact('siswa', 'nama', 'absens', 'name', 'total_absen', 'total_siswa'));
 }
 }

@@ -6,6 +6,7 @@
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
 }
+
 body {
     display: flex;
     justify-content: center;
@@ -15,6 +16,7 @@ body {
     background-size: cover;
     background-position: center;
 }
+
 body::before {
     content: "";
     position: absolute;
@@ -22,13 +24,13 @@ body::before {
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: rgba(
-        0,
-        0,
-        0,
-        0.5
-    ); /* Adjust the alpha value for darkness */
+    background-color: rgba(0,
+            0,
+            0,
+            0.5);
+    /* Adjust the alpha value for darkness */
 }
+
 .wrapper {
     width: 50vh;
     height: 80%;
@@ -42,16 +44,18 @@ body::before {
 }
 
 .wrapper h1 {
-    font-size: 36px;
+    font-size: 2rem;
     text-align: center;
     border-radius: 10px;
     padding: 30px 40px;
 }
+
 .wrapper .input-box {
     width: 100%;
     height: 50px;
     margin: 30px 0;
 }
+
 .input-box input {
     width: 100%;
     height: 100%;
@@ -63,9 +67,11 @@ body::before {
     color: rgb(255, 255, 255);
     padding: 20px 45px 20px 20px;
 }
+
 .input-box input::placeholder {
     color: aliceblue;
 }
+
 .input-box i {
     position: absolute;
     right: 20px;
@@ -73,10 +79,12 @@ body::before {
     transform: translateY(-50%);
     font-size: 20px;
 }
+
 .wrapper .show {
     font-size: 14.5px;
     margin: -15px 0 15px;
 }
+
 .wrapper .btn {
     width: 100%;
     height: 45px;
@@ -90,15 +98,18 @@ body::before {
     color: gray;
     font-weight: 600;
 }
+
 .wrapper .btn:hover {
     background: green;
     color: aliceblue;
 }
+
 @media (max-width: 430px) {
     .wrapper {
         width: 360px;
     }
+
     .wrapper h1 {
-        font-size: 30px;
+        font-size: 1rem;
     }
 }

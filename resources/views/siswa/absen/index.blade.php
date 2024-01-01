@@ -66,13 +66,54 @@
                             <tr>
                                 <td>{{ $counter++ }}</td>
                                 <td>{{ $data->nama_siswa }}</td>
+                                @php
+                                $today = \Carbon\Carbon::now()->timezone('Asia/Jakarta')->format('Y-m-d');
+                                    $siswaAbsen = \App\Models\SiswaAbsen::where('id_siswa', $data->id_siswa)->whereDate('tanggal', $today)->select('keterangan', 'jam_ke')->first();
+                                @endphp
+
                                 <td class="text-center">
-                                    <button type="button"
-                                        class="btn btn-success"
-                                        data-toggle="modal" data-target="#modalAbsen{{ $data->id_siswa}}">
-                                        Hadir
-                                    </button>
-                            </td>
+    @if ($siswaAbsen)
+        @php
+            $keteranganLabels = [
+                'A' => 'Alpa',
+                'S' => 'Sakit',
+                'I' => 'Ijin',
+            ];
+
+            $keterangan = $siswaAbsen->keterangan ?? '';
+            $label = $keteranganLabels[$keterangan] ?? '';
+        @endphp
+
+        @php
+            $ketArray = [];
+        @endphp
+
+        @foreach ($absen as $abs)
+            @if ($abs->id_siswa == $data->id_siswa)
+                @php
+                    $ketArray[] = $abs->jam_ke;
+                @endphp
+            @endif
+        @endforeach
+
+        @if ($keterangan)
+            @if (count($ketArray) == 8)
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalAbsen{{ $data->id_siswa }}">
+                    {{ $label }} (Sehari)
+                </button>
+            @else
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalAbsen{{ $data->id_siswa }}">
+                    {{ $label }} Jam ke: ({{ implode(', ', $ketArray) }})
+                </button>
+            @endif
+        @endif
+    @else
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modalAbsen{{ $data->id_siswa }}">
+            Hadir
+        </button>
+    @endif
+</td>
+
                             </tr>
                         @endforeach
                     </tbody>

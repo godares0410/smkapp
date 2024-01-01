@@ -238,6 +238,9 @@
                             <li class="@yield('struktur-active')"><a href="{{ route('siswas.absen') }}"><i
                                         class="fa fa-circle-o"></i>
                                     Absen</a></li>
+                            <li class="@yield('laporan-active')"><a href="{{ route('siswas.absenlaporan') }}"><i
+                                        class="fa fa-circle-o"></i>
+                                    Laporan</a></li>
                         </ul>   
                     </li>
                 @endif

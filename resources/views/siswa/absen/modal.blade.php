@@ -13,13 +13,12 @@
                     <form action="{{ route('siswas.absens', $data->id_siswa) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
-                        @method('PUT')
                         <div class="form-group">
                             <label for="keterangan">Keterangan</label>
                             <select class="form-control" id="keterangan" name="keterangan" required>
-                                <option value="alpa">Alpa</option>
-                                <option value="sakit">Sakit</option>
-                                <option value="izin">Izin</option>
+                                <option value="A">Alpa</option>
+                                <option value="S">Sakit</option>
+                                <option value="I">Izin</option>
                             </select>
                         </div>
                         <div class="form-group">

@@ -154,7 +154,8 @@ Route::group(['middleware' => ['auth:siswa', 'checkUserStatus']], function () {
     Route::get('/menu', [SiswasController::class, 'dashboard'])->name('siswa.dashboard');
     Route::get('/assesmen', [SiswasController::class, 'index'])->name('siswas.index');
     Route::get('/absen', [SiswasController::class, 'absen'])->name('siswas.absen');
-    Route::post('/absens', [SiswasController::class, 'absens'])->name('siswas.absens');
+    Route::post('/absens/{id}', [SiswasController::class, 'absens'])->name('siswas.absens');
+    Route::get('/laporan', [SiswasController::class, 'absenlaporan'])->name('siswas.absenlaporan');
     Route::get('/detail/{kode}', [SiswasController::class, 'detail'])->name('siswas.detail');
     Route::post('/exam', [SiswasController::class, 'mengerjakan'])->name('siswas.mengerjakan');
     Route::post('/exams', [SiswasController::class, 'mengerjakans'])->name('siswas.mengerjakans');
