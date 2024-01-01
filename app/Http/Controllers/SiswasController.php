@@ -357,6 +357,24 @@ class SiswasController extends Controller
 }
 public function absen()
 {
+    $kelas = Auth::guard('siswa')->user()->id_kelas;
+    $jurusan = Auth::guard('siswa')->user()->id_jurusan;
+    $siswa = Siswa::select('siswa.*', 'kelas.nama_kelas', 'jurusan.nama_jurusan')
+    ->where('siswa.id_kelas', $kelas)
+    ->where('siswa.id_jurusan', $jurusan)
+    ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+    ->join('jurusan', 'siswa.id_jurusan', '=', 'jurusan.id_jurusan')
+    ->get();
+    return view('siswa.absen.index', compact('siswa'));
+}
+public function absens(Request $request, $id)
+{
+    $siswa = Siswa::where('id_siswa', $id)
+    ->whereDate('tanggal', Carbon::today())
+    ->get();
+    if ($siswa->isNotEmpty()) {
+        $siswa->first()->delete();
+    }
     return view('siswa.absen.index');
 }
 }

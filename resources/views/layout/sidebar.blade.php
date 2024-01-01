@@ -225,7 +225,8 @@
                                     E-Learning</a></li>
                         </ul>
                     </li>
-                    <li class="@yield('assesmen') treeview">
+                    @if (auth('siswa')->user()->rule != 0)
+                    <li class="@yield('struktur') treeview">
                         <a href="#">
                             <i class="fa fa-edit"></i>
                             <span>Kelas</span>
@@ -234,11 +235,12 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li class="@yield('assesmen-active')"><a href="{{ route('siswas.absen') }}"><i
+                            <li class="@yield('struktur-active')"><a href="{{ route('siswas.absen') }}"><i
                                         class="fa fa-circle-o"></i>
                                     Absen</a></li>
                         </ul>   
                     </li>
+                @endif
                 @endif
         </section>
         <!-- /.sidebar -->
