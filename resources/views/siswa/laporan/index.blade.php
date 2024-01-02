@@ -52,6 +52,8 @@
                 <h3 class="box-title">Data {{ ucwords($title) }}</h3>
             </div>
             <div class="box-body pad">
+            <div class="col-md-6">
+            <div class="box box-info col-md-6">
               <div class="container mt-5">
   <div class="row">
 @php
@@ -66,8 +68,8 @@
 @endphp
     <div class="col-md-6">
       <div class="mb-3">
-        <label for="exampleTextarea" class="form-label">Text Area</label>
-        <textarea class="form-control" id="exampleTextarea" style="width: 100%; height: 50vh; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; font-family: 'Ubuntu', sans-serif;" readonly>
+        <label for="exampleTextarea" class="form-label">Laporan Kelas</label>
+        <textarea class="form-control" id="exampleTextarea" style="width: 100%; height: 30vh; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; font-family: 'Ubuntu', sans-serif;" readonly>
 📑 LAPORAN KELAS HARIAN 📑
 ===========================
 🏫 Kelas     :  {{$name->nama_kelas}}-{{$name->kode_jurusan}}
@@ -148,11 +150,50 @@ $sp = '         ';
 @endforeach
 </textarea>
       </div>
-      <button class="btn btn-primary" onclick="copyToClipboard()">Copy</button>
+      <button class="btn btn-primary" onclick="copyToClipboard()" style="margin-top: 10px; margin-bottom: 10px">Copy</button>
+      </div>
     </div>
   </div>
+  </div>
 </div>
-            </div>
+<div class="col-md-6">
+<div class="box box-success">
+<div class="container mt-5">
+  
+  <div class="col-md-6">
+      <div class="mb-3">
+        <label for="GrupAbsen" class="form-label">Laporan Grup Absen</label>
+        <textarea class="form-control" id="GrupAbsen" style="width: 100%; height: 20vh; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; font-family: 'Ubuntu', sans-serif;" readonly>
+@php
+    $counter = 1;
+@endphp
+@foreach ($nama as $nm)
+@php $jam_ke_values =[];
+@endphp {{$counter++}}. {{$nm->nama_siswa}} *({{ $nm->keterangan}})*
+@php
+    $jam_ke_values = [];
+    foreach ($absens as $abs) {
+        if ($abs->id_siswa == $nm->id_siswa) {
+            $jam_ke_values[] = $abs->jam_ke;
+        }
+    }
+    $formatted_values = implode(',', $jam_ke_values);
+@endphp
+@unless(count($jam_ke_values) > 7)          Jam Ke: *({{ trim($formatted_values) }})*
+@else
+        *(Sehari)*
+@endunless
+@endforeach
+@if ($total_absen == 0)*(Nihil)*
+@endif
+        </textarea>
+  </div>
+  <button class="btn btn-primary" onclick="copyToClipboardz()" style="margin-top: 10px; margin-bottom: 10px">Copy</button>
+  </div>
+  </div>
+  </div>
+  </div>
+        </div>
         </div>
     </section>
 @endsection
@@ -160,14 +201,34 @@ $sp = '         ';
 
 @push('script')
     <script>
-      $(function () {
-    // Replace the <textarea id="editor1"> with a CKEditor
-    // instance, using default configuration.
-    CKEDITOR.replace('editor1')});
 
     function copyToClipboard() {
     /* Get the text area element */
     var textarea = document.getElementById("exampleTextarea");
+
+    /* Select the text in the text area */
+    textarea.select();
+
+    /* Copy the selected text to the clipboard */
+    document.execCommand("copy");
+
+    /* Deselect the text area */
+    textarea.setSelectionRange(0, 0);
+
+    Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil!',
+                    text: 'Absen Berhasil Disalin',
+                    showConfirmButton: false,
+                    timer: 2500 // Menutup pesan dalam 1 detik (1000ms)
+                });
+  }
+    </script>
+    <script>
+
+    function copyToClipboardz() {
+    /* Get the text area element */
+    var textarea = document.getElementById("GrupAbsen");
 
     /* Select the text in the text area */
     textarea.select();
