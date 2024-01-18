@@ -386,7 +386,7 @@ public function absens(Request $request, $id)
         $absen->tanggal = Carbon::now('Asia/Jakarta');
         $absen->save();
     }
-    return redirect()->back()->with('success', 'Mapel berhasil ditambahkan');
+    return redirect()->back()->with('success', 'Absen berhasil diubah');
 }
 public function absenlaporan(){
     $kelas = Auth::guard('siswa')->user()->id_kelas;

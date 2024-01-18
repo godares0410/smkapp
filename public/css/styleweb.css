@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Roboto:wght@900&display=swap");
+
 * {
   margin: 0;
   padding: 0;
@@ -12,17 +13,21 @@ body {
   background-size: cover;
   background-position: center;
 }
+
 li {
   list-style: none;
 }
+
 li a {
   text-decoration: none;
   color: aliceblue;
   font-size: 1rem;
 }
+
 li a.active {
   text-decoration: none;
-  color: rgb(255, 115, 0); /* Change the color as needed */
+  color: rgb(255, 115, 0);
+  /* Change the color as needed */
   font-size: 1rem;
 }
 
@@ -38,6 +43,7 @@ header {
   display: flex;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
 }
+
 .navbar {
   /* position: fixed; */
   width: 100%;
@@ -48,10 +54,12 @@ header {
   align-items: center;
   justify-content: space-between;
 }
+
 .navbar .logo {
   display: flex;
   align-items: center;
 }
+
 /* .navbar .logo a {
     margin-left: 10px;
     font-size: 1.5rem;
@@ -84,6 +92,7 @@ header {
   font-weight: bold;
   cursor: pointer;
 }
+
 .action_btn:hover {
   scale: 1.05;
   color: white;
@@ -106,9 +115,11 @@ header {
   overflow: hidden;
   transition: height 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
+
 .dropdown_menu.open {
   height: 270px;
 }
+
 .dropdown_menu li {
   padding: 0.7rem;
   display: flex;
@@ -131,10 +142,12 @@ section#hero {
   text-align: center;
   color: aliceblue;
 }
+
 #hero h1 {
   font-size: 3rem;
   margin-bottom: 1rem;
 }
+
 .slider {
   width: 100%;
   max-width: 100vw;
@@ -143,6 +156,7 @@ section#hero {
   position: relative;
   overflow: hidden;
 }
+
 .list {
   position: absolute;
   top: 0;
@@ -152,12 +166,14 @@ section#hero {
   width: max-content;
   transition: 1s;
 }
+
 .list img {
   width: 100vw;
   /* max-width: 100vw; */
   height: 100%;
   object-fit: cover;
 }
+
 .buttons {
   position: absolute;
   top: 45%;
@@ -167,6 +183,7 @@ section#hero {
   justify-content: space-between;
   z-index: 2;
 }
+
 .buttons button {
   width: 50px;
   height: 50px;
@@ -177,18 +194,24 @@ section#hero {
   /* font-family: monospace;
     font-weight: bold; */
 }
+
 .buttons button:active {
-  animation: scaleDown 0.2s ease-out; /* Apply the scale animation when clicked */
+  animation: scaleDown 0.2s ease-out;
+  /* Apply the scale animation when clicked */
 }
 
 @keyframes scaleDown {
   0% {
-    transform: scale(1); /* Original size */
+    transform: scale(1);
+    /* Original size */
   }
+
   100% {
-    transform: scale(0.5); /* Scale down to 90% of the original size */
+    transform: scale(0.5);
+    /* Scale down to 90% of the original size */
   }
 }
+
 .dots {
   position: absolute;
   bottom: 10px;
@@ -200,6 +223,7 @@ section#hero {
   display: flex;
   justify-content: center;
 }
+
 .dots li {
   list-style: none;
   width: 10px;
@@ -210,6 +234,7 @@ section#hero {
   transition: 1s;
   cursor: pointer;
 }
+
 .dots li.active {
   width: 30px;
 }
@@ -219,14 +244,12 @@ section#hero {
   padding: 10px;
   width: 300px;
   padding: 10px;
-  background-image: linear-gradient(
-    to right bottom,
-    #031191,
-    #0532ae,
-    #0554cb,
-    #009ee7,
-    #00b1e7
-  );
+  background-image: linear-gradient(to right bottom,
+      #031191,
+      #0532ae,
+      #0554cb,
+      #009ee7,
+      #00b1e7);
   background-size: 200% 200%;
   border-radius: 12px;
 }
@@ -270,14 +293,12 @@ section#hero {
 .card button {
   width: 100%;
   margin-top: 15px;
-  background-image: linear-gradient(
-    to right bottom,
-    #035191,
-    #0532ae,
-    #0554cb,
-    #009ee7,
-    #00b1e7
-  );
+  background-image: linear-gradient(to right bottom,
+      #035191,
+      #0532ae,
+      #0554cb,
+      #009ee7,
+      #00b1e7);
   background-size: 200% 200%;
   border: none;
   padding: 8px 10px;
@@ -296,6 +317,7 @@ section#hero {
 button:hover {
   animation: gradient 0.8s ease-in 1;
 }
+
 .profile {
   background-image: url('/img/website/bg/_1703127815.jpg');
   height: 100vh;
@@ -303,6 +325,7 @@ button:hover {
   background-size: cover;
   justify-content: center;
 }
+
 .profile .box-profil {
   margin-top: 5%;
   width: 95%;
@@ -320,6 +343,7 @@ button:hover {
   width: 60%;
   height: 45%;
 }
+
 .profile .boxp {
   max-height: 80%;
   border-radius: 25.175px;
@@ -333,6 +357,7 @@ button:hover {
   align-self: center;
   overflow: auto;
 }
+
 .profile .logo {
   position: absolute;
   left: 50%;
@@ -343,21 +368,27 @@ button:hover {
   margin-top: 40px;
   gap: 1rem;
 }
+
 .profile a {
   font-family: "Roboto", sans-serif;
   text-decoration: none;
   color: #000000;
 }
+
 .profile a:hover {
-color: green;
+  color: green;
 }
+
 .profile .logo img {
   width: 20%;
 }
+
 .profile .logo img:hover {
-  transform: scale(1.1); /* You can adjust the scale factor as needed */
+  transform: scale(1.1);
+  /* You can adjust the scale factor as needed */
   transition: transform 0.3s ease;
 }
+
 .profile h2 {
   margin-top: 30px;
   text-align: center;
@@ -367,9 +398,11 @@ color: green;
   font-weight: 700;
   line-height: normal;
 }
-.profile .boxpr{
-    padding: 10px;
+
+.profile .boxpr {
+  padding: 10px;
 }
+
 .profile p {
   margin-top: 5px;
   color: #fff;
@@ -388,14 +421,16 @@ color: green;
   height: 55%;
   margin-bottom: 10px;
 }
-.video-container .boxframe{
+
+.video-container .boxframe {
   display: flex;
   align-items: center;
   flex-direction: column;
-    width: 49%;
-    
+  width: 49%;
+
 }
-.video-container .lbl{
+
+.video-container .lbl {
   position: absolute;
   width: 22%;
   height: 7%;
@@ -406,57 +441,92 @@ color: green;
   justify-content: center;
   align-items: center;
 }
-.video-container .lbl h1{
+
+.video-container .lbl h1 {
   color: #FFF;
-text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.80);
-font-family: 'roboto';
-font-size: 2rem;
-font-style: normal;
-line-height: normal;
+  text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.80);
+  font-family: 'roboto';
+  font-size: 2rem;
+  font-style: normal;
+  line-height: normal;
 }
-.video-container .bxfr{
+
+.video-container .bxfr {
   margin-top: 5%;
   height: 95%;
   width: 100%;
   border-radius: 16px;
-background: #06658D;
-box-shadow: 4px 1px 4px 0px rgba(0, 0, 0, 0.25);
+  background: #06658D;
+  box-shadow: 4px 1px 4px 0px rgba(0, 0, 0, 0.25);
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
+
 .video-container iframe {
   box-sizing: border-box;
   margin-top: 1rem;
   width: 90%;
   height: 80%;
 }
+
 .profile.focus {
-  border: 1px solid rgb(235, 235, 235); /* Change the border color as needed */
-  outline: none; /* Remove default outline style */
+  border: 1px solid rgb(235, 235, 235);
+  /* Change the border color as needed */
+  outline: none;
+  /* Remove default outline style */
 }
+
 .beranda {
   position: relative;
   height: 100vh;
   display: flex;
   flex-direction: column;
 }
+
 .beranda.focus {
-  border: 1px solid rgb(235, 235, 235); /* Change the border color as needed */
-  outline: none; /* Remove default outline style */
+  border: 1px solid rgb(235, 235, 235);
+  /* Change the border color as needed */
+  outline: none;
+  /* Remove default outline style */
 }
+
+.berita {
+  background-image: url('/img/website/bg/_1703127815.jpg');
+  height: 100vh;
+  display: flex;
+  background-size: cover;
+  justify-content: center;
+}
+
+.berita .box-berita {
+  margin-top: 5%;
+  width: 95%;
+  height: 88%;
+  border-radius: 24px;
+  background: #f1f1f1;
+  box-shadow: 6px 6px 4px 0px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 @media (max-width: 992px) {
+
   .navbar .links,
   .navbar .action_btn {
     display: none;
   }
+
   .navbar .toggle_btn {
     display: block;
   }
+
   .dropdown_menu {
     display: block;
   }
+
   .slider {
     width: 100%;
     height: 60vh;
@@ -477,15 +547,18 @@ box-shadow: 4px 1px 4px 0px rgba(0, 0, 0, 0.25);
     width: unset;
   }
 }
+
 @media (max-width: 430px) {
   .dropdown_menu {
     left: 2rem;
     width: unset;
   }
+
   .navbar .logo a {
     font-size: 1rem;
     font-weight: bold;
   }
+
   .slider {
     width: 100%;
     height: 35vh;
@@ -499,48 +572,59 @@ box-shadow: 4px 1px 4px 0px rgba(0, 0, 0, 0.25);
     top: 20%;
     /* display: none; */
   }
-  .profile{
+
+  .profile {
     height: 100vh;
     height: 100svh;
   }
-  .profile .box-profil .boxtop{
+
+  .profile .box-profil .boxtop {
     margin-top: 6%;
     height: 35%;
     width: 90%;
     margin-bottom: 0px;
   }
+
   .profile .box-profil {
     margin-top: 7%;
     height: 94%;
   }
-  .profile .box-profil .boxp{
+
+  .profile .box-profil .boxp {
     height: 70%;
   }
-  .video-container .boxframe{
-      width: 100%;
-    }
-    .video-container .boxframe iframe{
-      margin-top: 4%;
+
+  .video-container .boxframe {
+    width: 100%;
+  }
+
+  .video-container .boxframe iframe {
+    margin-top: 4%;
     width: 90%;
   }
-  .video-container .lbl{
+
+  .video-container .lbl {
     width: 80%;
     height: 5%;
   }
-  .video-container .bxfr{
-   width: 95%;
+
+  .video-container .bxfr {
+    width: 95%;
   }
-  
+
 }
+
 @media (max-width: 360px) {
   .dropdown_menu {
     left: 2rem;
     width: unset;
   }
+
   .navbar .logo a {
     font-size: 1rem;
     font-weight: bold;
   }
+
   .slider {
     width: 100%;
     height: 30vh;
@@ -554,38 +638,47 @@ box-shadow: 4px 1px 4px 0px rgba(0, 0, 0, 0.25);
     top: 15%;
     /* display: none; */
   }
-  .profile{
+
+  .profile {
     height: 100vh;
     height: 100svh;
   }
-  .profile .box-profil .boxtop{
+
+  .profile .box-profil .boxtop {
     margin-top: 6%;
     height: 35%;
     width: 90%;
     margin-bottom: 0px;
   }
+
   .profile .box-profil {
     margin-top: 7%;
     height: 94%;
   }
-  .profile .box-profil .boxp{
+
+  .profile .box-profil .boxp {
     height: 70%;
   }
-  .video-container .boxframe{
-      width: 100%;
-    }
-    .video-container .boxframe iframe{
-      margin-top: 4%;
+
+  .video-container .boxframe {
+    width: 100%;
+  }
+
+  .video-container .boxframe iframe {
+    margin-top: 4%;
     width: 90%;
   }
-  .video-container .lbl{
+
+  .video-container .lbl {
     width: 80%;
     height: 5%;
   }
-  .video-container .bxfr{
-   width: 95%;
+
+  .video-container .bxfr {
+    width: 95%;
   }
-  }
+}
+
 @keyframes gradient {
   0% {
     background-position: 200% 200%;

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="{{ asset('img/bank_soal/website/logo/_1702460950.png') }}" type="image/png">
     <link rel="shortcut icon" href="{{ asset('img/bank_soal/website/logo/_1702460950.png') }}" type="image/png">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -24,11 +24,12 @@
                 {{-- <a href="">SMK Sabilillah</a> --}}
             </div>
             <ul class="links">
-                <li><a href="beranda">Beranda</a></li>
+                {{-- <li><a href="beranda">Beranda</a></li> --}}
                 <li><a href="profile">Profile</a></li>
-                <li><a href="visimisi">Visi Misi</a></li>
-                <li><a href="">Galeri</a></li>
-                <li><a href="">Contact</a></li>
+                <li><a href="berita">Berita</a></li>
+                <li><a href="jurusan">Jurusan</a></li>
+                <li><a href="program">Program</a></li>
+                <li><a href="fasilitas">Fasilitas</a></li>
             </ul>
             <a href="/login" class="action_btn">Login</a>
             <div class="toggle_btn">
@@ -36,11 +37,11 @@
             </div>
         </div>
         <div class="dropdown_menu">
-            <li><a href="#beranda">Beranda</a></li>
             <li><a href="#profile">Profile</a></li>
-            <li><a href="#visimisi">Visi Misi</a></li>
-            <li><a href="">Galeri</a></li>
-            <li><a href="">Contact</a></li>
+            <li><a href="#berita">Berita</a></li>
+            <li><a href="#jurusan">Jurusan</a></li>
+            <li><a href="#program">Program</a></li>
+            <li><a href="#fasilitas">Fasilitas</a></li>
             <a href="{{ route('login') }}" class="action_btn">Login</a>
         </div>
     </header>
@@ -51,7 +52,8 @@
                     <div class="list">
                         @foreach ($beranda as $data)
                             <div class="item">
-                                <img src="{{ asset('img/bank_soal/website/landing/' . $data->foto) }}" alt="{{ $data->tag }}">
+                                <img src="{{ asset('img/bank_soal/website/landing/' . $data->foto) }}"
+                                    alt="{{ $data->tag }}">
                             </div>
                         @endforeach
                     </div>
@@ -69,54 +71,62 @@
         </div>
         <div class="konten">
             <div class="profile" id="profile">
-          <div class="box-profil">
-                <div class="boxtop">
-                  <div class="logo">
-                      <a href="">Profile</a>
-                      <img src="{{ asset('img/website/logo/1.svg') }}" alt="">
-                      <a href="">Visi</a>
-                      <a href="" style="margin-left : -10px">Misi</a>
-                  </div>
-                    <div class="boxp">
+                <div class="box-profil">
+                    <div class="boxtop">
+                        <div class="logo">
+                            <a href="">Profile</a>
+                            <img src="{{ asset('img/website/logo/1.svg') }}" alt="">
+                            <a href="">Visi</a>
+                            <a href="" style="margin-left : -10px">Misi</a>
+                        </div>
+                        <div class="boxp">
                             <h2>Profil SMK Sabilillah</h2>
                             <div class="boxpr">
-                            <p>
-                                SMK Sabilillah merupakan salah satu SMK yang terpilih menjadi SMK Pusat Keunggulan oleh Direktorat Jenderal Vokasi Kementerian Pendidikan dan Kebudayaan melalui Direktorat Sekolah Menengah Kejuruan.
-                            </p>
-                            <p>
-                                Pegembangan tersebut difokuskan pada peningkatan kualitas pendidikan SMK sebagai pusat keunggulan (Center of Excellence = COE) yang dapat menjadi Sekolah Penggerak.  
-                            </p>
-                            <p> 
-                                SMK Sabilillah memiliki tujuan utama yakni memutus mata rantai kemiskinan melalui lembaga pendidikan serta pelatihan profesional dengan memiliki daya saing ditengah masyarakat miskin, supaya menjadi pengusaha handal dalam menaikkan taraf hidup bermasyarakat
-                            </p>
-                        </div>
+                                <p>
+                                    SMK Sabilillah merupakan salah satu SMK yang terpilih menjadi SMK Pusat Keunggulan
+                                    oleh Direktorat Jenderal Vokasi Kementerian Pendidikan dan Kebudayaan melalui
+                                    Direktorat Sekolah Menengah Kejuruan.
+                                </p>
+                                <p>
+                                    Pegembangan tersebut difokuskan pada peningkatan kualitas pendidikan SMK sebagai
+                                    pusat keunggulan (Center of Excellence = COE) yang dapat menjadi Sekolah Penggerak.
+                                </p>
+                                <p>
+                                    SMK Sabilillah memiliki tujuan utama yakni memutus mata rantai kemiskinan melalui
+                                    lembaga pendidikan serta pelatihan profesional dengan memiliki daya saing ditengah
+                                    masyarakat miskin, supaya menjadi pengusaha handal dalam menaikkan taraf hidup
+                                    bermasyarakat
+                                </p>
+                            </div>
                         </div>
                     </div>
-            <div class="video-container">
-              <div class="boxframe">
-                <div class="lbl">
-                  <h1>Video Profil</h1>
+                    <div class="video-container">
+                        <div class="boxframe">
+                            <div class="lbl">
+                                <h1>Video Profil</h1>
+                            </div>
+                            <div class="bxfr">
+                                <iframe src="https://www.youtube.com/embed/mkpa_Menlf4" frameborder="0"
+                                    allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <div class="boxframe">
+                            <div class="lbl">
+                                <h1>Film SMK</h1>
+                            </div>
+                            <div class="bxfr">
+                                <iframe src="https://www.youtube.com/embed/553DJSCg-5Q" frameborder="0"
+                                    allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="bxfr">
-                    <iframe src="https://www.youtube.com/embed/mkpa_Menlf4" frameborder="0" allowfullscreen></iframe>
-                  </div>
-              </div>
-            <div class="boxframe">
-              <div class="lbl">
-                <h1>Film SMK</h1>
-              </div>
-              <div class="bxfr">
-              <iframe
-                src="https://www.youtube.com/embed/553DJSCg-5Q"
-                frameborder="0"
-                allowfullscreen
-              ></iframe>
             </div>
+            <div class="berita" id="berita">
+                <div class="box-berita">
+                </div>
             </div>
-            </div>
-          </div>
         </div>
-      </div>
     </div>
     <script>
         let list = document.querySelector('.slider .list');
@@ -184,9 +194,8 @@
     </script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const berandaLink = document.querySelector(".links li a[href='beranda']");
             const profileLink = document.querySelector(".links li a[href='profile']");
-            const visimisiLink = document.querySelector(".links li a[href='visimisi']");
+            const beritaLink = document.querySelector(".links li a[href='berita']");
 
             function handleLinkClick(targetElement, link) {
                 link.addEventListener("click", function(event) {
@@ -209,10 +218,9 @@
                 });
             }
 
-            // Handle clicks for the profile and visimisi links
-            handleLinkClick(document.querySelector(".beranda"), berandaLink);
+            // Handle clicks for the profile and berita links
             handleLinkClick(document.querySelector(".profile"), profileLink);
-            handleLinkClick(document.querySelector(".visimisi"), visimisiLink);
+            handleLinkClick(document.querySelector(".berita"), beritaLink);
 
             // Function to update active state based on the element's visibility
             function updateActiveState(targetElement, link) {
@@ -231,52 +239,49 @@
                 }
             }
 
-            // Update active state for profile and visimisi on scroll
+            // Update active state for profile and berita on scroll
             window.addEventListener("scroll", function() {
-                updateActiveState(document.querySelector(".beranda"), berandaLink);
                 updateActiveState(document.querySelector(".profile"), profileLink);
-                updateActiveState(document.querySelector(".visimisi"), visimisiLink);
+                updateActiveState(document.querySelector(".berita"), beritaLink);
             });
         });
     </script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const dropdownMenuLinks = document.querySelectorAll(".dropdown_menu li a");
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const dropdownMenuLinks = document.querySelectorAll(".dropdown_menu li a");
 
-        function handleDropdownClick(targetId) {
-            // Check if the targetId is not empty
-            if (targetId) {
-                const targetElement = document.getElementById(targetId);
+            function handleDropdownClick(targetId) {
+                // Check if the targetId is not empty
+                if (targetId) {
+                    const targetElement = document.getElementById(targetId);
 
-                // Check if the target element exists
-                if (targetElement) {
-                    targetElement.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start"
-                    });
+                    // Check if the target element exists
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start"
+                        });
+                    } else {
+                        console.error(`Element with id '${targetId}' not found.`);
+                    }
                 } else {
-                    console.error(`Element with id '${targetId}' not found.`);
+                    console.error('Empty targetId. Make sure the href attribute has a valid id reference.');
                 }
-            } else {
-                console.error('Empty targetId. Make sure the href attribute has a valid id reference.');
             }
-        }
 
-        dropdownMenuLinks.forEach(function (link) {
-            link.addEventListener("click", function (event) {
-                event.preventDefault();
+            dropdownMenuLinks.forEach(function(link) {
+                link.addEventListener("click", function(event) {
+                    event.preventDefault();
 
-                // Extract the target section's id from the href attribute
-                const targetId = link.getAttribute("href").substring(1);
+                    // Extract the target section's id from the href attribute
+                    const targetId = link.getAttribute("href").substring(1);
 
-                // Handle the click and scroll to the target section
-                handleDropdownClick(targetId);
+                    // Handle the click and scroll to the target section
+                    handleDropdownClick(targetId);
+                });
             });
         });
-    });
-</script>
-
-
+    </script>
 
 </body>
 
