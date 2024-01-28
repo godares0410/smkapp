@@ -168,13 +168,9 @@
                                         class="fa fa-circle-o"></i>Cetak Nilai</a></li>
                         </ul>
                     </li>
-                    <li class="treeview">
+                    {{-- <li class="treeview">
                         <a href="#">
                             <i class="fa fa-calendar"></i> <span>Absen</span>
-                            {{-- <span class="pull-right-container">
-                            <small class="label pull-right bg-red">3</small>
-                            <small class="label pull-right bg-blue">17</small>
-                        </span> --}}
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
                             </span>
@@ -187,7 +183,7 @@
                             <li><a href="{{ asset('AdminLTE-2/pages/UI/general.html') }}"><i
                                         class="fa fa-circle-o"></i>Laporan</a></li>
                         </ul>
-                    </li>
+                    </li> --}}
                     <li class="@yield('data-website') treeview">
                         <a href="#">
                             <i class="fa fa-edit"></i>
@@ -203,6 +199,20 @@
                             <li class="@yield('berita-active')"><a href="{{ route('website.berita') }}"><i
                                         class="fa fa-circle-o"></i>
                                     Berita</a></li>
+                        </ul>
+                    </li>
+                    <li class="@yield('data-ppdb') treeview">
+                        <a href="#">
+                            <i class="fa fa-edit"></i>
+                            <span>Data PPDB</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="@yield('daftar-active')"><a href="{{ route('daftar.ppdb') }}"><i
+                                        class="fa fa-circle-o"></i>
+                                    Pendaftar</a></li>
                         </ul>
                     </li>
                 @endif

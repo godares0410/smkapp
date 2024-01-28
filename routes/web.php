@@ -32,6 +32,7 @@ use App\Http\Controllers\PelaksanaanController;
 use App\Http\Controllers\AlokasiController;
 use App\Http\Controllers\ScoreController;
 use App\Http\Controllers\WebsiteController;
+use App\Http\Controllers\DaftarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +54,7 @@ Route::get('/logout', [LoginAuthController::class, 'logout']);
 Route::get('/', [WebsiteController::class, 'index']);
 // Route::get('/login', [LoginAuthController::class, 'index']);
 Route::resource('website', WebsiteController::class);
+Route::resource('daftar', DaftarController::class);
 Route::resource('test', TestController::class);
 
 
@@ -65,6 +67,7 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::resource('pelaksanaan', PelaksanaanController::class);
     Route::resource('alokasi', AlokasiController::class);
     Route::resource('score', ScoreController::class);
+    Route::get('/daftarppdb', [DaftarController::class, 'daftar'])->name('daftar.ppdb');
     Route::get('/rekap', [ScoreController::class, 'rekap'])->name('score.rekap');
     Route::post('/rekap/nilai', [ScoreController::class, 'rekapnilai'])->name('score.rekapnilai');
     Route::post('/rekap/export', [ScoreController::class, 'rekapeksport'])->name('rekap.export');
