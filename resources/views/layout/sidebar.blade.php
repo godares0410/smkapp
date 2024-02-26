@@ -168,6 +168,21 @@
                                         class="fa fa-circle-o"></i>Cetak Nilai</a></li>
                         </ul>
                     </li>
+                    <li class="@yield('datacetak') treeview">
+                        <a href="#">
+                            <i class="fa fa-table"></i> <span>Cetak</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li class="@yield('daftar_hadir-active')"><a href="{{ route('cetak.index') }}"><i
+                                        class="fa fa-circle-o"></i>Daftar Hadir</a>
+                            </li>
+                            <li class="@yield('nilai-active')"><a href="{{ route('score.index') }}"><i
+                                        class="fa fa-circle-o"></i>Kartu Peserta</a></li>
+                        </ul>
+                    </li>
                     {{-- <li class="treeview">
                         <a href="#">
                             <i class="fa fa-calendar"></i> <span>Absen</span>

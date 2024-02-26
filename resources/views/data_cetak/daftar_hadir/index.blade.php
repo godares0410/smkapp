@@ -1,163 +1,134 @@
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <style>
-      @page {
-        size: A4;
-        margin: 0;
-      }
-      body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        /* border: 1px solid; */
-      }
-      .judul {
-        display: flex;
-        justify-content: center;
-      }
-      .nama table {
-        width: 100%;
-        border-collapse: collapse;
-        border: 1px solid #000; /* Border untuk seluruh tabel */
-      }
+@extends('layout.master')
 
-      .nama th,
-      td {
-        border: 1px solid #000; /* Border untuk seluruh sel */
-        padding: 8px;
-        text-align: left;
-      }
-      .nama th {
-        background-color: #f2f2f2;
-    }
-    </style>
-  </head>
-  <body>
-    <img src="kop.png" alt="" style="width: 100%; margin-top: 15px;" />
-    <div class="judul">
-      <h3 style="text-align: center">
-        DAFTAR HADIR PESERTA <br />
-        UJIAN SATUAN PENDIDIKAN BERBASIS KOMPUTER <br />
-        TAHUN PELAJARAN 2023/2024
-      </h3>
-    </div>
-    <div class="form" style="text-align: left; padding: 25px">
-      <table style="width: 100%;">
-        <tr>
-          <th>Sekolah</th>
-          <th>:</th>
-          <th>SMK SABILILLAH</th>
-          <th></th>
-          <th></th>
-          <th></th>
-        </tr>
-        <tr>
-          <th>Ruang</th>
-          <th>:</th>
-          <th>1</th>
-          <th>Sesi</th>
-          <th>:</th>
-          <th>1</th>
-        </tr>
-        <tr>
-          <th>Hari/Tgl</th>
-          <th>:</th>
-          <th>Senin, 26-02-2024</th>
-          <th>Jam</th>
-          <th>:</th>
-          <th>07:00 - 08:30</th>
-        </tr>
-        <tr>
-          <th>Mata Pelajaran</th>
-          <th>:</th>
-          <th>Pendidikan Agama Islam</th>
-          <th></th>
-          <th></th>
-          <th></th>
-        </tr>
-      </table>
-    </div>
-    <div class="nama" style="text-align: left; padding: 25px">
-      <table>
-        <thead>
-          <tr style="border: 1px solid;">
-            <th style="width: 15px">No</th>
-            <th style="width: 115px; text-align: center;">Nomor Peserta</th>
-            <th style="text-align: center;">Nama</th>
-            <th style="width: 150px;  text-align: center;">Tanda Tangan</th>
-            <th style="width: 15px;  text-align: center;">Ket</th>
-          </tr>
-          <tbody>
-              <tr>
-                  <td>1</td>
-                  <td>10-190-2024</td>
-                  <td>Alex</td>
-                  <td>1.</td>
-                  <td></td>
-                </tr>
-              <tr>
-                  <td>2</td>
-                  <td>10-190-2024</td>
-                  <td>Muhammad wdijadijwaijd</td>
-                  <td style="text-align: center;">2.</td>
-                  <td></td>
-                </tr>
-              <tr>
-                  <td>2</td>
-                  <td>10-190-2024</td>
-                  <td>Muhammad wdijadijwaijd</td>
-                  <td style="text-align: center;">2.</td>
-                  <td></td>
-                </tr>
-              <tr>
-                  <td>2</td>
-                  <td>10-190-2024</td>
-                  <td>Muhammad wdijadijwaijd</td>
-                  <td style="text-align: center;">2.</td>
-                  <td></td>
-                </tr>
-            </tbody>
-        </thead>
-      </table>
-    </div>
-    <div class="footer" style="margin-left: 25px;">
-      <table>
-          <tr style="text-align: left;">
-              <th>Jumlah Peserta</th>
-              <th>:</th>
-              <th>28</th>
-              <th>Orang</th>
-          </tr>
-          <tr style="text-align: left;">
-              <th>Jumlah Peserta Tidak Hadir</th>
-              <th>:</th>
-              <th>0</th>
-              <th>Orang</th>
-          </tr>
-          <tr style="text-align: left;">
-              <th>Jumlah Peserta Hadir</th>
-              <th>:</th>
-              <th>0</th>
-              <th>Orang</th>
-          </tr>
-      </table>
-    </div>
-    <div class="bottom" style="display: flex; justify-content:space-between; align-items: center; margin-left: 150px; margin-right: 150px;">
-        <div class="ttd" style="text-align: center;">
-            <p>Proktor</p>
-            <br>
-            <br>
-            <br>
-            <b style="margin-top: 50px;">Taufiqur Rahman</b>
+@section('title')
+    Cetak
+@endsection
+
+@php
+    $title = View::getSections()['title'];
+@endphp
+
+@section('datacetak', 'active')
+@section('daftar_hadir-active', 'active')
+
+@section('badge')
+    @parent
+    <li class="active">{{ ucwords($title) }}</li>
+@endsection
+
+@section('content')
+    <!-- Main content -->
+    <section class="content">
+
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        @if (session('success'))
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil!',
+                    text: '{{ session('success') }}',
+                    showConfirmButton: false,
+                    timer: 2500 // Menutup pesan dalam 1 detik (1000ms)
+                });
+            </script>
+        @endif
+
+
+
+        <!-- Small boxes (Stat box) -->
+        <div class="box">
+            <div class="box-header with-border">
+                <h3 class="box-title">Data {{ ucwords($title) }}</h3>
+            </div>
+            <div class="box-body table-responsive">
+                <form action="{{ route('cetak.daftarhadir') }}" method="POST" target="_blank">
+                    @csrf
+                    <div class="form-group">
+                        <label for="jenis">Jadwal Ujian</label>
+                        <select class="form-control" id="jenis" name="jenis" required>
+                            @foreach ($jadwal as $data)
+                                <option value="{{ $data->id_jadwal_ujian }}">{{ $data->nama_ujian }} {{$data->nama_mapel}}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sesi">Sesi</label>
+                        <select class="form-control" id="sesi" name="sesi" required>
+                            @foreach ($sesi as $data)
+                                <option value="{{ $data->id_sesi }}">{{ $data->nama_sesi }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="ruang">Ruang</label>
+                        <select class="form-control" id="ruang" name="ruang" required>
+                            @foreach ($ruang as $data)
+                                <option value="{{ $data->id_ruang }}">{{ $data->nama_ruang }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="hadir">Siswa Hadir</label>
+                        <select class="form-control" id="hadir" name="hadir" required>
+                            <option value="1">Hadir Semua</option>
+                            <option value="2">Ada Siswa Tidak Hadir</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group tdkhadir">
+                        <label for="tdkhadir">Jumlah Tidak Hadir</label>
+                        <input type="tdkhadir" class="form-control" name="tdkhadir" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="proktor">Nama Proktor</label>
+                        <select class="form-control" id="proktor" name="proktor" required>
+                            <option value="Ach. Alfan Taufiqi, S.Pd">Ach. Alfan Taufiqi, S.Pd</option>
+                            <option value="Taufiqur Rahman, S.Kom">Taufiqur Rahman, S.Kom</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pengawas">Nama Pengawas</label>
+                        <input type="pengawas" class="form-control" name="pengawas" required="required">
+                    </div>
+                    <button type="submit" class="btn btn-success">Cari
+                        <i class="fa fa-search"></i>
+                    </button>
+                </form>
+            </div>
         </div>
-        <div class="ttd" style="text-align: center;">
-            <p>Pengawas</p>
-            <br>
-            <br>
-            <br>
-            <b style="margin-top: 50px;">Taufiqur Rahman</b>
-        </div>
-    </div>
-  </body>
+    </section>
+@endsection
+
+@push('script')
+    <script>
+       document.addEventListener("DOMContentLoaded", function() {
+        var hadirSelect = document.getElementById('hadir');
+        var tdkhadirInput = document.querySelector('.form-group.tdkhadir');
+
+        hadirSelect.addEventListener('change', function() {
+            if (hadirSelect.value === '2') {
+                tdkhadirInput.style.display = 'block';
+            } else {
+                tdkhadirInput.style.display = 'none';
+            }
+        });
+
+        // Initially hide the input if "Hadir Semua" is selected by default
+        if (hadirSelect.value === '1') {
+            tdkhadirInput.style.display = 'none';
+        }
+    });
+    </script>
+@endpush

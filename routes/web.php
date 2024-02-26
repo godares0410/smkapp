@@ -33,6 +33,7 @@ use App\Http\Controllers\AlokasiController;
 use App\Http\Controllers\ScoreController;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\DaftarController;
+use App\Http\Controllers\CetakController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,6 +69,8 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::resource('pelaksanaan', PelaksanaanController::class);
     Route::resource('alokasi', AlokasiController::class);
     Route::resource('score', ScoreController::class);
+    Route::resource('cetak', CetakController::class);
+    Route::post('/cetak/daftarhadir', [CetakController::class, 'cetakdaftar'])->name('cetak.daftarhadir');
     Route::get('/daftarppdb', [DaftarController::class, 'daftar'])->name('daftar.ppdb');
     Route::get('/rekap', [ScoreController::class, 'rekap'])->name('score.rekap');
     Route::post('/rekap/nilai', [ScoreController::class, 'rekapnilai'])->name('score.rekapnilai');
