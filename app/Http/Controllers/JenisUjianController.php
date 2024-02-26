@@ -43,7 +43,7 @@ class JenisUjianController extends Controller
         ]);
         $jenis = new JenisUjian;
         $jenis->nama_ujian = $request->nama_ujian;
-        $jenis->kode_ujian = $request->kode_ujian;
+        $jenis->nama_ujian = $request->kode_ujian;
         $jenis->save();
 
         // Tampilkan pesan success

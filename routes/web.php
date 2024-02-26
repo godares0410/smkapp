@@ -55,6 +55,7 @@ Route::get('/', [WebsiteController::class, 'index']);
 // Route::get('/login', [LoginAuthController::class, 'index']);
 Route::resource('website', WebsiteController::class);
 Route::resource('daftar', DaftarController::class);
+Route::resource('ppdb', DaftarController::class);
 Route::resource('test', TestController::class);
 
 

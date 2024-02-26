@@ -16,15 +16,15 @@ class DaftarController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nik' => 'required|numeric|unique:data_pendaftaran',
-            'nkk' => 'required|unique:data_pendaftaran',
+            'no_kk' => 'required|unique:data_pendaftaran',
             'email' => 'required|unique:data_pendaftaran',
-            'wa' => 'required|unique:data_pendaftaran',
+            'no_wa' => 'required|unique:data_pendaftaran',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ], [
             'nik.unique' => 'NIK sudah digunakan.',
-            'nkk.unique' => 'Nomor KK sudah digunakan.',
+            'no_kk.unique' => 'Nomor KK sudah digunakan.',
             'email.unique' => 'Email sudah digunakan.',
-            'wa.unique' => 'Nomor WA sudah digunakan.',
+            'no_wa.unique' => 'Nomor WA sudah digunakan.',
             'foto.mimes' => 'Foto harus berupa jpeg, png, jpg.',
             'foto.max' => 'Ukuran Foto Maksimal 2MB.',
         ]);
@@ -34,7 +34,7 @@ class DaftarController extends Controller
         }
         $pendaftaran = new Pendaftaran;
         $pendaftaran->nik = $request->nik;
-        $pendaftaran->no_kk = $request->nkk;
+        $pendaftaran->no_kk = $request->no_kk;
         $pendaftaran->nama_pendaftar = $request->nama;
         $pendaftaran->tempat = $request->tempatl;
         $pendaftaran->ttl = $request->tgl;
@@ -43,7 +43,7 @@ class DaftarController extends Controller
         $pendaftaran->asal_sekolah = $request->asal;
         $pendaftaran->jurusan = $request->jurusan;
         $pendaftaran->email = $request->email;
-        $pendaftaran->no_wa = $request->wa;
+        $pendaftaran->no_wa = $request->no_wa;
         if ($request->hasFile('foto')) {
             $foto = $request->file('foto');
             // $namaFoto = $foto->getClientOriginalName();

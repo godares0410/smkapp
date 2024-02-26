@@ -40,7 +40,7 @@
                     <div class="form-group">
                         <label for="durasi">Durasi</label>
                         <input type="text" class="form-control" id="durasi" name="durasi"
-                            placeholder="Dalam Satuan Menit" value="60" required>
+                            placeholder="Dalam Satuan Menit" value="90" required>
                     </div>
                     @php
                         $today = \Carbon\Carbon::now()->timezone('Asia/Jakarta');

@@ -112,12 +112,12 @@
                                 <td>
                                     <div class="btn-group" style="display: flex;">
                                         <a href="{{ route('soal.index', ['id_bank_soal' => $data->id_bank_soal]) }}" class="btn {{ $data->total_soal == 0 ? 'btn-warning' : 'btn-primary' }}"  style="margin-right: 5px;">Lihat Soal</a>
-                                        <a href="{{ route('soal.index', ['id_bank_soal' => $data->id_bank_soal]) }}" class="btn btn-primary" style="margin-right: 5px;">Lihat Soal</a>
+                                        {{-- <a href="{{ route('soal.index', ['id_bank_soal' => $data->id_bank_soal]) }}" class="btn btn-primary" style="margin-right: 5px;">Lihat Soal</a>
 
                                         <a href="{{ route('soal.index', ['id_bank_soal' => $data->id_bank_soal]) }}" class="btn btn-primary" style="margin-right: 5px;">Lihat Soal</a>
 
                                         <a href="{{ route('soal.index', ['id_bank_soal' => $data->id_bank_soal]) }}" class="btn btn-primary" style="margin-right: 5px;">Lihat Soal</a>
-                                        <a href="{{ route('soal.index', ['id_bank_soal' => $data->id_bank_soal]) }}" class="btn {{ $data->total_soal == 0 ? 'btn-warning' : 'btn-primary' }}"  style="margin-right: 5px;">Lihat Soal</a>
+                                        <a href="{{ route('soal.index', ['id_bank_soal' => $data->id_bank_soal]) }}" class="btn {{ $data->total_soal == 0 ? 'btn-warning' : 'btn-primary' }}"  style="margin-right: 5px;">Lihat Soal</a> --}}
                                         <form action="{{ route('bank_soal.destroy', $data->id_bank_soal) }}" method="POST">
                                             @csrf
                                             @method('DELETE')

@@ -78,8 +78,8 @@
         <input type="number" name="nik" id="nik" class="form-control" placeholder="NIK" required>
       </div>
       <div class="form-group has-feedback">
-        <label for="nkk">NO Kartu Keluarga</label>
-        <input type="number" name="nkk" id="nkk" class="form-control" placeholder="NO Kartu Keluarga" required>
+        <label for="no_kk">NO Kartu Keluarga</label>
+        <input type="number" name="no_kk" id="no_kk" class="form-control" placeholder="NO Kartu Keluarga" required>
       </div>
       <div class="form-group has-feedback">
         <label for="nama">Nama Pendaftar</label>
@@ -118,8 +118,8 @@
         <input type="text" name="email" id="email" class="form-control" placeholder="Email" required>
       </div>
       <div class="form-group has-feedback">
-        <label for="wa">Nomor WA</label>
-        <input type="text" name="wa" id="wa" class="form-control" placeholder="Nomor WA" required>
+        <label for="no_wa">Nomor WA</label>
+        <input type="text" name="no_wa" id="no_wa" class="form-control" placeholder="Nomor WA" required>
       </div>
       <div class="form-group has-feedback">
         <label for="foto">Foto</label>
