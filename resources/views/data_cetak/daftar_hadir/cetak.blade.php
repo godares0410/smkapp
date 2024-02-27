@@ -38,7 +38,7 @@
           <tr>
             <th>Hari/Tgl</th>
             <th>:</th>
-           @php
+           {{-- @php
               $bulanIndonesia = [
                   1 => 'Januari', 2 => 'Februari', 3 => 'Maret',
                   4 => 'April', 5 => 'Mei', 6 => 'Juni',
@@ -80,6 +80,58 @@
                 $jamSelesai = substr($jadwal->js, 0, -3); // Mengambil semua karakter kecuali 3 karakter terakhir
           @endphp
             <th>{{ $namaHariIndonesia}}, {{ $formattedDate}}</th>
+            <th>Jam</th>
+            <th>:</th>
+            <th>{{ $jamMulai}} - {{ $jamSelesai}}</th>
+          </tr> --}}
+          @php
+              $bulanIndonesia = [
+                  1 => 'Januari', 2 => 'Februari', 3 => 'Maret',
+                  4 => 'April', 5 => 'Mei', 6 => 'Juni',
+                  7 => 'Juli', 8 => 'Agustus', 9 => 'September',
+                  10 => 'Oktober', 11 => 'November', 12 => 'Desember',
+              ];
+
+              $carbonTanggalMulai = \Carbon\Carbon::createFromFormat('Y-m-d', $jadwal->tm)->timezone('Asia/Jakarta');
+              $formattedDate = $carbonTanggalMulai->format('d') . '-' . $bulanIndonesia[$carbonTanggalMulai->format('n')] . '-' . $carbonTanggalMulai->format('Y');
+              // Tambah 7 hari
+              $carbonTanggalMulai->addDays(7);
+
+              // Format tanggal setelah ditambah 7 hari
+              $formattedDateAfterAddition = $carbonTanggalMulai->format('d') . '-' . $bulanIndonesia[$carbonTanggalMulai->format('n')] . '-' . $carbonTanggalMulai->format('Y');
+               // Ambil nama hari dari tanggal yang diberikan
+               // Ambil nama hari dari tanggal yang diberikan
+              $namaHari = $carbonTanggalMulai->format('l'); // 'l' akan mengembalikan nama hari dalam bahasa Inggris (Monday, Tuesday, dst.)
+              // Jika Anda ingin menggunakan nama hari dalam bahasa Indonesia, Anda dapat menerjemahkannya secara manual
+              $namaHariIndonesia = '';
+              switch($namaHari) {
+                  case 'Monday':
+                      $namaHariIndonesia = 'Senin';
+                      break;
+                  case 'Tuesday':
+                      $namaHariIndonesia = 'Selasa';
+                      break;
+                  case 'Wednesday':
+                      $namaHariIndonesia = 'Rabu';
+                      break;
+                  case 'Thursday':
+                      $namaHariIndonesia = 'Kamis';
+                      break;
+                  case 'Friday':
+                      $namaHariIndonesia = 'Jumat';
+                      break;
+                  case 'Saturday':
+                      $namaHariIndonesia = 'Sabtu';
+                      break;
+                  case 'Sunday':
+                      $namaHariIndonesia = 'Minggu';
+                      break;
+              }
+
+                $jamMulai = substr($jadwal->jm, 0, -3); // Mengambil semua karakter kecuali 3 karakter terakhir
+                $jamSelesai = substr($jadwal->js, 0, -3); // Mengambil semua karakter kecuali 3 karakter terakhir
+          @endphp
+            <th>{{ $namaHariIndonesia}}, {{ $formattedDateAfterAddition}}</th>
             <th>Jam</th>
             <th>:</th>
             <th>{{ $jamMulai}} - {{ $jamSelesai}}</th>

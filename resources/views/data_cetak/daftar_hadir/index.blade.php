@@ -102,8 +102,8 @@
                         <label for="pengawas">Nama Pengawas</label>
                         <input type="pengawas" class="form-control" name="pengawas" required="required">
                     </div>
-                    <button type="submit" class="btn btn-success">Cari
-                        <i class="fa fa-search"></i>
+                    <button type="submit" class="btn btn-success">Cetak
+                        <i class="fa fa-print"></i>
                     </button>
                 </form>
             </div>

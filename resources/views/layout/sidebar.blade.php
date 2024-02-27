@@ -96,6 +96,7 @@
                                 <i class="fa fa-angle-left pull-right"></i>
                             </span>
                         </a>
+                        @if (auth('web')->user()->level == 1)
                         <ul class="treeview-menu">
                             <li class="@yield('banksoal-active')"><a href="{{ route('banksoal.index') }}"><i
                                         class="fa fa-circle-o"></i>
@@ -129,6 +130,7 @@
                                     Token</a></li> --}}
                         </ul>
                     </li>
+                    @endif
                     <li class="@yield('data-pelaksanaan') treeview">
                         <a href="#">
                             <i class="fa fa-edit"></i>
@@ -179,26 +181,9 @@
                             <li class="@yield('daftar_hadir-active')"><a href="{{ route('cetak.index') }}"><i
                                         class="fa fa-circle-o"></i>Daftar Hadir</a>
                             </li>
-                            <li class="@yield('nilai-active')"><a href="{{ route('score.index') }}"><i
-                                        class="fa fa-circle-o"></i>Kartu Peserta</a></li>
                         </ul>
                     </li>
-                    {{-- <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-calendar"></i> <span>Absen</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="{{ asset('AdminLTE-2/pages/UI/general.html') }}"><i
-                                        class="fa fa-circle-o"></i>Absen Harian</a></li>
-                            <li><a href="{{ asset('AdminLTE-2/pages/UI/general.html') }}"><i
-                                        class="fa fa-circle-o"></i>Absen Bulanan</a></li>
-                            <li><a href="{{ asset('AdminLTE-2/pages/UI/general.html') }}"><i
-                                        class="fa fa-circle-o"></i>Laporan</a></li>
-                        </ul>
-                    </li> --}}
+                    @if (auth('web')->user()->level == 1)
                     <li class="@yield('data-website') treeview">
                         <a href="#">
                             <i class="fa fa-edit"></i>
@@ -210,7 +195,7 @@
                         <ul class="treeview-menu">
                             <li class="@yield('beranda-active')"><a href="{{ route('website.beranda') }}"><i
                                         class="fa fa-circle-o"></i>
-                                    website</a></li>
+                                    Website</a></li>
                             <li class="@yield('berita-active')"><a href="{{ route('website.berita') }}"><i
                                         class="fa fa-circle-o"></i>
                                     Berita</a></li>
@@ -230,6 +215,7 @@
                                     Pendaftar</a></li>
                         </ul>
                     </li>
+                    @endif
                 @endif
                 @if (auth('siswa')->check())
                     <li class="@yield('assesmen') treeview">
