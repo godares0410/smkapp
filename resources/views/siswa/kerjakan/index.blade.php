@@ -138,13 +138,26 @@
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                               @if(auth('siswa')->user()->foto != null)
+                                    <img src="{{ asset('img/siswa/' . auth('siswa')->user()->foto) }}" class="user-image" alt="User Image">
+                                @else
+                                    <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                                @endif
                                 <span class="hidden-xs">{{ auth('siswa')->user()->nama_siswa }}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header">
-                                    <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                    @if (auth('siswa')->check())
+                                        @if(auth('siswa')->user()->foto != null)
+                                            <img src="{{ asset('img/siswa/' . auth('siswa')->user()->foto) }}" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;" alt="User Image">
+                                        @else
+                                            <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                                        @endif
+                                    @endif
+                                    @if (auth('web')->check())
+                                        <img src="{{ asset('AdminLTE-2/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+                                    @endif
 
                                     <p>{{ auth('siswa')->user()->nama_siswa }}
                                         {{-- <small>Member since Nov. 2012</small> --}}

@@ -12,7 +12,7 @@
     <div class="judul">
       <h5 style="text-align: center">
         DAFTAR HADIR PESERTA <br />
-        UJIAN SATUAN PENDIDIKAN BERBASIS KOMPUTER <br />
+        ASSESSMEN SATUAN PENDIDIKAN BERBASIS KOMPUTER <br />
         TAHUN PELAJARAN 2023/2024
       </h5>
     </div>

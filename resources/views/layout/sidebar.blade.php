@@ -5,7 +5,16 @@
             <!-- Sidebar user panel -->
             <div class="user-panel">
                 <div class="pull-left image">
+                @if (auth('siswa')->check())
+                 @if(auth('siswa')->user()->foto != null)
+                        <img src="{{ asset('img/siswa/' . auth('siswa')->user()->foto) }}" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" alt="User Image">
+                    @else
+                        <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                    @endif
+                @endif
+                @if (auth('web')->check())
                     <img src="{{ asset('AdminLTE-2/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+                @endif
                 </div>
                 <div class="pull-left info">
                     @if (auth('web')->check())
@@ -143,9 +152,11 @@
                             <li class="@yield('pelaksanaan-active')"><a href="{{ route('pelaksanaan.index') }}"><i
                                         class="fa fa-circle-o"></i>
                                     Pelaksanaan</a></li>
+                                    @if (auth('web')->user()->level == 1)
                             <li class="@yield('reset-active')"><a href="{{ route('pelaksanaan.reset') }}"><i
                                         class="fa fa-circle-o"></i>
                                     Reset</a></li>
+                                    @endif
                         </ul>
                     </li>
                     <li class="@yield('token-active')">
@@ -172,7 +183,7 @@
                     </li>
                     <li class="@yield('datacetak') treeview">
                         <a href="#">
-                            <i class="fa fa-table"></i> <span>Cetak</span>
+                            <i class="fa fa-print"></i> <span>Cetak</span>
                             <span class="pull-right-container">
                                 <i class="fa fa-angle-left pull-right"></i>
                             </span>

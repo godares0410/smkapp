@@ -16,7 +16,7 @@
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
                 <!-- Messages: style can be found in dropdown.less-->
-                <li class="dropdown messages-menu">
+                {{-- <li class="dropdown messages-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-envelope-o"></i>
                         <span class="label label-success">4</span>
@@ -97,7 +97,7 @@
                         </li>
                         <li class="footer"><a href="#">See All Messages</a></li>
                     </ul>
-                </li>
+                </li> --}}
                 <!-- Notifications: style can be found in dropdown.less -->
                 <li class="dropdown notifications-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -230,11 +230,20 @@
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="{{ asset('AdminLTE-2/dist/img/user2-160x160.jpg') }}" class="user-image"
-                            alt="User Image">
-                        {{-- <span class="hidden-xs">{{ auth()->user()->name }}</span> --}}
-                        @if (auth()->check())
-                            <span class="hidden-xs">{{ auth()->user()->name }}</span>
+                        {{-- <img src="{{ asset('AdminLTE-2/dist/img/user2-160x160.jpg') }}" class="user-image"
+                            alt="User Image"> --}}
+                            @if (auth('siswa')->check())
+                            @if(auth('siswa')->user()->foto != null)
+                                    <img src="{{ asset('img/siswa/' . auth('siswa')->user()->foto) }}" style="width: 25px; height: 25px; border-radius: 50%; object-fit: cover;" alt="User Image">
+                                @else
+                                    <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                                @endif
+                            @endif
+                            @if (auth('web')->check())
+                                <img src="{{ asset('AdminLTE-2/dist/img/user2-160x160.jpg') }}" class="user-image" alt="User Image">
+                            @endif
+                        @if (auth('web')->check())
+                            <span class="hidden-xs">{{ auth('web')->user()->name }}</span>
                         @elseif (auth('guru')->check())
                             <span class="hidden-xs">{{ auth('guru')->user()->nama_guru }}</span>
                         @elseif (auth('siswa')->check())
@@ -244,9 +253,18 @@
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="{{ asset('AdminLTE-2/dist/img/user2-160x160.jpg') }}" class="img-circle"
-                                alt="User Image">
-
+                            {{-- <img src="{{ asset('AdminLTE-2/dist/img/user2-160x160.jpg') }}" class="img-circle"
+                                alt="User Image"> --}}
+                            @if (auth('siswa')->check())
+                                @if(auth('siswa')->user()->foto != null)
+                                    <img src="{{ asset('img/siswa/' . auth('siswa')->user()->foto) }}" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; vertical-align: middle;" alt="User Image">
+                                @else
+                                    <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                                @endif
+                            @endif
+                            @if (auth('web')->check())
+                                <img src="{{ asset('AdminLTE-2/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+                            @endif
                             @if (auth('web')->check())
                                 @php
                                     $nama = auth()->user()->name;

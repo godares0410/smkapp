@@ -152,6 +152,7 @@ class SoalController extends Controller
         ]);
 
         $folderPath = public_path('bank_soal/' . $bank->nama_bank_soal);
+        // $folderPath = public_path('img/siswa');
 
         if ($request->hasFile('images')) {
             // Periksa dan buat direktori jika belum ada
