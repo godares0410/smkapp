@@ -89,7 +89,7 @@ $besok = $tomorrow->format('Y-m-d');
                                         </label>
                                     </div>
 
-                                    <div style="margin-left: 20px; display: none;" class="jam-ke-container"
+                                    {{-- <div style="margin-left: 20px; display: none;" class="jam-ke-container"
                                         data-jam-ke="{{ $idSesi }}">
                                         <p>Jam ke:</p>
 
@@ -106,6 +106,31 @@ $besok = $tomorrow->format('Y-m-d');
                                                     {{ $idJamKe }}
                                                     ({{ date('H:i', strtotime(reset($sesiDetails)['jam_mulai'])) }} -
                                                     {{ date('H:i', strtotime(reset($sesiDetails)['jam_selesai'])) }})
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                    </div> --}}
+                                    <div style="margin-left: 20px; display: none;" class="jam-ke-container"
+                                        data-jam-ke="{{ $idSesi }}">
+                                        <p>Jam ke:</p>
+
+                                        @php
+                                            $uniqueJamKe = array_unique(array_column($sesiDetails, 'id_jam_ke'));
+                                        @endphp
+
+                                        @foreach ($uniqueJamKe as $idJamKe)
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="jam_ke[]" value="{{ $idJamKe }}"
+                                                        class="jam-ke-checkbox" data-jam-ke="{{ $idJamKe }}"
+                                                        hidden>
+                                                    {{ $idJamKe }}
+                                                    @foreach ($sesiDetails as $sesi)
+                                                        @if ($sesi['id_jam_ke'] == $idJamKe)
+                                                            ({{ date('H:i', strtotime($sesi['jam_mulai'])) }} -
+                                                            {{ date('H:i', strtotime($sesi['jam_selesai'])) }})
+                                                        @endif
+                                                    @endforeach
                                                 </label>
                                             </div>
                                         @endforeach

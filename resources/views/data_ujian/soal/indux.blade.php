@@ -9,6 +9,6 @@
     <p> C. {{ $data->pil_c }} </p>
     <p> D. {{ $data->pil_d }} </p>
     <p> E. {{ $data->pil_e }} </p>
-    <br>
-    <p> Kunci : {{ $data->jawaban }} </p>
+    {{-- <br>
+    <p> Kunci : {{ $data->jawaban }} </p> --}}
 @endforeach

@@ -177,9 +177,10 @@
                                         @if ($nilai != null && $nilai->id_jenis != null)
                                             @php
                                                 $sws = Auth::guard('siswa')->user()->id_siswa;
-                                                $sudah = \App\Models\SiswaNilai::where('id_jenis', $nilai->id_jenis)
+                                                $sudah = \App\Models\SiswaNilai::where('id_jenis', $data->id_jenis)
                                                     ->where('id_siswa', $sws)
                                                     ->where('id_mapel', $data->id_mapel)
+                                                    ->whereYear('created_at', '=', date('Y'))
                                                     ->first();
                                             @endphp
                                         @endif

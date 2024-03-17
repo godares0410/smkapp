@@ -56,6 +56,7 @@ class SiswasController extends Controller
             ->join('sesi', 'sesi_jadwal_ujian.id_sesi', '=', 'sesi.id_sesi')
             ->join('alokasi_waktu', 'sesi_jadwal_ujian.id_alokasi_waktu', '=', 'alokasi_waktu.id_alokasi_waktu')
             ->where('bank_ujian.id_kelas', $kelas)
+            ->orderBy('jadwal_ujian.id_jadwal_ujian', 'desc')
             ->get();
 
 
