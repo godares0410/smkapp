@@ -95,7 +95,7 @@
               $carbonTanggalMulai = \Carbon\Carbon::createFromFormat('Y-m-d', $jadwal->tm)->timezone('Asia/Jakarta');
               $formattedDate = $carbonTanggalMulai->format('d') . '-' . $bulanIndonesia[$carbonTanggalMulai->format('n')] . '-' . $carbonTanggalMulai->format('Y');
               // Tambah 7 hari
-              $carbonTanggalMulai->addDays(7);
+              $carbonTanggalMulai->addDays(0);
 
               // Format tanggal setelah ditambah 7 hari
               $formattedDateAfterAddition = $carbonTanggalMulai->format('d') . '-' . $bulanIndonesia[$carbonTanggalMulai->format('n')] . '-' . $carbonTanggalMulai->format('Y');

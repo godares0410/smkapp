@@ -115,7 +115,7 @@
       </div>
       <div class="form-group has-feedback">
         <label for="email">Email</label>
-        <input type="text" name="email" id="email" class="form-control" placeholder="Email" required>
+        <input type="email" name="email" id="email" class="form-control" placeholder="Email" required>
       </div>
       <div class="form-group has-feedback">
         <label for="no_wa">Nomor WA</label>
