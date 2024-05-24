@@ -23,11 +23,12 @@
             height: 53.98mm;
             width: 85.60mm;
             border: 1px solid black;
+            overflow: hidden;
         }
         .no-border {
-            margin-top: 10px;
+            margin-top: 4px;
             border-collapse: collapse;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
         }
 
@@ -69,17 +70,21 @@
                     <div style="height: 70%;">
                         <div style="display: flex; flex-direction: row;">
                             <div style="width: 20%;">
-                             <img src="{{ asset('img/siswa/IMG_9298.jpg') }}" style="width: 90%; padding: 5%" alt="">
+                            @if ($data->foto != null)
+                                <img src="{{ asset('img/siswa/' . $data->foto) }}" style="width: 90%; padding: 5%" alt="">
+                            @else
+                                <img src="{{ asset('img/siswa/icon.jpg') }}" style="width: 90%; padding: 5%; margin-top: 10px" alt="">
+                            @endif
                             </div>
                             <div style="width: 80%;">
                                 <table class="no-border">
                                     <tr>
-                                        <td>Nama</td>
-                                        <td>:</td>
-                                        <td>{{$data->nama_siswa}}</td>
+                                        <td style="vertical-align: top;">Nama</td>
+                                        <td style="vertical-align: top;">:</td>
+                                        <td style="vertical-align: top;">{{$data->nama_siswa}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Kelas / Sesi Ujian</td>
+                                        <td style="width: 100px">Kelas / Sesi Ujian</td>
                                         <td>:</td>
                                         <td>{{$data->nama_kelas}} {{$data->kode_jurusan}} / {{$data->nama_sesi}}</td>
                                     </tr>
@@ -99,6 +104,13 @@
                                         <td>{{$data->nama_ruang}}</td>
                                     </tr>
                                 </table>
+                            </div>
+                        </div>
+                        <div style="display: flex; justify-content: flex-end; align-items: flex-end;">
+                            <div style="width: 40%; display: flex; align-items: center; flex-direction: column; justify-content: flex-end;">
+                                <div style="font-size: 10px;">Kepala Sekolah</div>
+                                <img src="{{ asset('img/kartu/pmad.png') }}" style="height: 30px;" alt="">
+                                <div style="font-size: 10px;">Fachrur Rozi, M.Pd.I</div>
                             </div>
                         </div>
                     </div>
