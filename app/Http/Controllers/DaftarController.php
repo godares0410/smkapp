@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pendaftaran;
 use Illuminate\Support\Facades\Validator;
+use App\Exports\ExportDaftar;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 
 class DaftarController extends Controller
 {
@@ -78,5 +82,10 @@ class DaftarController extends Controller
         $pendaftar->delete();
 
         return redirect()->back()->with('success', 'Pendaftar berhasil dihapus');
+    }
+    public function exportData()
+    {
+        $pendaftar = Pendaftaran::all();
+        return Excel::download(new ExportDaftar($pendaftar), "Data PPDB.xlsx");
     }
 }

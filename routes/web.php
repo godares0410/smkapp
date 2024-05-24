@@ -34,6 +34,7 @@ use App\Http\Controllers\ScoreController;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\DaftarController;
 use App\Http\Controllers\CetakController;
+use App\Http\Controllers\KartuController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,14 +71,18 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::resource('alokasi', AlokasiController::class);
     Route::resource('score', ScoreController::class);
     Route::resource('cetak', CetakController::class);
+    Route::resource('kartu', KartuController::class);
+    Route::post('/kartu/cetak', [KartuController::class, 'cetakkartu'])->name('cetak.kartu');
     Route::post('/cetak/daftarhadir', [CetakController::class, 'cetakdaftar'])->name('cetak.daftarhadir');
     Route::get('/daftarppdb', [DaftarController::class, 'daftar'])->name('daftar.ppdb');
+    Route::post('/daftarppdb/export', [DaftarController::class, 'exportData'])->name('daftarppdb.export');
     Route::get('/rekap', [ScoreController::class, 'rekap'])->name('score.rekap');
     Route::post('/rekap/nilai', [ScoreController::class, 'rekapnilai'])->name('score.rekapnilai');
     Route::post('/rekap/export', [ScoreController::class, 'rekapeksport'])->name('rekap.export');
     Route::post('/rekap/exportall', [ScoreController::class, 'exportRekap'])->name('rekap.exportall');
     Route::get('/fetch-mapel-options', [ScoreController::class, 'fetchMapelOptions'])->name('score.fetchMapelOptions');
     Route::post('/nilai/tampil', [ScoreController::class, 'nilai'])->name('nilai.cari');
+
     Route::post('/nilai/export', [ScoreController::class, 'exportData'])->name('nilai.export');
     Route::post('/pelaksanaan/selesikan/{id}/{idUj}', [PelaksanaanController::class, 'selesaikan'])->name('pelaksanaan.selesaikan');
     Route::get('/reset', [PelaksanaanController::class, 'reset'])->name('pelaksanaan.reset');

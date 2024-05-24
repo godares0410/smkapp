@@ -192,6 +192,9 @@
                             <li class="@yield('daftar_hadir-active')"><a href="{{ route('cetak.index') }}"><i
                                         class="fa fa-circle-o"></i>Daftar Hadir</a>
                             </li>
+                            <li class="@yield('cetak_kartu-active')"><a href="{{ route('kartu.index') }}"><i
+                                        class="fa fa-circle-o"></i>Kartu Peserta</a>
+                            </li>
                         </ul>
                     </li>
                     @if (auth('web')->user()->level == 1)
