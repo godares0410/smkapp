@@ -22,7 +22,8 @@ class SoalController extends Controller
 
         $bank = BankSoal::where('bank_soal.id_bank_soal', $id_bank_soal)
         ->join('mapel', 'bank_soal.id_mapel', '=', 'mapel.id_mapel')
-            ->select('bank_soal.nama_bank_soal', 'bank_soal.id_bank_soal', 'mapel.kode_mapel')
+        ->join('kelas', 'mapel.id_kelas', '=', 'kelas.id_kelas')
+            ->select('bank_soal.nama_bank_soal', 'bank_soal.id_bank_soal', 'mapel.kode_mapel', 'kelas.nama_kelas')
             ->first();
         $soal = Soal::where('id_bank_soal', $id_bank_soal)
             ->get();
@@ -173,5 +174,30 @@ class SoalController extends Controller
         } else {
             return redirect()->back()->with('error', 'No files selected');
         }
+    }
+    public function destroyall($id)
+    {
+        // Temukan BankSoal berdasarkan ID
+        $mapel = BankSoal::findOrFail($id);
+
+        // Hapus folder terkait
+        $folderPath = public_path('bank_soal/' . $mapel->nama_bank_soal);
+        if (file_exists($folderPath)) {
+            $this->deleteFolder($folderPath);
+        }
+        Soal::where('id_bank_soal', $id)->delete();
+
+        return redirect()->back()->with('success', 'Soal berhasil dihapus');
+    }
+    private function deleteFolder($folderPath)
+    {
+        // Hapus semua file di dalam folder
+        $files = glob($folderPath . '/*');
+        foreach ($files as $file) {
+            unlink($file);
+        }
+
+        // Hapus folder itu sendiri
+        rmdir($folderPath);
     }
 }

@@ -259,6 +259,7 @@
             checkbox.name = 'bank_soal[]';
             checkbox.value = mapelId;
             checkbox.id = 'bankSoal_' + mapelId;
+            // checkbox.required = true;
 
             var label = document.createElement('label');
             label.htmlFor = 'bankSoal_' + mapelId;

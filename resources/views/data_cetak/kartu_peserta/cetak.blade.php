@@ -59,7 +59,7 @@
                             <img src="{{ asset('img/website/logo/_1716540967.png') }}" style="width: 95%" alt="">
                         </div>
                         <div style="width:60%; text-align: center; font-size: 13px; font-weight: bold;">
-                            KARTU PESERTA PAT <br>
+                            KARTU PESERTA PSAT <br>
                             SMK SABILILLAH <br>
                             TAHUN PELAJARAN 2023/2024
                         </div>
@@ -84,9 +84,9 @@
                                         <td style="vertical-align: top;">{{$data->nama_siswa}}</td>
                                     </tr>
                                     <tr>
-                                        <td style="width: 100px">Kelas / Sesi Ujian</td>
+                                        <td style="width: 100px">Kelas</td>
                                         <td>:</td>
-                                        <td>{{$data->nama_kelas}} {{$data->kode_jurusan}} / {{$data->nama_sesi}}</td>
+                                        <td>{{$data->nama_kelas}} {{$data->kode_jurusan}}</td>
                                     </tr>
                                     <tr>
                                         <td>Username</td>
@@ -99,9 +99,9 @@
                                         <td>{{$data->password}}</td>
                                     </tr>
                                     <tr>
-                                        <td>Tempat Ujian</td>
+                                        <td>Tempat / Sesi</td>
                                         <td>:</td>
-                                        <td>{{$data->nama_ruang}}</td>
+                                        <td>{{$data->nama_ruang}} / {{$data->nama_sesi}}</td>
                                     </tr>
                                 </table>
                             </div>
@@ -109,8 +109,8 @@
                         <div style="display: flex; justify-content: flex-end; align-items: flex-end;">
                             <div style="width: 40%; display: flex; align-items: center; flex-direction: column; justify-content: flex-end;">
                                 <div style="font-size: 10px;">Kepala Sekolah</div>
-                                <img src="{{ asset('img/kartu/pmad.png') }}" style="height: 30px;" alt="">
-                                <div style="font-size: 10px;">Fachrur Rozi, M.Pd.I</div>
+                                <img src="{{ asset('img/kartu/ttd.png') }}" style="height: 30px;" alt="">
+                                <div style="font-size: 10px;">Fachrur Rozi, S.Pd, M.Pd.I</div>
                             </div>
                         </div>
                     </div>

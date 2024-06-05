@@ -23,7 +23,7 @@ class BankUjianController extends Controller
         $kelas = Kelas::all();
         $mapel = Mapel::all();
         $jenis = JenisUjian::all();
-        $bank = BankSoal::all();
+        $bank = BankSoal::orderBy('id_bank_soal', 'desc')->get();
         $bankujian = BankUjian::select('bank_ujian.*',
             'jenis_ujian.nama_ujian',
             'kelas.nama_kelas',

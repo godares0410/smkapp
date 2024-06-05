@@ -18,40 +18,17 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{ asset('AdminLTE-2/dist/css/skins/_all-skins.min.css') }}">
-
+    <!-- SweetAlert CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js') }}"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js') }}"></script>
   <![endif]-->
-
     <!-- Google Font -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-    <style>
-        /* Styling for radio buttons */
-        #soal-container input[type="radio"] {
-            margin-right: 5px;
-            /* Spacing between radio buttons */
-        }
-
-        /* Add labels for each answer choice */
-        #soal-container label {
-            font-weight: normal;
-            /* Normal text style */
-            margin-right: 15px;
-            /* Spacing between labels */
-        }
-
-        /* Text style for answer choice labels */
-        #soal-container label::before {
-            content: attr(data-label);
-            /* Use text from data-label attribute */
-            font-weight: bold;
-            margin-right: 5px;
-        }
-    </style>
 </head>
 <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
 
@@ -64,7 +41,7 @@
                 <!-- mini logo for sidebar mini 50x50 pixels -->
                 <span class="logo-mini"><b>A</b>LT</span>
                 <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg"><b>Admin</b>LTE</span>
+                <span class="logo-lg"><b>SMK</b>App</span>
             </a>
             <!-- Header Navbar: style can be found in header.less -->
             <nav class="navbar navbar-static-top">
@@ -161,16 +138,29 @@
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                               @if(auth('siswa')->user()->foto != null)
+                                    <img src="{{ asset('img/siswa/' . auth('siswa')->user()->foto) }}" class="user-image" alt="User Image">
+                                @else
+                                    <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                                @endif
                                 <span class="hidden-xs">{{ auth('siswa')->user()->nama_siswa }}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header">
-                                    <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                    @if (auth('siswa')->check())
+                                        @if(auth('siswa')->user()->foto != null)
+                                            <img src="{{ asset('img/siswa/' . auth('siswa')->user()->foto) }}" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;" alt="User Image">
+                                        @else
+                                            <img src="{{ asset('img/siswa/icon.jpg') }}" class="user-image" alt="User Image">
+                                        @endif
+                                    @endif
+                                    @if (auth('web')->check())
+                                        <img src="{{ asset('AdminLTE-2/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+                                    @endif
 
                                     <p>{{ auth('siswa')->user()->nama_siswa }}
-                                        <small>Member since Nov. 2012</small>
+                                        {{-- <small>Member since Nov. 2012</small> --}}
                                     </p>
                                 </li>
                                 <!-- Menu Body -->
@@ -194,11 +184,16 @@
                                         <a href="#" class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                        <a href="#" class="btn btn-default btn-flat"
+                                            onclick="document.getElementById('logout-form').submit()">Keluar</a>
                                     </div>
                                 </li>
                             </ul>
                         </li>
+                        <form action="{{ route('logout') }}" method="post" id="logout-form" style="display: none">
+                            @csrf
+                        </form>
+
                         <!-- Control Sidebar Toggle Button -->
                         <li>
                             <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
@@ -213,162 +208,124 @@
             <div class="container">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>
-                        Top Navigation
-                        <small>Example 2.0</small>
-                    </h1>
-                    <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li><a href="#">Layout</a></li>
-                        <li class="active">Top Navigation</li>
-                    </ol>
+                    {{-- <h1>
+                        {{ $ujian->nama_mapel }}
+                    </h1> --}}
+
                 </section>
 
                 <!-- Main content -->
                 <section class="content">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Blank Box</h3>
-                        </div>
-                        <div class="box-body">
-                            <div id="soal-container">
-                                @php
-                                    $counter = 1;
-                                @endphp
-                                {{-- @foreach ($soal as $sl)
-                                    <div>
-                                        <h3>{{ $counter++ }}. {{ $sl->soal }}</h3><br>
-
-                                        <form class="answer-form">
-                                            @csrf
-                                            <input type="hidden" name="id_soal" value="{{ $sl->id_soal }}">
-                                            <button type="button"
-                                                class="answer-btn btn-lg {{ $sl->soal_jawaban == 'A' ? 'btn-success' : '' }}"
-                                                data-answer="{{ $sl->pil_a }}">A</button> {{ $sl->pil_a }}
-                                        </form><br>
-                                        <form class="answer-form">
-                                            @csrf
-                                            <input type="hidden" name="id_soal" value="{{ $sl->id_soal }}">
-                                            <button type="button"
-                                                class="answer-btn btn-lg {{ $sl->soal_jawaban == 'B' ? 'btn-success' : '' }}"
-                                                data-answer="{{ $sl->pil_b }}">B</button> {{ $sl->pil_b }}
-                                        </form><br>
-                                        <form class="answer-form">
-                                            @csrf
-                                            <input type="hidden" name="id_soal" value="{{ $sl->id_soal }}">
-                                            <button type="button"
-                                                class="answer-btn btn-lg {{ $sl->soal_jawaban == 'C' ? 'btn-success' : '' }}"
-                                                data-answer="{{ $sl->pil_c }}">C</button> {{ $sl->pil_c }}
-                                        </form><br>
-                                        <form class="answer-form">
-                                            @csrf
-                                            <input type="hidden" name="id_soal" value="{{ $sl->id_soal }}">
-                                            <button type="button"
-                                                class="answer-btn btn-lg {{ $sl->soal_jawaban == 'D' ? 'btn-success' : '' }}"
-                                                data-answer="{{ $sl->pil_d }}">D</button> {{ $sl->pil_d }}
-                                        </form><br>
-                                        @if ($ujian->jumlah_opsi == 5)
-                                            <form class="answer-form">
-                                                @csrf
-                                                <input type="hidden" name="id_soal" value="{{ $sl->id_soal }}">
-                                                <button type="button"
-                                                    class="answer-btn btn-lg {{ $sl->soal_jawaban == 'E' ? 'btn-success' : '' }}"
-                                                    data-answer="{{ $sl->pil_e }}">E</button> {{ $sl->pil_e }}
-                                            </form><br>
-                                        @endif
-                                    </div>
-                                @endforeach --}}
-
-                                @foreach ($soal as $sl)
-                                    <div>
-                                        <h3>{{ $counter++ }}. {{ $sl->soal }}</h3><br>
-
-                                        {{-- Create an array of answer choices --}}
-                                        @php
-                                            $answerChoicesKey = 'answer_choices_' . $sl->id_soal;
-                                            $answerChoices = session($answerChoicesKey);
-
-                                            if (!$answerChoices) {
-                                                $answerChoices = [
-                                                    'A' => $sl->pil_a,
-                                                    'B' => $sl->pil_b,
-                                                    'C' => $sl->pil_c,
-                                                    'D' => $sl->pil_d,
-                                                ];
-
-                                                if ($ujian->jumlah_opsi == 5) {
-                                                    $answerChoices['E'] = $sl->pil_e;
-                                                }
-
-                                                // Shuffle the content of the answer choices if $acak_opsi is 1
-                                                if ($ujian->acak_opsi == 1) {
-                                                    $shuffledContent = collect($answerChoices)
-                                                        ->values()
-                                                        ->shuffle()
-                                                        ->toArray();
-                                                    $answerChoices = array_combine(array_keys($answerChoices), $shuffledContent);
-                                                }
-
-                                                session([$answerChoicesKey => $answerChoices]);
-                                            }
-                                        @endphp
-
-                                        {{-- Display the answer choices with fixed button labels --}}
-                                        @foreach ($answerChoices as $option => $answer)
-                                            <form class="answer-form">
-                                                @csrf
-                                                <input type="hidden" name="id_soal" value="{{ $sl->id_soal }}">
-                                                <button type="button"
-                                                    class="answer-btn btn-lg {{ $sl->soal_jawaban == $option ? 'btn-success' : '' }}"
-                                                    data-answer="{{ $answer }}">{{ $option }}</button>
-                                                {{ $answer }}
-                                            </form><br>
-                                        @endforeach
-                                    </div>
-                                @endforeach
-
-
+                            {{-- <h3 class="box-title">{{ $idUj }}</h3> --}}
+                            <!-- Button to trigger the modal -->
+                            <div class="pull-right">
+                                <button class="btn btn-success" onclick="refreshHalaman()"><i
+                                        class="fa  fa-refresh"></i></button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                    data-target="#soalModal" id="btnDaftarSoal">
+                                    Daftar Soal
+                                </button>
                             </div>
                         </div>
-                        <!-- /.box-body -->
-                    </div>
-                    <!-- /.box -->
-                </section>
-                <!-- /.content -->
+                        @if (session('sukses'))
+                            <script>
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal!',
+                                    text: '{{ session('sukses') }}',
+                                    showConfirmButton: true
+                                })
+                            </script>
+                        @endif
+                        <div class="box-body">
+    <div id="soal-container">
+        @php
+            $counter = 1;
+        @endphp
+        @foreach ($soal as $index => $sl)
+            <div class="pertanyaan-{{ $sl->id_soal }}" id="question-{{ $index }}" style="display: {{ $index === 0 ? 'block' : 'none' }};">
+                @if ($sl->file_1 != null && isset($bank_soal))
+                    <img src="{{ asset('bank_soal/' . $bank_soal->nama_bank_soal . '/' . $sl->file_1) }}" alt="Deskripsi Gambar" style="width: 100%">
+                @endif
+                <h3>{{ $counter++ }}. {{ $sl->soal }}</h3><br>
+                <form action="{{ route('siswa.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="id_soal" value="{{ $sl->id_soal }}">
+                    <button type="button" class="answer-btn btn-lg {{ $sl->soal_jawaban == 'A' ? 'btn-success' : '' }}" data-answer="{{ encrypt($sl->pil_a) }}">A</button>
+                    {{ $sl->pil_a }}<br>
+                    <button type="button" class="answer-btn btn-lg {{ $sl->soal_jawaban == 'B' ? 'btn-success' : '' }}" data-answer="{{ encrypt($sl->pil_b) }}">B</button>
+                    {{ $sl->pil_b }}<br>
+                    <button type="button" class="answer-btn btn-lg {{ $sl->soal_jawaban == 'C' ? 'btn-success' : '' }}" data-answer="{{ encrypt($sl->pil_c) }}">C</button>
+                    {{ $sl->pil_c }}<br>
+                    <button type="button" class="answer-btn btn-lg {{ $sl->soal_jawaban == 'D' ? 'btn-success' : '' }}" data-answer="{{ encrypt($sl->pil_d) }}">D</button>
+                    {{ $sl->pil_d }}<br>
+                    @if ($sl->pil_e != null)
+                        <button type="button" class="answer-btn btn-lg {{ $sl->soal_jawaban == 'E' ? 'btn-success' : '' }}" data-answer="{{ encrypt($sl->pil_e) }}">E</button>
+                        {{ $sl->pil_e }}<br>
+                    @endif
+                </form>
             </div>
-            <!-- /.container -->
+        @endforeach
+    </div>
+</div>
+<footer class="main-footer">
+    <div class="container">
+        <div class="col-lg-4 col-xs-4">
+            <div class="text-center">
+                <button class="btn btn-primary" id="prev-btn">Sebelumnya</button>
+            </div>
         </div>
-        <!-- /.content-wrapper -->
-        <footer class="main-footer">
-            <div class="container">
-                <!-- Tambahkan div dengan ID untuk menampilkan soal -->
-                <div class="col-lg-4 col-xs-4">
-                    <!-- small box -->
-                    <div class="box">
-                        <button class="btn btn-primary" id="btnSebelumnya"
-                            onclick="tampilkanSoalSebelumnya()">Sebelumnya</button>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-xs-4">
-                    <!-- small box -->
-                    <div class="box text-center">
-                        <button class="btn btn-primary" onclick="tampilkanSoalSelanjutnya()">Ragu</button>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-xs-4">
-                    <!-- small box -->
-                    <div class="box text-right">
-                        <button class="btn btn-primary pull-right" id="btnSelanjutnya"
-                            onclick="tampilkanSoalSelanjutnya()">Selanjutnya</button>
-                        <button class="btn btn-success pull-right" id="btnSelesai" style="display: none;"
-                            onclick="selesai()">Selesai</button>
-                    </div>
-                </div>
+        <div class="col-lg-4 col-xs-4">
+            <div class="text-center">
+                <button type="button" class="btn btn-warning btn-ragu">Ragu</button>
+            </div>
+        </div>
+        <div class="col-lg-4 col-xs-4">
+            <div class="text-right">
+                <button class="btn btn-primary pull-right" id="next-btn">Selanjutnya</button>
+            </div>
+        </div>
+    </div>
+</footer>
+
             </div>
             <!-- /.container -->
         </footer>
     </div>
     <!-- ./wrapper -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="soalModal" tabindex="-1" role="dialog" aria-labelledby="soalModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="soalModalLabel">Pastikan Tidak Ada Soal Terlewat</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- Generate buttons for each question -->
+                    @foreach ($soal as $sl)
+                        @php
+                            $isSoalJawabanNotNull = !is_null($sl->soal_jawaban);
+                        @endphp
+
+                        <button type="button"
+                            class="btn btn-{{ $isSoalJawabanNotNull ? 'success' : 'default' }} btn-soal"
+                            data-nomor="{{ $loop->iteration }}" style="width: 19%">
+                            {{ $loop->iteration }}
+                        </button>
+                    @endforeach
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- jQuery 3 -->
     <script src="{{ asset('AdminLTE-2/bower_components/jquery/dist/jquery.min.js') }}"></script>
@@ -382,90 +339,34 @@
     <script src="{{ asset('AdminLTE-2/dist/js/adminlte.min.js') }}"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('AdminLTE-2/dist/js/demo.js') }}"></script>
+    <!-- SweetAlert JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        $(document).ready(function() {
-            $('.answer-btn').click(function() {
-                // Ambil data dari tombol jawaban
-                var idSoal = $(this).parent().find('input[name="id_soal"]').val();
-                var jawaban = $(this).data('answer');
+        document.addEventListener('DOMContentLoaded', function() {
+    let currentQuestion = 0;
+    const questions = document.querySelectorAll('[id^=question-]');
+    const totalQuestions = questions.length;
 
-                // Kirim permintaan Ajax
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ route('siswas.update') }}',
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        id_soal: idSoal,
-                        jawaban: jawaban
-                    },
-                    success: function(response) {
-                        // Handle response jika diperlukan
-                        console.log(response);
-                    },
-                    error: function(error) {
-                        // Handle error jika diperlukan
-                        console.log(error);
-                    }
-                });
-            });
-        });
-    </script>
-
-    <!-- Initial setup -->
-    <script>
-        var currentSoalIndex = 0;
-        var jumlahSoal = {{ count($soal) }};
-
-        document.addEventListener("DOMContentLoaded", function() {
-            tampilkanSoal();
-            updateNavigationButtons();
-        });
-
-        function updateNavigationButtons() {
-            // Hide/show "Sebelumnya" button based on current question index
-            document.getElementById("btnSebelumnya").style.display = (currentSoalIndex === 0) ? "none" : "block";
-
-            // Hide/show "Selanjutnya" and "Selesai" buttons based on current question index
-            if (currentSoalIndex === jumlahSoal - 1) {
-                document.getElementById("btnSelanjutnya").style.display = "none";
-                document.getElementById("btnSelesai").style.display = "block";
-            } else {
-                document.getElementById("btnSelanjutnya").style.display = "block";
-                document.getElementById("btnSelesai").style.display = "none";
-            }
+    document.getElementById('next-btn').addEventListener('click', function() {
+        if (currentQuestion < totalQuestions - 1) {
+            questions[currentQuestion].style.display = 'none';
+            currentQuestion++;
+            questions[currentQuestion].style.display = 'block';
         }
+    });
 
-        function tampilkanSoalSebelumnya() {
-            if (currentSoalIndex > 0) {
-                currentSoalIndex--;
-                tampilkanSoal();
-            }
+    document.getElementById('prev-btn').addEventListener('click', function() {
+        if (currentQuestion > 0) {
+            questions[currentQuestion].style.display = 'none';
+            currentQuestion--;
+            questions[currentQuestion].style.display = 'block';
         }
+    });
+});
+</script>
 
-        function tampilkanSoalSelanjutnya() {
-            if (currentSoalIndex < jumlahSoal - 1) {
-                currentSoalIndex++;
-                tampilkanSoal();
-            }
-        }
 
-        function tampilkanSoal() {
-            var soalContainer = document.getElementById("soal-container");
-            var soalDivs = soalContainer.getElementsByTagName("div");
-
-            // Hide all questions
-            for (var i = 0; i < soalDivs.length; i++) {
-                soalDivs[i].style.display = "none";
-            }
-
-            // Show the current question
-            soalDivs[currentSoalIndex].style.display = "block";
-
-            // Update navigation buttons visibility
-            updateNavigationButtons();
-        }
-    </script>
 </body>
 
 </html>

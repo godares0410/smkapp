@@ -49,6 +49,14 @@
             <div class="box-header with-border">
                 <h3 class="box-title">Data {{ ucwords($title) }}</h3>
                 <div class="pull-right">
+                    <form action="{{ route('jadwal_ujian.destroyAll') }}" method="POST" id="deleteAllForm">
+                        @csrf
+                        @method('DELETE')
+                        <button type="button" class="btn-delete btn btn-danger">Hapus Semua
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </form>
+
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalTambahJenis">Tambah
                         <i class="fa fa-plus-circle"></i>
                     </button>
@@ -240,6 +248,27 @@
                 $('.sesi-checkbox').prop('checked', checked).trigger('change');
             });
         });
+    </script>
+    <script>
+        // <<HAPUS>>
+        document.addEventListener('DOMContentLoaded', function() {
+        const deleteAllButton = document.querySelector('.btn-delete');
+
+        deleteAllButton.addEventListener('click', function() {
+            Swal.fire({
+                title: 'Konfirmasi Hapus',
+                text: 'Apakah Anda yakin ingin menghapus semua jadwal?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('deleteAllForm').submit();
+                }
+            });
+        });
+    });
     </script>
     <script>
         // <<HAPUS>>

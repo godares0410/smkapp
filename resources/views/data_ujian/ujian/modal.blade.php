@@ -15,7 +15,7 @@
                         <label for="jenis">Jenis Ujian</label>
                         <select class="form-control" id="jenis" name="jenis" required>
                             @foreach ($jenis as $jns)
-                                <option value="{{ $jns->id_jenis }}">{{ $jns->nama_ujian }}</option>
+                                <option value="{{ $jns->id_jenis }}" {{ $jns->id_jenis == 4 ? 'selected' : '' }}>{{ $jns->nama_ujian }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -76,7 +76,7 @@
                     <div class="form-group">
                         <label for="jumlah_soal">Jumlah Soal</label>
                         <input type="text" class="form-control" id="jumlah_soal" name="jumlah_soal"
-                            placeholder="Masukkan Jumlah Soal" required>
+                            placeholder="Masukkan Jumlah Soal" value="50" required>
                     </div>
                     <div class="form-group">
                         <label for="jumlah_opsi">Jumlah Opsi</label>

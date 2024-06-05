@@ -148,8 +148,10 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::delete('/soal/{id}', [SoalController::class, 'destroy'])->name('soal.destroy');
     Route::resource('setujian', SetUjianController::class);
     Route::resource('soal', SoalController::class);
+    Route::delete('/soal/{id}', [SoalController::class, 'destroyall'])->name('soal.destroyall');
     Route::resource('jadwal_ujian', JadwalUjianController::class);
     Route::delete('/jadwal_ujianhps/{id}', [JadwalUjianController::class, 'destroy'])->name('jadwal_ujian.destroy');
+    Route::delete('/jadwal_ujian/destroyAll', [JadwalUjianController::class, 'destroyAll'])->name('jadwal_ujian.destroyAll');
     // });
 });
 

@@ -12,7 +12,7 @@
     <div class="judul">
       <h5 style="text-align: center">
         DAFTAR HADIR PESERTA <br />
-        ASSESSMEN SATUAN PENDIDIKAN BERBASIS KOMPUTER <br />
+        PENILAIAN SUMATIF AKHIR TAHUN <br />
         TAHUN PELAJARAN 2023/2024
       </h5>
     </div>
@@ -153,6 +153,7 @@
         <th style="width: 15px; padding: 5px;">No</th>
         <th style="width: 115px; text-align: center; padding: 5px;">Nomor Peserta</th>
         <th style="text-align: center; padding: 5px;">Nama</th>
+        <th style="text-align: center; padding: 5px;">Kelas</th>
         <th style="width: 150px; text-align: center; padding: 5px;">Tanda Tangan</th>
         <th style="width: 15px; text-align: center; padding: 5px;">Ket</th>
       </tr>
@@ -168,6 +169,7 @@
           <td style="padding: 5px; text-align:center">{{ $counter++}}</td>
           <td style="padding: 5px; text-align:center">00{{ $data->id_jurusan}}-00{{ $data->id_siswa}}-{{ $data->id_kelas}}24</td>
           <td style="padding: 5px;">{{ $data->nama_siswa}}</td>
+          <td style="padding: 5px; text-align:center">{{ $data->nama_kelas}} - {{ $data->kode_jurusan}}</td>
           <td style="{{ $ttd % 2 == 0 ? 'text-align: center; padding: 5px;' : 'padding: 5px;' }}">{{ $ttd++}}.</td>
           <td style="padding: 5px;"></td>
         </tr>

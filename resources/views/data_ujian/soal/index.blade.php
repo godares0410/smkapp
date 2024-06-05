@@ -47,14 +47,13 @@
         <!-- Small boxes (Stat box) -->
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Data {{ ucwords($title) }} : {{ $bank->nama_bank_soal }}</h3>
+                <h3 class="box-title">Data {{ ucwords($title) }} : {{ $bank->nama_bank_soal }} {{ $bank->nama_kelas }}</h3>
                 <div class="pull-right">
-                    {{-- <button onclick="addForm()" class="btn btn-success">Import
-                        <i class="fa fa-upload"></i>
-                    </button> --}}
+                    
                     <a href="/banksoal" type="button" class="btn btn-warning">Kembali
                         <i class="fa fa-arrow-left"></i>
                     </a>
+                    
                     <button type="button" class="btn btn-success" data-toggle="modal" data-target="#importModal">Import
                         Soal
                         <i class="fa fa-upload"></i>
@@ -65,6 +64,13 @@
                 </div>
             </div>
             <div class="box-body table-responsive">
+                <div class="pull-right">
+                    <form action="{{ route('soal.destroyall', $bank->id_bank_soal) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="button" class="btn-deleteall btn btn-danger">Hapus Semua</button>
+                    </form>
+                </div>
                 <h4>Jumlah Soal : {{ $jml }}</h4>
                 <table class="table table-bordered table-striped">
                     <thead>
@@ -198,6 +204,28 @@
             function updateImageZoom() {
                 $('.modal-body .zoomable').css('transform', 'scale(' + zoomFactor + ')');
             }
+        });
+
+        // <<HAPUS>>
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteButtons = document.querySelectorAll('.btn-deleteall');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    Swal.fire({
+                        title: 'Konfirmasi Hapus',
+                        text: 'Apakah Anda yakin ingin menghapus semua soal?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Ya, Hapus!',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            button.parentNode.submit();
+                        }
+                    });
+                });
+            });
         });
     </script>
 @endpush

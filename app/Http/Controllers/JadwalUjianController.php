@@ -180,4 +180,15 @@ class JadwalUjianController extends Controller
 
         return response()->json($jamKeData);
     }
+    public function destroyAll()
+    {
+        // Delete all records in the jadwal_ujian table
+        JadwalUjian::truncate();
+
+        // Delete all records in the sesi_jadwal_ujian table
+        SesiJadwalUjian::truncate();
+
+        return redirect()->back()->with('success', 'Semua jadwal ujian berhasil dihapus');
+        // return redirect()->route('jadwal_ujian.index')->with('success', 'Semua jadwal ujian berhasil dihapus.');
+    }
 }

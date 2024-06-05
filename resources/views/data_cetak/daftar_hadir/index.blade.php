@@ -56,7 +56,7 @@
                         <label for="jenis">Jadwal Ujian</label>
                         <select class="form-control" id="jenis" name="jenis" required>
                             @foreach ($jadwal as $data)
-                                <option value="{{ $data->id_jadwal_ujian }}">{{ $data->nama_ujian }} {{$data->nama_mapel}}
+                                <option value="{{ $data->id_jadwal_ujian }}">{{ $data->nama_ujian }} {{$data->nama_mapel}} - {{$data->nama_kelas}}
                                 </option>
                             @endforeach
                         </select>

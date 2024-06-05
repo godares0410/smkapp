@@ -42,9 +42,11 @@ class CetakController extends Controller
         $sesis = Sesi::select('nama_sesi')
         ->where('id_sesi', $sesi)
         ->first();
-        $siswa = Siswa::select('siswa.*')
+        $siswa = Siswa::select('siswa.*', 'kelas.nama_kelas', 'kode_jurusan')
         ->join('siswa_sesi', 'siswa_sesi.id_siswa', '=', 'siswa.id_siswa' )
         ->join('siswa_ruang', 'siswa_ruang.id_siswa', '=', 'siswa.id_siswa' )
+        ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas' )
+        ->join('jurusan', 'siswa.id_jurusan', '=', 'jurusan.id_jurusan' )
         ->where('siswa_sesi.id_sesi', $ssi)
         ->where('siswa_ruang.id_ruang', $rg)
         ->get();

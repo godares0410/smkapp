@@ -81,7 +81,9 @@
                             <label for="kelas">Kelas</label>
                             <select class="form-control" id="kelas" name="kelas" required>
                                 @foreach ($kelas as $kls)
-                                    <option value="{{ $kls->id_kelas }}">{{ $kls->nama_kelas }}</option>
+                                     <option value="{{ $kls->id_kelas }}" {{ $kls->id_kelas == $data->id_kelas ? 'selected' : '' }}>
+                                        {{ $kls->nama_kelas }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -89,7 +91,9 @@
                             <label for="jurusan">Jurusan</label>
                             <select class="form-control" id="jurusan" name="jurusan" required>
                                 @foreach ($jurusan as $jrs)
-                                    <option value="{{ $jrs->id_jurusan }}">{{ $jrs->kode_jurusan }}</option>
+                                    <option value="{{ $jrs->id_jurusan }}" {{ $jrs->id_jurusan == $data->id_jurusan ? 'selected' : '' }}>
+                                        {{ $jrs->kode_jurusan }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>

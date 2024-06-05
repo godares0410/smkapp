@@ -15,7 +15,8 @@
                     @csrf
                     <div class="form-group">
                         <label for="nama_bank_soal">Nama Bank Soal</label>
-                        <input type="text" class="form-control" id="nama_bank_soal" name="nama_bank_soal" required>
+                        <input type="text" class="form-control" id="nama_bank_soal" name="nama_bank_soal" value="PSAT 2024 " required>
+
                     </div>
                     <div class="form-group">
                         <label for="kelas">Kelas</label>
