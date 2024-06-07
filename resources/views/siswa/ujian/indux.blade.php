@@ -194,7 +194,11 @@
                                             <div class="containerz col-md-auto text-center">
                                                 <button class="btn btn-success">Sudah Mengerjakan</button>
                                             </div>
-                                        @elseif ($kerjakan->id_jadwal_ujian != $data->id_jadwal_ujian && $data->token == 1 && $woi >= $waktuMulai && $mula <= $batas && $sudah == null)
+                                        @elseif ($kerjakan == null && $data->token == 1 && $woi >= $waktuMulai && $mula <= $batas && $sudah == null)
+                                            {{-- <div class="containerz col-md-auto text-center">
+                                                <button class="btn btn-primary" onclick="toggleElements()">Masukkan
+                                                    Token</button>
+                                            </div> --}}
                                             <div class="containerz col-md-auto text-center" id="masukkanTokenSection">
                                                 <button class="btn btn-primary"
                                                     onclick="toggleElements('{{ $data->id_jadwal_ujian }}')">Masukkan
@@ -234,8 +238,7 @@
                                             <div class="containerz col-md-auto text-center">
                                                 <button class="btn btn-danger">Ujian Sudah Berakhir</button>
                                             </div>
-                                        @elseif ($data->token == 1 && $kerjakan->id_jadwal_ujian == $data->id_jadwal_ujian && $sudah == null)
-                                        <!-- @elseif ($kerjakan != null && $data->token == 1 && $kerjakan->id_jadwal_ujian == $data->id_jadwal_ujian) -->
+                                        @elseif ($kerjakan != null && $data->token == 1)
                                             <div class="containerz col-md-auto text-center">
                                                 <form action="{{ route('siswas.mengerjakan') }}" method="POST">
                                                     @csrf
