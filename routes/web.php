@@ -13,13 +13,21 @@ use App\Http\Controllers\SesiController;
 use App\Http\Controllers\SoalController;
 use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Response;
+use App\Http\Controllers\AbsenController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CetakController;
+use App\Http\Controllers\KartuController;
 use App\Http\Controllers\MapelController;
+use App\Http\Controllers\ScoreController;
 use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\TokenController;
 use App\Http\Controllers\UjianController;
+use App\Http\Controllers\DaftarController;
 use App\Http\Controllers\SiswasController;
+use App\Http\Controllers\AlokasiController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\MakananController;
+use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\BankSoalController;
 use App\Http\Controllers\SetUjianController;
 use App\Http\Controllers\BankUjianController;
@@ -27,14 +35,9 @@ use App\Http\Controllers\GuruMapelController;
 use App\Http\Controllers\LoginAuthController;
 use App\Http\Controllers\JenisUjianController;
 use App\Http\Controllers\JadwalUjianController;
-use App\Http\Controllers\TokenController;
 use App\Http\Controllers\PelaksanaanController;
-use App\Http\Controllers\AlokasiController;
-use App\Http\Controllers\ScoreController;
-use App\Http\Controllers\WebsiteController;
-use App\Http\Controllers\DaftarController;
-use App\Http\Controllers\CetakController;
-use App\Http\Controllers\KartuController;
+use App\Http\Controllers\KSController;
+use App\Http\Controllers\UploadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +62,11 @@ Route::resource('website', WebsiteController::class);
 Route::resource('daftar', DaftarController::class);
 Route::resource('ppdb', DaftarController::class);
 Route::resource('test', TestController::class);
+Route::resource('ks', KSController::class);
+Route::resource('upload', UploadController::class);
+Route::post('/upload/file', [UploadController::class, 'fileupload'])->name('upload.file');
+Route::get('/absen/siswa/{id}', [AbsenController::class, 'cari']);
+
 
 
 // <<AUTH ADMIN>>
@@ -75,7 +83,9 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::post('/kartu/cetak', [KartuController::class, 'cetakkartu'])->name('cetak.kartu');
     Route::post('/cetak/daftarhadir', [CetakController::class, 'cetakdaftar'])->name('cetak.daftarhadir');
     Route::get('/daftarppdb', [DaftarController::class, 'daftar'])->name('daftar.ppdb');
-    Route::post('/daftarppdb/export', [DaftarController::class, 'exportData'])->name('daftarppdb.export');
+    // Route::post('/daftarppdb/export', [DaftarController::class, 'exportData'])->name('daftarppdb.export');
+    Route::get('/export-data', [DaftarController::class, 'exportData'])->name('daftarppdb.export');
+
     Route::get('/rekap', [ScoreController::class, 'rekap'])->name('score.rekap');
     Route::post('/rekap/nilai', [ScoreController::class, 'rekapnilai'])->name('score.rekapnilai');
     Route::post('/rekap/export', [ScoreController::class, 'rekapeksport'])->name('rekap.export');
@@ -99,13 +109,13 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::resource('guru_mapel', GuruMapelController::class);
     Route::delete('/guru_mapel/{id}', [GuruMapelController::class, 'destroy'])->name('guru_mapel.destroy');
     Route::resource('kelas_rombel', KelasRombel::class);
-    
+
     //Import Data Umum
     Route::post('/siswa/import', [SiswaController::class, 'import'])->name('siswa.import');
     Route::post('/guru/import', [GuruController::class, 'import'])->name('guru.import');
     Route::post('/mapel/import', [MapelController::class, 'import'])->name('mapel.import');
     Route::post('/jurusan/import', [JurusanController::class, 'import'])->name('jurusan.import');
-    
+
     // website
     Route::get('/beranda', [WebsiteController::class, 'beranda'])->name('website.beranda');
     Route::post('/berandastore', [WebsiteController::class, 'berandastore'])->name('website.berandastore');
@@ -177,6 +187,7 @@ Route::group(['middleware' => ['auth:siswa', 'checkUserStatus']], function () {
     Route::post('/exams', [SiswasController::class, 'mengerjakans'])->name('siswas.mengerjakans');
     Route::post('/done', [SiswasController::class, 'selesai'])->name('siswas.selesai');
     Route::post('/notoken', [SiswasController::class, 'no_token'])->name('siswas.notoken');
+    Route::post('/siswas/data', [SiswasController::class, 'data'])->name('siswas.data');
     Route::post('/siswas/updateStatus', [SiswasController::class, 'updateStatus']);
     Route::resource('siswas', SiswasController::class);
     Route::post('/exam/update', [SiswasController::class, 'update'])->name('siswas.update');

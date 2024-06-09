@@ -10,6 +10,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
 
+
 class DaftarController extends Controller
 {
     public function index()
@@ -88,4 +89,5 @@ class DaftarController extends Controller
         $pendaftar = Pendaftaran::all();
         return Excel::download(new ExportDaftar($pendaftar), "Data PPDB.xlsx");
     }
+
 }

@@ -17,6 +17,7 @@ use App\Models\JadwalUjian;
 use App\Models\AlokasiWaktu;
 use App\Models\SesiJadwalUjian;
 use App\Models\SiswaAbsen;
+use App\Models\SiswaData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -33,6 +34,9 @@ class SiswasController extends Controller
 
         $sesi = SiswaSesi::where('id_siswa', $idSiswa)
             ->select('id_sesi')
+            ->first();
+        $siswadata = SiswaData::where('id_siswa', $idSiswa)
+            ->select('siswa_data.*')
             ->first();
 
         $today = Carbon::now();
@@ -63,7 +67,7 @@ class SiswasController extends Controller
         $kerjakan = SiswaUjian::where('id_siswa', $idSiswa)->first();
         $nilai = SiswaNilai::where('id_siswa', $idSiswa)->first();
 
-        return view('siswa.ujian.indux', compact('ujian', 'kerjakan', 'sesi', 'nilai'));
+        return view('siswa.ujian.indux', compact('ujian', 'kerjakan', 'sesi', 'nilai', 'siswadata',));
     }
     public function dashboard()
     {
@@ -405,7 +409,7 @@ public function absenlaporan(){
     ->whereDate('siswa_absen.tanggal', Carbon::now('Asia/Jakarta')->toDateString())
     ->distinct()
     ->count('siswa.id_siswa');
-
+    
     $name = Siswa::select('kelas.nama_kelas', 'jurusan.kode_jurusan')
     ->join('kelas', 'kelas.id_kelas', '=', 'siswa.id_kelas')
     ->join('jurusan', 'jurusan.id_jurusan', '=', 'siswa.id_jurusan')
@@ -425,16 +429,33 @@ public function absenlaporan(){
     ->join('jurusan', 'siswa.id_jurusan', '=', 'jurusan.id_jurusan')
     ->get();
     // foreach ($siswa as $singleSiswa) {
-    //     $rekap = SiswaAbsen::select('id_siswa') // Tambahkan kolom id_siswa ke dalam select
-    //         ->where('id_siswa', $singleSiswa->id_siswa)
-    //         ->where('keterangan', "A")
-    //         ->count();
-    //     }
+        //     $rekap = SiswaAbsen::select('id_siswa') // Tambahkan kolom id_siswa ke dalam select
+        //         ->where('id_siswa', $singleSiswa->id_siswa)
+        //         ->where('keterangan', "A")
+        //         ->count();
+        //     }
     $total_siswa = Siswa::where('siswa.id_kelas', $kelas)
     ->where('siswa.id_jurusan', $jurusan)
     ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
     ->join('jurusan', 'siswa.id_jurusan', '=', 'jurusan.id_jurusan')
     ->count();
     return view('siswa.laporan.index', compact('siswa', 'nama', 'absens', 'name', 'total_absen', 'total_siswa'));
+}
+public function data(Request $request)
+{
+    $idSiswa = Auth::guard('siswa')->user()->id_siswa;
+    $kota = $request->input('kota');
+    $tgl = $request->input('tgl');
+    $alamat = $request->input('alamat');
+    $darah = $request->input('darah');
+
+    $data = new SiswaData;
+    $data->id_siswa = $idSiswa;
+    $data->kota = $kota;
+    $data->tgl = $tgl;
+    $data->alamat = $alamat;
+    $data->golongan_darah = $darah;
+    $data->save();
+    return redirect()->back()->with('success', 'Data Berhasil Disimpan');
 }
 }

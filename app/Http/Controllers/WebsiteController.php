@@ -48,7 +48,8 @@ class WebsiteController extends Controller
             $foto = $request->file('foto');
             $namaFoto = $foto->getClientOriginalName();
             // $namaFoto = $request->nama_siswa . '_' . time() . '.' . $request->foto->extension();
-            $foto->move(public_path('img/kartu'), $namaFoto);
+            // $foto->move(public_path('img/kartu'), $namaFoto);
+            $foto->move(public_path('img/ktp'), $namaFoto);
             // $namaFoto = $request->nama_siswa . '_' . time() . '.' . $request->foto->extension();
             // $foto->move(public_path('img/website/logo'), $namaFoto);
             $web->foto = $namaFoto;

@@ -49,9 +49,10 @@
             <div class="box-header with-border">
                 <h3 class="box-title">Data {{ ucwords($title) }}</h3>
                  <div class="pull-right">
-                    <button type="submit" href="{{ route('daftarppdb.export') }}" class="btn btn-success">Export Data
-                        <i class="fa  fa-file-excel-o"></i>
-                    </button>
+                    <button type="submit" onclick="location.href='{{ route('daftarppdb.export') }}'" class="btn btn-success">
+    Export Data <i class="fa fa-file-excel-o"></i>
+</button>
+
                 </div>
             </div>
             <div class="box-body table-responsive">

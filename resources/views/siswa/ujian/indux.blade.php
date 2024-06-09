@@ -30,6 +30,17 @@
                 </div>
             </div>
             <div class="box-body">
+                @if (session('success'))
+                    <script>
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil!',
+                            text: '{{ session('success') }}',
+                            showConfirmButton: false,
+                            timer: 2500 // Menutup pesan dalam 1 detik (1000ms)
+                        });
+                    </script>
+                @endif
                 @if (session('error'))
                     <script>
                         Swal.fire({
@@ -42,6 +53,42 @@
                     </script>
                 @endif
                 <div class="row">
+                 @if ($siswadata == null)
+                 <div class="container">
+                    <form action="{{ route('siswas.data') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <h3 class="text-center">Sebelum Mengerjakan Ujian Silahkan Mengisi Data Terlebih Dahulu.
+                            <br>
+                            Isi Data Dengan Benar, Data Akan Ditampilkan Di 
+                            <br>
+                            <b>Kartu Tanda Pelajar</b>
+                        </h3>
+                        <div class="form-group">
+                            <label for="kota">Kota Lahir</label>
+                            <input type="text" class="form-control" id="kota" name="kota"
+                                placeholder="Kota Kelahiran" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tgl">Tanggal Lahir</label>
+                            <input type="date" class="form-control" id="tgl" name="tgl"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label for="alamat">Alamat / Tempat Tinggal</label>
+                            <input type="text" class="form-control" id="alamat" name="alamat"
+                                placeholder="Alamat Lengkap: Dusun, Desa, Kecamatan, Kota" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="darah">Golongan Darah</label>
+                            <input type="text" class="form-control" id="darah" name="darah"
+                                placeholder="Kosongi Jika Tidak Tahu">
+                        </div>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                    </form>
+                </div>
+
+
+                 @else
                     @php
                         $today = \Carbon\Carbon::now()->timezone('Asia/Jakarta');
                     @endphp
@@ -276,10 +323,11 @@
                         @endif
                     @endforeach
                 </div>
+                @endif
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-                Footer
+                {{-- Footer --}}
             </div>
             <!-- /.box-footer-->
         </div>
