@@ -38,7 +38,7 @@ use App\Http\Controllers\JadwalUjianController;
 use App\Http\Controllers\PelaksanaanController;
 use App\Http\Controllers\KSController;
 use App\Http\Controllers\UploadController;
-
+use App\Http\Controllers\RekapAbsenController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -80,6 +80,8 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::resource('score', ScoreController::class);
     Route::resource('cetak', CetakController::class);
     Route::resource('kartu', KartuController::class);
+    Route::resource('rekapabsen', RekapAbsenController::class);
+    Route::post('/rekapabsen/tampil', [RekapAbsenController::class, 'rekap'])->name('rekap.cari');
     Route::post('/kartu/cetak', [KartuController::class, 'cetakkartu'])->name('cetak.kartu');
     Route::post('/cetak/daftarhadir', [CetakController::class, 'cetakdaftar'])->name('cetak.daftarhadir');
     Route::get('/daftarppdb', [DaftarController::class, 'daftar'])->name('daftar.ppdb');

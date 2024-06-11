@@ -428,12 +428,6 @@ public function absenlaporan(){
     ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
     ->join('jurusan', 'siswa.id_jurusan', '=', 'jurusan.id_jurusan')
     ->get();
-    // foreach ($siswa as $singleSiswa) {
-        //     $rekap = SiswaAbsen::select('id_siswa') // Tambahkan kolom id_siswa ke dalam select
-        //         ->where('id_siswa', $singleSiswa->id_siswa)
-        //         ->where('keterangan', "A")
-        //         ->count();
-        //     }
     $total_siswa = Siswa::where('siswa.id_kelas', $kelas)
     ->where('siswa.id_jurusan', $jurusan)
     ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
