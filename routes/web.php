@@ -62,6 +62,8 @@ Route::resource('website', WebsiteController::class);
 Route::resource('daftar', DaftarController::class);
 Route::resource('ppdb', DaftarController::class);
 Route::resource('test', TestController::class);
+Route::resource('abs', AbsenController::class);
+Route::get('/pkl', [AbsenController::class, 'pkl'])->name('siswa.pkl');
 Route::resource('ks', KSController::class);
 Route::resource('upload', UploadController::class);
 Route::post('/upload/file', [UploadController::class, 'fileupload'])->name('upload.file');
