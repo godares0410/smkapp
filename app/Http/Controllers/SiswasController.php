@@ -18,6 +18,7 @@ use App\Models\AlokasiWaktu;
 use App\Models\SesiJadwalUjian;
 use App\Models\SiswaAbsen;
 use App\Models\SiswaData;
+use App\Models\SiswaScanMasuk;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -71,63 +72,20 @@ class SiswasController extends Controller
     }
     public function dashboard()
     {
-        return view('siswa.dashboard');
+        $idSiswa = Auth::guard('siswa')->user()->id_siswa;
+        $idKelas = Auth::guard('siswa')->user()->id_kelas;
+        $now = now()->setTimezone('Asia/Jakarta'); // Ambil waktu sekarang dengan zona waktu Jakarta
+        $abs = SiswaScanMasuk::select('created_at')
+            ->where('id_siswa', $idSiswa)
+            ->whereDate('created_at', $now->toDateString()) // Membandingkan tanggal
+            ->get(); // Eksekusi query untuk mendapatkan hasil
+        
+        // Ambil tanggal dari hasil query
+        $tanggalAbsen = $abs->isNotEmpty() ? $abs[0]->created_at->format('Y-m-d') : null;
+        
+
+        return view('siswa.dashboard', compact('abs', 'idKelas'));
     }
-    // public function store(Request $request)
-    // {
-    //     // dd($request->all());
-    //     $tokenInput = $request->input('tokenInput');
-    //     $token = Token::where('token', $tokenInput)->first();
-    //     // $mula = $request->input('siswa_mulai');
-
-    //     if ($token) {
-    //         $idSiswa = Auth::guard('siswa')->user()->id_siswa;
-    //         $idBankSoal = $request->input('idbank');
-    //         $idUjian = $request->input('idUjian');
-    //         $jumlahSoal = $request->input('jumlahSoal');
-    //         $acakSoal = $request->input('acakSoal');
-    //         // $idBank 
-
-    //         // Convert JSON string to an array
-    //         $idBankSoalArray = json_decode($idBankSoal);
-
-    //         // Retrieve soal based on conditions
-    //         $soalQuery = DB::table('soal')
-    //             ->where('id_bank_soal', $idBankSoalArray);
-
-    //         if ($acakSoal == 1) {
-    //             $soalQuery->inRandomOrder();
-    //         }
-
-    //         $soalRecords = $soalQuery->take($jumlahSoal)->get();
-
-    //         // Create an array to store multiple records
-    //         $siswaData = [];
-
-    //         // Add records to the array
-    //         foreach ($soalRecords as $soal) {
-    //             $siswaData[] = [
-    //                 'id_jadwal_ujian' => $idUjian,
-    //                 'id_siswa' => $idSiswa,
-    //                 'id_soal' => $soal->id_soal,
-    //                 // 'kunci' => $soal->jawaban,
-    //             ];
-    //         }
-    //         // Save all records in the array to the database
-    //         SiswaUjian::insert($siswaData);
-
-    //         $mulai = new SiswaMulai;
-    //         $mulai->id_jadwal_ujian = $idUjian;
-    //         $mulai->id_siswa = $idSiswa;
-    //         // $mulai->mulai = $request->mula;
-    //         $mulai->save();
-
-    //         $kode = Crypt::encryptString($idUjian);
-    //         return redirect('/detail/' . $kode)->with('sukses', 'Data berhasil ditambahkan');
-    //     } else {
-    //         return redirect()->back()->with('error', 'Token Salah!');
-    //     }
-    // }
     public function mengerjakan(Request $request)
     {
         // Dapatkan id_siswa dari user yang login

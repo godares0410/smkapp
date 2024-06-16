@@ -32,8 +32,12 @@ class SiswaController extends Controller
     }
     public function dashboard()
     {
-        // $guru = Guru::all();
-        return view('siswa.dashboard');
+        $idSiswa = Auth::guard('siswa')->user()->id_siswa;
+        $abs = SiswaMasuk::select('created_at')
+                        ->where('id_siswa', $idSiswa)
+                        ->get(); // Eksekusi query untuk mendapatkan hasil
+
+        return view('siswa.dashboard', compact('abs'));
     }
     public function store(Request $request)
     {

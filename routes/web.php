@@ -63,7 +63,7 @@ Route::resource('daftar', DaftarController::class);
 Route::resource('ppdb', DaftarController::class);
 Route::resource('test', TestController::class);
 Route::resource('abs', AbsenController::class);
-Route::get('/pkl', [AbsenController::class, 'pkl'])->name('siswa.pkl');
+
 Route::resource('ks', KSController::class);
 Route::resource('upload', UploadController::class);
 Route::post('/upload/file', [UploadController::class, 'fileupload'])->name('upload.file');
@@ -181,6 +181,8 @@ Route::middleware('auth.guru')->get('/login', function () {
 
 // Route::group(['middleware' => 'auth:siswa'], function () {
 Route::group(['middleware' => ['auth:siswa', 'checkUserStatus']], function () {
+    Route::get('/pkl', [AbsenController::class, 'pkl'])->name('siswa.pkl');
+    Route::post('/pkl/input', [AbsenController::class, 'pklstore'])->name('pkl.absen');
     Route::get('/menu', [SiswasController::class, 'dashboard'])->name('siswa.dashboard');
     Route::get('/assesmen', [SiswasController::class, 'index'])->name('siswas.index');
     Route::get('/absen', [SiswasController::class, 'absen'])->name('siswas.absen');

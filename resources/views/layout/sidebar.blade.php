@@ -247,10 +247,10 @@
                             <li class="@yield('assesmen-active')"><a href="{{ route('siswas.index') }}"><i
                                         class="fa fa-circle-o"></i>
                                     Ujian</a></li>
-                            <li class="@yield('siswa-active')"><a href="#"><i class="fa fa-circle-o"></i>
+                            {{-- <li class="@yield('siswa-active')"><a href="#"><i class="fa fa-circle-o"></i>
                                     Tugas</a></li>
                             <li class="@yield('guru-active')"><a href="#"><i class="fa fa-circle-o"></i>
-                                    E-Learning</a></li>
+                                    E-Learning</a></li> --}}
                         </ul>
                     </li>
                     @if (auth('siswa')->user()->rule != 0)
