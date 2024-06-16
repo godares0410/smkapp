@@ -57,6 +57,8 @@
                 text: '{{ session('success') }}',
                 showConfirmButton: false,
                 timer: 1000 // Menutup pesan dalam 2.5 detik (2500ms)
+             }).then(function() {
+                document.getElementById('idsiswa').focus();
             });
         </script>
     @endif
@@ -69,6 +71,8 @@
                 text: '{{ session('error') }}',
                 showConfirmButton: false,
                 timer: 1000 // Menutup pesan dalam 2.5 detik (2500ms)
+             }).then(function() {
+                document.getElementById('idsiswa').focus();
             });
         </script>
     @endif
@@ -77,33 +81,32 @@
         <div class="row">
             <!-- Kolom Kiri -->
             <div class="col-md-3">
-                <h5>Form Input</h5>
                 <form id="absForm" action="{{ route('abs.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="idsiswa" name="idsiswa" autofocus>
-                    </div>
                     <input type="hidden" id="screenshot" name="screenshot">
                     <div class="card mt-4">
                         <div class="card-body">
                             This is a card box under the form.
                         </div>
                     </div>
-                </form>
-            </div>
-
-            <!-- Kolom Tengah -->
-            <div class="col-md-6">
-                <div class="border-red p-3 relative">
-                    <h5>Foto Absensi</h5>
-                    <video id="video" width="100%" height="auto" autoplay>
-                        Your browser does not support the video tag.
-                    </video>
-                    <img id="logo" src="{{ asset('img/website/logo/_1716541080.png') }}" alt="Logo" class="absolute">
-                    <p id="datetime" class="absolute"></p>
                 </div>
-                <br>
-                <button type="submit" class="btn btn-primary" form="absForm">Absen</button>
+            
+            <!-- Kolom Tengah -->
+        <div class="col-md-6">
+            <div class="border-red p-3 relative">
+                <h5>Foto Absensi</h5>
+            <video id="video" width="100%" height="auto" autoplay>
+                Your browser does not support the video tag.
+            </video>
+        <img id="logo" src="{{ asset('img/website/logo/_1716541080.png') }}" alt="Logo" class="absolute">
+        <p id="datetime" class="absolute"></p>
+        </div>
+        <br>
+        <div class="form-group">
+            <input type="text" class="form-control" id="idsiswa" name="idsiswa" style="color: white" autofocus>
+        </div>
+        </form>
+                <button type="submit" class="btn" style="background-color: white" form="absForm"></button>
             </div>
 
             <!-- Kolom Kanan -->

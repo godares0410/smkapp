@@ -23,64 +23,75 @@ class AbsenController extends Controller
     }
     public function store(Request $request)
     {
+    // Set the default timezone to Asia/Jakarta (WIB - Western Indonesian Time)
+    date_default_timezone_set('Asia/Jakarta');
+
     // Decode the image from base64 format
     $screenshot = $request->input('screenshot');
     $image = str_replace('data:image/png;base64,', '', $screenshot);
     $image = str_replace(' ', '+', $image);
     $imageName = 'scan_' . time() . '.png';
 
-    // Path to the directory
-    $directory = public_path('img/scan');
-
-    // Create directory if it doesn't exist
-    if (!file_exists($directory)) {
-        mkdir($directory, 0755, true); // 0755 is the default permission
-    }
-
-    // Save the image to the directory
-    $imagePath = $directory . '/' . $imageName;
-    file_put_contents($imagePath, base64_decode($image));
-
-    // Get the current time
-    $currentTime = new \DateTime();
+    // Get the current time in Asia/Jakarta timezone
+    $currentTime = new \DateTime('now', new \DateTimeZone('Asia/Jakarta'));
     $currentHourMinute = $currentTime->format('H:i');
 
-    // Define the time ranges
-    $masukStart = new \DateTime('06:00');
-    $masukEnd = new \DateTime('07:30');
-    $pulangStart = new \DateTime('12:00');
-    $pulangEnd = new \DateTime('13:30');
+    // Define the time ranges in Asia/Jakarta timezone
+    $masukStart = new \DateTime('06:00', new \DateTimeZone('Asia/Jakarta'));
+    $masukEnd = new \DateTime('17:30', new \DateTimeZone('Asia/Jakarta'));
+    $pulangStart = new \DateTime('12:00', new \DateTimeZone('Asia/Jakarta'));
+    $pulangEnd = new \DateTime('13:30', new \DateTimeZone('Asia/Jakarta'));
 
     // Check if the current time is within the "Masuk" range
     if ($currentTime >= $masukStart && $currentTime <= $masukEnd) {
+        // Set the directory for "Masuk" scans
+        $directory = public_path('img/scan/masuk');
+        
+        // Create directory if it doesn't exist
+        if (!file_exists($directory)) {
+            mkdir($directory, 0755, true); // 0755 is the default permission
+        }
+
+        // Save the image to the directory
+        $imagePath = $directory . '/' . $imageName;
+        file_put_contents($imagePath, base64_decode($image));
+
         // Save the record to the SiswaScanMasuk table
         $abs = new SiswaScanMasuk();
         $abs->id_siswa = $request->input('idsiswa');
         $abs->foto = $imageName;
         $abs->save();
 
-        return redirect()->back()->with('success', 'Data has been saved successfully!');
+        return redirect()->back()->with('success', 'Absen Masuk Berhasil!');
     }
 
     // Check if the current time is within the "Pulang" range
     if ($currentTime >= $pulangStart && $currentTime <= $pulangEnd) {
+        // Set the directory for "Pulang" scans
+        $directory = public_path('img/scan/pulang');
+
+        // Create directory if it doesn't exist
+        if (!file_exists($directory)) {
+            mkdir($directory, 0755, true); // 0755 is the default permission
+        }
+
+        // Save the image to the directory
+        $imagePath = $directory . '/' . $imageName;
+        file_put_contents($imagePath, base64_decode($image));
+
         // Save the record to the SiswaScanPulang table
         $abs = new SiswaScanPulang();
         $abs->id_siswa = $request->input('idsiswa');
         $abs->foto = $imageName;
         $abs->save();
 
-        return redirect()->back()->with('success', 'Data has been saved successfully!');
+        return redirect()->back()->with('success', 'Absen Pulang Berhasil!');
     }
 
-    // If the time is not within any valid range, redirect with an error
-    if ($currentTime < $masukStart || ($currentTime > $masukEnd && $currentTime < $pulangStart) || $currentTime > $pulangEnd) {
-        $error = ($currentTime < $masukStart || $currentTime > $masukEnd) ? 'Jam Masuk Tidak Sesuai' : 'Jam Pulang Tidak Sesuai';
-        return redirect()->back()->with('error', $error);
+    // If the current time does not match any range, return an error message
+    return redirect()->back()->with('error', 'Current time does not match any allowed scan time range.');
     }
 
-    return redirect()->back()->with('error', 'Invalid request.');
-    }
 
 
     public function pklstore(Request $request)

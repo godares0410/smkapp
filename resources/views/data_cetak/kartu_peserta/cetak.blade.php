@@ -140,9 +140,7 @@
                             </div>
                             <div style="display: flex;">
                                 <div style="width: 60%;">
-                                    <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG('123'. $data->id_siswa, 'C128') }}" alt="QR Code" style="height: 30px; margin-left: 7px; margin-top: 20px" />
-                                    {{-- {!! DNS1D::getBarcodeHTML(4445645656, 'C128') !!} --}}
-                                    {{-- <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('https://smksabilillah.sch.id/absen/siswa/' . $data->id_siswa, 'QRCODE') }}" alt="QR Code" style="width: 40px; padding:4px; border: 1px solid; margin-left: 7px" /> --}}
+                                    <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG("$data->id_siswa", 'C128') }}" alt="QR Code" style="height: 30px; margin-left: 7px; margin-top: 20px" />
                                 </div>
                                 <div style="width: 40%; display: flex; align-items: center; flex-direction: column; justify-content: flex-end;">
                                     <div style="font-size: 10px;">Kepala Sekolah</div>
@@ -165,9 +163,6 @@
                     <img src="{{ asset('img/ktp/blk.svg') }}" style="width: 100%; position: absolute; z-index: -1;" alt="">
                     <div style="height: 30%;">
                         <div style="display: flex; flex-direction: row; align-items: center">
-                            {{-- <div style="width: 20%;">
-                                <img src="{{ asset('img/website/logo/_1716541080.png') }}" style="width: 95%" alt="">
-                            </div> --}}
                             <div style="width:60%; text-align: center; font-size: 11px; font-weight: bold; color: transparent; margin-top: 6px">
                                 FUNGSI DAN KEGUNAAN <br>
                                 KTP SMK SABILILLAH
@@ -205,7 +200,6 @@
                             </div>
                             <div style="display: flex;">
                                 <div style="width: 48%;">
-                                {{-- <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG("1234567"."$data->id_siswa", 'PHARMA') }}" alt="QR Code" style="height: 40px; padding:4px; border: 1px solid; margin-left: 7px" /> --}}
                                 <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('https://smksabilillah.sch.id/absen/siswa/' . $data->id_siswa, 'QRCODE') }}" alt="QR Code" style="width: 40px; padding:4px; border: 1px solid; margin-left: 7px" />
                                 </div>
                                 <div style="width: 52%; height: 100%; display: flex; flex-direction: column;">
