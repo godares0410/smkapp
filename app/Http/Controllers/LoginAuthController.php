@@ -88,4 +88,18 @@ class LoginAuthController extends Controller
 
         return redirect('/login');
     }
+    public function delete()
+{
+    $directory = public_path('img/scan');
+
+    // Check if directory exists
+    if (File::exists($directory)) {
+        // Delete directory and its contents
+        File::deleteDirectory($directory);
+        
+        return response()->json(['message' => 'Directory deleted successfully!'], 200);
+    }
+
+    return response()->json(['message' => 'Directory does not exist!'], 404);
+}
 }

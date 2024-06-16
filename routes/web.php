@@ -57,7 +57,7 @@ Route::get('/login', [LoginAuthController::class, 'index'])->name('login');
 Route::post('/logins', [LoginAuthController::class, 'login'])->name('siswa.login');
 Route::get('/logout', [LoginAuthController::class, 'logout']);
 Route::get('/', [WebsiteController::class, 'index']);
-// Route::get('/login', [LoginAuthController::class, 'index']);
+// Route::get('/delete-folder', [UploadController::class, 'deleteFolder']);
 Route::resource('website', WebsiteController::class);
 Route::resource('daftar', DaftarController::class);
 Route::resource('ppdb', DaftarController::class);
