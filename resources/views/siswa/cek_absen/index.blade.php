@@ -203,14 +203,28 @@
                 Keterangan Hari Ini :
             </div>  
             <div class="d-flex justify-content-around">
-                <button type="button" class="btn btn-block btn-success btn-xs mx-2" data-bs-toggle="modal" data-bs-target="#masuk">
-                    <div style="font-size: 13px; padding: 0; margin-top: -10px;">Sudah Scan Masuk</div>
-                    <div style="font-size: 10px; padding: 0; margin: -5px;">(Cek Foto Scan)</div>
-                </button>
-                <button type="button" class="btn btn-block btn-success btn-xs mx-2" data-bs-toggle="modal" data-bs-target="#pulang">
-                    <div style="font-size: 13px; padding: 0; margin-top: -10px;">Sudah Scan Pulang</div>
-                    <div style="font-size: 10px; padding: 0; margin: -5px;">(Cek Foto Scan)</div>
-                </button>
+                @if($masuk != null)
+                    <button type="button" class="btn btn-block btn-success btn-xs mx-2" data-bs-toggle="modal" data-bs-target="#masuk">
+                        <div style="font-size: 13px; padding: 0; margin-top: -10px;">Sudah Scan Masuk</div>
+                        <div style="font-size: 10px; padding: 0; margin: -5px;">(Cek Foto Scan)</div>
+                    </button>
+                @else
+                    <button type="button" class="btn btn-block btn-danger btn-xs mx-2">
+                        <div style="font-size: 13px; padding: 0; margin-top: -10px;">Belum Scan Masuk</div>
+                        <div style="font-size: 10px; padding: 0; margin: -5px;">(Siswa Belum Masuk)</div>
+                    </button>
+                @endif
+                @if($pulang != null)
+                    <button type="button" class="btn btn-block btn-success btn-xs mx-2" data-bs-toggle="modal" data-bs-target="#pulang">
+                        <div style="font-size: 13px; padding: 0; margin-top: -10px;">Sudah Scan Pulang</div>
+                        <div style="font-size: 10px; padding: 0; margin: -5px;">(Cek Foto Scan)</div>
+                    </button>
+                @else
+                    <button type="button" class="btn btn-block btn-danger btn-xs mx-2">
+                        <div style="font-size: 13px; padding: 0; margin-top: -10px;">Belum Scan Pulang</div>
+                        <div style="font-size: 10px; padding: 0; margin: -5px;">(Siswa Belum Pulang)</div>
+                    </button>
+                @endif
             </div>
             <!-- <div class="d-flex justify-content-around">
                 <button type="button" class="btn btn-block btn-danger btn-xs mx-2" data-bs-toggle="modal" data-bs-target="#masuk">
@@ -222,13 +236,20 @@
                     <div style="font-size: 10px; padding: 0; margin: -5px;">(Siswa Belum Pulang)</div>
                 </button>
             </div> -->
-            <!-- <div class="pemb">
-                Informasi Pembayaran :
-            </div> 
-            <button type="button" class="btn btn-block btn-success btn-xs mx-2" data-bs-toggle="modal" data-bs-target="#bayar">
-                    <div style="font-size: 13px; padding: 0; margin-top: -10px;">Sisa Pelunasan : Rp. 2.500.000</div>
-                    <div style="font-size: 10px; padding: 0; margin: -5px;">(Lihat Bukti Pembayaran)</div>
-            </button> -->
+            @if($siswa->id_kelas == 3)
+                <div class="pemb">
+                    Informasi Pembayaran :
+                </div> 
+                <button type="button" class="btn btn-block btn-success btn-xs mx-2" data-bs-toggle="modal" data-bs-target="#bayar">
+                        <div style="font-size: 13px; padding: 0; margin-top: -10px;">
+                            @if ($total == 0)
+                                LUNAS
+                            @else
+                                {{ $totalFormatted }}
+                            @endif</div>
+                        <div style="font-size: 10px; padding: 0; margin: -5px;">(Lihat Bukti Pembayaran)</div>
+                </button>
+            @endif
         </div>
     </div>
      <!-- Modal Masuk-->
@@ -240,7 +261,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <img class="siswa" src="{{ asset('img/scan/masuk/m1.jfif.jpg') }}" style="width: 100%" alt="Foto Siswa">
+                    <img class="siswa" src="{{ asset('img/scan/masuk/' . $masuk->foto) }}" style="width: 100%" alt="Foto Siswa">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -257,7 +278,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <img class="siswa" src="{{ asset('img/scan/pulang/p1.png.jpg') }}" style="width: 100%" alt="Foto Siswa">
+                    <img class="siswa" src="{{ asset('img/scan/pulang/' . $pulang->foto) }}" style="width: 100%" alt="Foto Siswa">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

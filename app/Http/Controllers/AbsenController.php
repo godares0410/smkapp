@@ -9,6 +9,10 @@ use App\Models\SiswaAlpa;
 use App\Models\Tapel;
 use App\Models\Semester;
 use App\Models\RekapAbsen;
+use App\Models\ScanMasuk;
+use App\Models\ScanPulang;
+use App\Models\Biaya;
+use App\Models\Pembayaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -59,7 +63,7 @@ class AbsenController extends Controller
     $currentHourMinute = $currentTime->format('H:i');
 
     // Define the time ranges in Asia/Jakarta timezone
-    $masukStart = new \DateTime('00:00', new \DateTimeZone('Asia/Jakarta'));
+    $masukStart = new \DateTime('07:00', new \DateTimeZone('Asia/Jakarta'));
     $masukEnd = new \DateTime('21:30', new \DateTimeZone('Asia/Jakarta'));
     $pulangStart = new \DateTime('12:00', new \DateTimeZone('Asia/Jakarta'));
     $pulangEnd = new \DateTime('13:30', new \DateTimeZone('Asia/Jakarta'));
@@ -192,7 +196,32 @@ class AbsenController extends Controller
         $siswa = Siswa::where('id_siswa', $id)
             ->select('siswa.*')
             ->first();
-        return view('siswa.cek_absen.index', compact('siswa', 'tapel', 'semester', 'harialpa', 'hariijin', 'harisakit', 'jamalpa', 'jamijin', 'jamsakit'));
+        $today = Carbon::now()->format('Y-m-d');
+        $masuk = ScanMasuk::where('id_siswa', $id)
+            ->whereDate('created_at', $today)
+            ->select('siswa_scan_masuk.*')
+            ->first();
+        $pulang = ScanPulang::where('id_siswa', $id)
+            ->whereDate('created_at', $today)
+            ->select('siswa_scan_pulang.*')
+            ->first();
+        // Sum the biaya values
+        $bayar = Biaya::sum('biaya');
+
+        // Sum the jumlah values for the given student
+        $pembayaran = Pembayaran::where('id_siswa', $id)
+            ->sum('jumlah');
+
+        // Calculate the total
+        $total = $bayar - $pembayaran;
+
+        // Format the total as Indonesian Rupiah
+        $totalFormatted = 'Sisa Pembayaran : Rp. ' . number_format($total, 0, ',', '.');
+
+        $pembayaran = Pembayaran::where('id_siswa', $id)
+            ->select('pembayaran.*')
+            ->first();
+        return view('siswa.cek_absen.index', compact('siswa', 'tapel', 'semester', 'harialpa', 'hariijin', 'harisakit', 'jamalpa', 'jamijin', 'jamsakit', 'masuk', 'pulang', 'totalFormatted', 'total'));
     }
     // public function insertFromSiswa()
     // {

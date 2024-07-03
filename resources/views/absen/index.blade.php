@@ -94,34 +94,32 @@
     <div class="container-fluid mt-4">
         <div class="row">
             <!-- Kolom Kiri -->
-            <!-- <div class="col-md-3">
-                <form id="absForm" action="{{ route('abs.store') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <input type="hidden" id="screenshot" name="screenshot">
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="idsiswa" name="idsiswa" style="color: white" autofocus>
+                
+                <!-- Kolom Tengah -->
+                <div class="col-md-6">
+                    
+                    <div class="border-red p-3 relative">
+                        <h5>Foto Absensi</h5>
+                        <video id="video" width="100%" height="auto" autoplay>
+                            Your browser does not support the video tag.
+                        </video>
+                        <img id="logo" src="{{ asset('img/website/logo/_1716541080.png') }}" alt="Logo" class="absolute">
+                        <p id="datetime" class="absolute"></p>
                     </div>
-                    <div class="card mt-4">
-                        <div class="card-body">
-                            This is a card box under the form.
-                            <a href="{{ route('cek.alpa') }}" class="btn btn-primary">Check Alpa</a>
+                    <br>
+                    <form id="absForm" action="{{ route('abs.store') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <input type="hidden" id="screenshot" name="screenshot">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="idsiswa" name="idsiswa" style="color: white" autofocus>
                         </div>
-                    </div>
-                </div> -->
-            
-            <!-- Kolom Tengah -->
-            <div class="col-md-6">
-            
-            <div class="border-red p-3 relative">
-                <h5>Foto Absensi</h5>
-            <video id="video" width="100%" height="auto" autoplay>
-                Your browser does not support the video tag.
-            </video>
-        <img id="logo" src="{{ asset('img/website/logo/_1716541080.png') }}" alt="Logo" class="absolute">
-        <p id="datetime" class="absolute"></p>
-        </div>
-        <br>
-        </form>
+                        <div class="card mt-4">
+                            <div class="card-body">
+                                This is a card box under the form.
+                                <a href="{{ route('cek.alpa') }}" class="btn btn-primary">Check Alpa</a>
+                            </div>
+                        </div>
+                    </form>
                 <button type="submit" class="btn" style="background-color: white" form="absForm"></button>
             </div>
             <div class="col-md-6">
