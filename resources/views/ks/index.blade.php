@@ -1,121 +1,172 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <meta charset="utf-8">
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ asset('img/bank_soal/website/logo/_1702460950.png') }}" type="image/png">
+    <link rel="shortcut icon" href="{{ asset('img/bank_soal/website/logo/_1702460950.png') }}" type="image/png">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Kepala Sekolah</title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.7 -->
-    <link rel="stylesheet" href=" {{ asset('AdminLTE-2/bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href=" {{ asset('AdminLTE-2/bower_components/font-awesome/css/font-awesome.min.css') }}">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href=" {{ asset('AdminLTE-2/bower_components/Ionicons/css/ionicons.min.css') }}">
-    <!-- Theme style -->
-    <link rel="stylesheet" href=" {{ asset('AdminLTE-2/dist/css/AdminLTE.min.css') }}">
-    <!-- iCheck -->
-    <link rel="stylesheet" href=" {{ asset('AdminLTE-2/plugins/iCheck/square/blue.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roca+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+        }
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
-  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-<style>
-.gradient-gold-border {
-    width: 40%; 
-    margin-top: -430px;
-    border-radius: 10px;
-    border: 5px solid transparent; /* Initial transparent border */
-    background: linear-gradient(white, white) padding-box, 
-                linear-gradient(to right, #B8860B, #FFD700, #B8860B) border-box;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-.login-page {
-    position: relative;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden; /* Ensure no overflow issues */
-}
+        .containerz {
+            position: relative; /* Menambahkan posisi relatif */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #ccc;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            width: 20%;
+            overflow: hidden;
+        }
 
-.login-page::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url('/img/website/bg/_1703127815.jpg');
-    background-size: cover;
-    background-position: center;
-    filter: blur(10px); /* Adjust the blur radius as needed */
-    z-index: -1;
-}
+        .bg {
+            position: relative; /* Menjadikan posisi absolut */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: auto;
+            z-index: 1; /* Mengatur z-index lebih rendah agar berada di bawah gambar siswa */
+        }
+        .konten {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            z-index: 2;
+            top: 15%;
+        }
+        .siswa {
+            width: 40%; 
+            border-radius: 10px;
+            border: 5px solid transparent; /* Initial transparent border */
+            background: linear-gradient(white, white) padding-box, 
+                        linear-gradient(to right, #B8860B, #FFD700, #B8860B) border-box;
+        }
+        .nama {
+            width: 90%;
+            z-index: 2;
+            margin-top: 15%;
+            font-family: 'Montserrat', sans-serif; /* Menggunakan font Montserrat */
+            color: white; /* Warna teks biru (#007bff) */
+            font-size: 1.3rem;
+            font-weight: bold; /* Teks bold (tebal) */
+            text-align: center; /* Teks ditengahkan */
+            /* border: 1px solid black; */
+        }
+        .sekolah {
+            width: 100%;
+            z-index: 2;
+            margin-bottom: 5%;
+            font-family: 'Roca One', sans-serif; /* Menggunakan font Roca One */
+            color: white; /* Warna teks biru (#007bff) */
+            font-size: 1.5rem;
+            font-weight: bold; /* Teks bold (tebal) */
+            text-align: center; /* Teks ditengahkan */
+            /* border: 1px solid black; */
+        }
+        .jabatan {
+            width: 100%;
+            z-index: 2;
+            margin-bottom: 5%;
+            font-family: 'Roca One', sans-serif; /* Menggunakan font Roca One */
+            color: orange; /* Warna teks biru (#007bff) */
+            font-size: 1.5rem;
+            font-weight: bold; /* Teks bold (tebal) */
+            text-align: center; /* Teks ditengahkan */
+            /* border: 1px solid black; */
+        }
+        .keterangan {
+            text-align: center;
+            width: 60%;
+            z-index: 2;
+            border: 2px solid #cccccc; /* Border biru dengan ketebalan 4px */
+            background-color: #e3e3e3;
+            border-radius: 8px; /* Lengkungan sudut 8px */
+            box-shadow: 0 0 10px rgba(128, 128, 128, 0.3); /* Warna shadow abu-abu */
+        }
+        .ta {
+            padding: 2px;
+            font-weight:bold;
+        }
+        .ket {
+            margin-top : 5%;
+            padding: 2px;
+            font-weight:bold;
+        }
+        .pemb {
+            margin-top : 1%;
+            padding: 2px;
+            font-weight:bold;
+        }
+        .logo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 20%;
+            z-index: 3; /* Mengatur z-index lebih tinggi agar berada di atas semua elemen */
+        }
 
-.login-page .content {
-    position: relative;
-    z-index: 1; /* Ensure the content is above the blurred background */
-}
+        .btn-whatsapp {
+            margin-top: 5%;
+            width: 50%;
+        }
+        .login-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('/img/website/bg/_1703127815.jpg');
+            background-size: cover;
+            background-position: center;
+            filter: blur(10px); /* Adjust the blur radius as needed */
+            z-index: -1;
+        }
 
+        .login-page .content {
+            position: relative;
+            z-index: 1; /* Ensure the content is above the blurred background */
+        }
 
-</style>
-    <!-- Google Font -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+        @media (max-width: 600px) {
+            .containerz {
+                width: 100%; /* Lebar 100% pada layar kecil */
+            }
+        }
+    </style>
 </head>
-
 <body class="hold-transition login-page">
-    <div class="login-box">
-        <!-- /.login-logo -->
-        <div class="login-box-body" style="position: relative; background-color: transparent">
-                    <img src="{{ asset('img/website/logo/_1716541080.png') }}" style="width: 55px; position: absolute; margin-top: 10px; margin-left: 5px" alt="">
-                    <p class="login-box-msg" style="margin-top: 100px; color: white; font-family: 'Poppins', sans-serif; font-size: 20px; position: absolute; left: 5%; right: 0; text-align: center;">
-    SMK SABILILLAH
-</p>
-
-                    <img src="{{ asset('img/file/id.svg') }}" style="width: 100%;" alt="">
-            <div class="social-auth-links" style="position: absolute;">
-                    <img src="{{ asset('img/file/ks.jpeg') }}" class="gradient-gold-border">
-                        <div class="text-center">
-                            <p class="login-box-msg" style="margin-top: 20px; color: white; font-family: 'Archivo Black', sans-serif; font-size: 20px;">
-                                Fachrur Rozi, S.Pd.I, M.Pd
-                            </p>
-                            <p class="login-box-msg" style="margin-top: 0px; color: gold; font-family: 'Poppins', sans-serif; font-size: 20px;">
-                                Kepala Sekolah
-                            </p>
-                        </div>
-
-            </div>
-            <a href="https://wa.me/6285649825908" class="btn btn-block btn-success btn-social btn-flat"><i class="fa fa-phone-square"></i>Nomor WhatsApp</a>
+    <div class="containerz">
+        <img class="bg" src="{{ asset('img/file/id.svg') }}" alt="ID Image">
+        <img class="logo" src="{{ asset('img/website/logo/_1716541080.png') }}" alt="ID Image">
+        <div class="konten">
+            <div class="sekolah">SMK SABILILLAH</div>
+            <img class="siswa" src="{{ asset('img/file/ks.jpeg') }}" alt="Foto Siswa">
+            <div class="nama">Fachrur Rozi, S.Pd.I, M.Pd</div>
+            <div class="jabatan">Kepala Sekolah</div>
+            <a href="https://wa.me/6285649825908" class="btn btn-block btn-success btn-whatsapp">
+                <i class="fas fa-phone-alt"></i> Nomor WhatsApp
+            </a>
         </div>
-        <!-- /.login-box-body -->
     </div>
-    <!-- /.login-box -->
-
-    <!-- jQuery 3 -->
-    <script src="{{ asset('AdminLTE-2/bower_components/jquery/dist/jquery.min.js') }}"></script>
-    <!-- Bootstrap 3.3.7 -->
-    <script src="{{ asset('AdminLTE-2/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-    <!-- iCheck -->
-    <script src="{{ asset('AdminLTE-2/plugins/iCheck/icheck.min.js') }}"></script>
-    <script>
-        $(function() {
-            $('input').iCheck({
-                checkboxClass: 'icheckbox_square-blue',
-                radioClass: 'iradio_square-blue',
-                increaseArea: '20%' /* optional */
-            });
-        });
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

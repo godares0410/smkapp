@@ -14,26 +14,31 @@ class GuruMapelController extends Controller
     public function index()
     {
         
-        $guru = Guru::all();
-        $mapel = Mapel::all();
-        return view('data_umum.guru_mapel.index', compact('guru', 'mapel'));
+        $gurus = Guru::all();
+        $mapels = Mapel::all();
+        return view('data_umum.guru_mapel.index', compact('gurus', 'mapels'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'id_guru' => 'required',
-            'id_mapel' => 'required',
+            'nama_guru' => 'required',
+            'nama_mapel' => 'required|array',
         ]);
-        $mapel = new GuruMapel;
-        $mapel->id_guru = $request->id_guru;
-        $mapel->id_mapel = $request->id_mapel;
-        $mapel->save();
 
-        // Tampilkan pesan success
-        return redirect()->route('guru_mapel.index')->with('success', 'Data berhasil ditambahkan.');
+        $guru_id = $request->nama_guru;
+        $mapel_ids = $request->nama_mapel;
+
+        // Simpan data ke tabel pivot guru_mapel
+        foreach ($mapel_ids as $mapel_id) {
+            GuruMapel::create([
+                'guru_id' => $guru_id,
+                'mapel_id' => $mapel_id,
+            ]);
+        }
+
+        return back()->with('success', 'Data berhasil disimpan.');
     }
-
     public function destroy($mapel_id)
     {
         $deleted = GuruMapel::where('id_mapel', $mapel_id)->delete();

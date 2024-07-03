@@ -63,6 +63,7 @@ Route::resource('daftar', DaftarController::class);
 Route::resource('ppdb', DaftarController::class);
 Route::resource('test', TestController::class);
 Route::resource('abs', AbsenController::class);
+Route::get('/cek-alpa', [AbsenController::class, 'insertFromSiswa'])->name('cek.alpa');
 
 Route::resource('ks', KSController::class);
 Route::resource('upload', UploadController::class);
@@ -82,9 +83,11 @@ Route::group(['middleware' => 'auth:web'], function () {
     Route::resource('score', ScoreController::class);
     Route::resource('cetak', CetakController::class);
     Route::resource('kartu', KartuController::class);
+    Route::get('/ktp', [KartuController::class, 'ktp'])->name('ktp.index');
     Route::resource('rekapabsen', RekapAbsenController::class);
     Route::post('/rekapabsen/tampil', [RekapAbsenController::class, 'rekap'])->name('rekap.cari');
     Route::post('/kartu/cetak', [KartuController::class, 'cetakkartu'])->name('cetak.kartu');
+    Route::post('/ktp/cetak', [KartuController::class, 'cetakktp'])->name('cetak.ktp');
     Route::post('/cetak/daftarhadir', [CetakController::class, 'cetakdaftar'])->name('cetak.daftarhadir');
     Route::get('/daftarppdb', [DaftarController::class, 'daftar'])->name('daftar.ppdb');
     // Route::post('/daftarppdb/export', [DaftarController::class, 'exportData'])->name('daftarppdb.export');

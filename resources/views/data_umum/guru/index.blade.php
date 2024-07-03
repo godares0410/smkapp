@@ -68,6 +68,7 @@
                             <th style="width: 20px">N0</th>
                             <th>Nama guru</th>
                             <th>Jabatan</th>
+                            <th>Walas</th>
                             <th class="text-center">Detail</th>
                         </tr>
                     </thead>

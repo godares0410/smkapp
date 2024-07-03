@@ -31,28 +31,17 @@
         }
 
         .no-border {
-            margin-top: 5px;
+            margin-top: 4px;
             border-collapse: collapse;
-            font-size: 9px;
+            font-size: 11px;
             font-weight: bold;
         }
+
         .no-border td,
         .no-border th {
             border: none;
             padding: 1px;
         }
-        .no-borderz {
-            margin-top: 5px;
-            border-collapse: collapse;
-            font-size: 9px;
-        }
-
-        .no-borderz td,
-        .no-borderz th {
-            border: none;
-            padding: 1px;
-        }
-        
 
         @media print {
             .container>.col .card {
@@ -72,29 +61,34 @@
     <div class="container">
         @foreach ($siswa as $data)
             <div class="col">
-                <div class="card" style="position: relative;">
-                    <img src="{{ asset('img/ktp/dpn.svg') }}" style="width: 100%; position: absolute; z-index: -1;" alt="">
+                <div class="card">
                     <div style="height: 30%;">
-                        <div style="display: flex; flex-direction: row; align-items: center;">
+                        <div
+                            style="border-bottom: 1px solid black; display: flex; flex-direction: row; align-items: center">
                             <div style="width: 20%;">
-                                <img src="{{ asset('img/website/logo/_1716541080.png') }}" style="width: 65%; margin-left: 17px" alt="">
+                                <img src="{{ asset('img/website/logo/_1716540967.png') }}" style="width: 95%"
+                                    alt="">
                             </div>
-                            <div style="width:60%; text-align: center; font-size: 11px; font-weight: bold; color: transparent !important; margin-top: 11px;">
-                                KARTU TANDA PELAJAR <br>
-                                SMK PUSAT KEUNGGULAN <br>
-                                SMK SABILILLAH
+                            <div style="width:60%; text-align: center; font-size: 13px; font-weight: bold;">
+                                KARTU PESERTA PSAT <br>
+                                SMK SABILILLAH <br>
+                                TAHUN PELAJARAN 2023/2024
                             </div>
-
-                            
+                            <div style="width: 20%;">
+                                <img src="{{ asset('img/website/logo/_1716541080.png') }}" style="width: 95%"
+                                    alt="">
+                            </div>
                         </div>
                         <div style="height: 70%;">
                             <div style="display: flex; flex-direction: row;">
                                 <div style="width: 20%;">
                                     @if ($data->foto != null)
-                                        <img src="{{ asset('img/siswa/' . $data->foto) }}" style="width: 90%; padding: 5%;  margin-top: 17px" alt="">
+                                        <img src="{{ asset('img/siswa/' . $data->foto) }}"
+                                            style="width: 90%; padding: 5%" alt="">
                                         <br>
                                     @else
-                                        <img src="{{ asset('img/siswa/icon.jpg') }}" style="width: 90%; padding: 5%; margin-top: 10px" alt="">
+                                        <img src="{{ asset('img/siswa/icon.jpg') }}"
+                                            style="width: 90%; padding: 5%; margin-top: 10px" alt="">
                                     @endif
                                 </div>
                                 <div style="width: 80%;">
@@ -105,113 +99,64 @@
                                             <td style="vertical-align: top;">{{ $data->nama_siswa }}</td>
                                         </tr>
                                         <tr>
-                                            <td style="width: 52px">Kejuruan</td>
+                                            <td style="width: 100px">Kelas</td>
                                             <td>:</td>
-                                            <td>{{ $data->nama_jurusan }}</td>
+                                            <td>{{ $data->nama_kelas }} {{ $data->kode_jurusan }}</td>
                                         </tr>
-                                        @php
-                                            $carbonTanggalMulai = \Carbon\Carbon::createFromFormat('Y-m-d', $data->tgl);
-                                            $bulanIndonesia = [
-                                                1 => 'Januari', 2 => 'Februari', 3 => 'Maret',
-                                                4 => 'April', 5 => 'Mei', 6 => 'Juni',
-                                                7 => 'Juli', 8 => 'Agustus', 9 => 'September',
-                                                10 => 'Oktober', 11 => 'November', 12 => 'Desember',
-                                            ];
-                                        @endphp
                                         <tr>
-                                            <td>TTL</td>
+                                            <td>Username</td>
                                             <td>:</td>
-                                            <td>{{ ucwords(strtolower($data->kota)) }},  {{ $carbonTanggalMulai->format('d') }}-{{ $bulanIndonesia[$carbonTanggalMulai->format('n')] }}-{{ $carbonTanggalMulai->format('Y') }}
-                                        </tr>
-                                       <tr>
-                                            <td style="vertical-align: top;">Alamat</td>
-                                            <td style="vertical-align: top;">:</td>
-                                            <td style="vertical-align: top;">{{ ucwords(strtolower($data->alamat)) }}</td>
-                                        </tr>
+                                            {{-- <td>
+                                                <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG("$data->id_siswa", 'QRCODE') }}"
+                                                    alt="QR Code" style="width: 50px;" />
+                                            </td> --}}
+                                            <td>{{ $data->username }}</td>
+                                            {{-- <td>{!! DNS1D::getBarcodeHTML("$data->id_siswa", 'PHARMA') !!}</td>
+                                            <td>{!! DNS2D::getBarcodeHTML("$data->id_siswa", 'QRCODE') !!}</td> --}}
 
+                                        </tr>
                                         <tr>
-                                            <td style="vertical-align: top;">Gol. Darah</td>
-                                            <td style="vertical-align: top;">:</td>
-                                            <td style="vertical-align: top;">{{ $data->golongan_darah ? strtoupper($data->golongan_darah) : '-' }}</td>
+                                            <td>Password</td>
+                                            <td>:</td>
+                                            <td>{{ $data->password }}</td>
                                         </tr>
-
+                                        <tr>
+                                            <td>Tempat / Sesi</td>
+                                            <td>:</td>
+                                            <td>{{ $data->nama_ruang }} / {{ $data->nama_sesi }}</td>
+                                        </tr>
                                     </table>
                                 </div>
                             </div>
                             <div style="display: flex;">
+                                {{-- <div style="width: 60%;">
+                                    @php
+                                        // Encrypt the $data->id_siswa using Laravel's encryption
+                                        $encrypted_id_siswa = encrypt($data->id_siswa);
+
+                                        // Generate the QR code with the encrypted ID
+                                        $barcode_data = 'https://smksabilillah.sch.id/absen/siswa/' . urlencode($encrypted_id_siswa);
+                                        $barcode_image = DNS2D::getBarcodePNG($barcode_data, 'QRCODE');
+                                    @endphp
+
+                                    <img src="data:image/png;base64,{{ $barcode_image }}" alt="QR Code" style="width: 40px; padding:4px; border: 1px solid; margin-left: 7px" />
+
+                                </div> --}}
                                 <div style="width: 60%;">
-                                    <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG("$data->id_siswa", 'C128') }}" alt="QR Code" style="height: 30px; margin-left: 7px; margin-top: 20px" />
+                                    <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('https://smksabilillah.sch.id/absen/siswa/' . "$data->id_siswa", 'QRCODE') }}"
+                                        alt="QR Code"
+                                        style="width: 40px; padding:4px; border: 1px solid; margin-left: 7px" />
                                 </div>
-                                <div style="width: 40%; display: flex; align-items: center; flex-direction: column; justify-content: flex-end;">
+                                <div
+                                    style="width: 40%; display: flex; align-items: center; flex-direction: column; justify-content: flex-end;">
                                     <div style="font-size: 10px;">Kepala Sekolah</div>
-                                    <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('https://smksabilillah.sch.id/ks', 'QRCODE') }}" alt="QR Code" style="height: 30px;  margin-left: 7px" />
-                                    <div style="font-size: 10px;">Fachrur Rozi, S.Pd.I, M.Pd</div>
+                                    <img src="{{ asset('img/kartu/ttd.png') }}" style="height: 30px;" alt="">
+                                    <div style="font-size: 10px;">Fachrur Rozi, S.Pd, M.Pd.I</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div style="width: 30px; height:100px;">
-                <div style="width: 50%; height: 100%; black; border-right: 1px solid black;">
-                </div>
-                <div style="width: 50%; height: 100% black; border-left: 1px solid black;">
-                </div>
-            </div>
-            <div class="col">
-                <div class="card" style="position: relative;">
-                    <img src="{{ asset('img/ktp/blk.svg') }}" style="width: 100%; position: absolute; z-index: -1;" alt="">
-                    <div style="height: 30%;">
-                        <div style="display: flex; flex-direction: row; align-items: center">
-                            <div style="width:60%; text-align: center; font-size: 11px; font-weight: bold; color: transparent; margin-top: 6px">
-                                FUNGSI DAN KEGUNAAN <br>
-                                KTP SMK SABILILLAH
-                            </div>
-                            <div style="width: 40%;">
-                                <img src="{{ asset('img/website/logo/_1716541080.png') }}" style="height: 40px; margin-left: 80px" alt="">
-                            </div>
-                        </div>
-                        <div style="height: 70%;">
-                            <div style="display: flex; flex-direction: row;">
-                                <div style="width: 100%; padding: 5px">
-                                    <table class="no-borderz">
-                                        <tr>
-                                            <td style="vertical-align: top;">1.</td>
-                                            <td style="vertical-align: top;"><b>Absensi Siswa:</b> Digunakan untuk absensi harian siswa secara elektronik.</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="vertical-align: top;">2.</td>
-                                            <td style="vertical-align: top;"><b>Monitoring Absensi:</b> Memudahkan sekolah dan orang tua memantau kehadiran siswa.</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="vertical-align: top;">3.</td>
-                                            <td style="vertical-align: top;"><b>Identifikasi Diri:</b> Sebagai identitas resmi siswa yang terdaftar.</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="vertical-align: top;">4.</td>
-                                            <td style="vertical-align: top;"><b>Partisipasi Kompetisi:</b> Identifikasi resmi saat mengikuti kompetisi akademik, olahraga, atau seni.</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="vertical-align: top;">5.</td>
-                                            <td style="vertical-align: top;"><b>Keamanan Sekolah:</b> Membantu mengontrol dan memastikan keamanan di lingkungan sekolah.</td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                            <div style="display: flex;">
-                                <div style="width: 48%;">
-                                <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('https://smksabilillah.sch.id/absen/siswa/' . $data->id_siswa, 'QRCODE') }}" alt="QR Code" style="width: 40px; padding:4px; border: 1px solid; margin-left: 7px" />
-                                </div>
-                                <div style="width: 52%; height: 100%; display: flex; flex-direction: column;">
-                                    <div style="font-size: 7px; margin-top: 29%; color: transparent">Jl. Dadapan. Grogol, Gondangwetan, Kab. Pasuruan</div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
             </div>
         @endforeach
     </div>

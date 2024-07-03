@@ -3,9 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap Layout</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>ABSEN SCAN</title>
+    <link rel="shortcut icon" href="{{ asset('img/bank_soal/website/logo/_1702460950.png') }}" type="image/png">
+    <!-- Bootstrap 3.3.7 -->
+  <link rel="stylesheet" href=" {{ asset('AdminLTE-2/bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href=" {{ asset('AdminLTE-2/bower_components/font-awesome/css/font-awesome.min.css') }}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href=" {{ asset('AdminLTE-2/bower_components/Ionicons/css/ionicons.min.css') }}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href=" {{ asset('AdminLTE-2/dist/css/AdminLTE.min.css') }}">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href=" {{ asset('AdminLTE-2/dist/css/skins/_all-skins.min.css') }}">
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
      <style>
@@ -29,12 +39,16 @@
             z-index: 10; /* Z-index untuk memastikan logo berada di atas video */
         }
         #datetime {
-    position: absolute;
-    bottom: 10px;
-    left: 20px;
-    z-index: 11;
-    color: white;
-}
+        position: absolute;
+        bottom: 10px;
+        left: 20px;
+        z-index: 11;
+        color: white;
+        text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; /* Outline hitam */
+        }
+        #video {
+        transform: scaleX(-1); /* Flip horizontally */
+        }
 
     </style>
 </head>
@@ -77,22 +91,27 @@
         </script>
     @endif
 
-    <div class="container mt-4">
+    <div class="container-fluid mt-4">
         <div class="row">
             <!-- Kolom Kiri -->
-            <div class="col-md-3">
+            <!-- <div class="col-md-3">
                 <form id="absForm" action="{{ route('abs.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" id="screenshot" name="screenshot">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="idsiswa" name="idsiswa" style="color: white" autofocus>
+                    </div>
                     <div class="card mt-4">
                         <div class="card-body">
                             This is a card box under the form.
+                            <a href="{{ route('cek.alpa') }}" class="btn btn-primary">Check Alpa</a>
                         </div>
                     </div>
-                </div>
+                </div> -->
             
             <!-- Kolom Tengah -->
-        <div class="col-md-6">
+            <div class="col-md-6">
+            
             <div class="border-red p-3 relative">
                 <h5>Foto Absensi</h5>
             <video id="video" width="100%" height="auto" autoplay>
@@ -102,31 +121,83 @@
         <p id="datetime" class="absolute"></p>
         </div>
         <br>
-        <div class="form-group">
-            <input type="text" class="form-control" id="idsiswa" name="idsiswa" style="color: white" autofocus>
-        </div>
         </form>
                 <button type="submit" class="btn" style="background-color: white" form="absForm"></button>
             </div>
-
-            <!-- Kolom Kanan -->
-            <div class="col-md-3">
-                <h5>List</h5>
-                <ul class="list-group">
-                    <li class="list-group-item">Item 1</li>
-                    <li class="list-group-item">Item 2</li>
-                    <li class="list-group-item">Item 3</li>
-                    <li class="list-group-item">Item 4</li>
-                </ul>
-            </div>
+            <div class="col-md-6">
+            <div class="nav-tabs-custom" style="height: 100vh; overflow: scroll">
+            <ul class="nav nav-tabs">
+              <li class="active"><a href="#masuk" data-toggle="tab">Scan Masuk</a></li>
+              <li><a href="#pulang" data-toggle="tab">Scan Pulang</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="active tab-pane" id="masuk">
+                    <!-- Post -->
+                    @foreach ($sm as $dm)
+                        <div class="post">
+                            <div style="width: 100%; display: flex">
+                                <div style="width: 25%">
+                                    <img src="{{ asset('img/scan/masuk/' . $dm->foto) }}" alt="Foto Scan Masuk" style="width: 100%; max-height: 200px">
+                                </div>
+                                <div style="width: 35%; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                                        <h3 style="color: black; font-weight: bold">
+                                            {{ $dm->nama_siswa}}
+                                        </h3> 
+                                        <h3> 
+                                        {{ $dm->nama_kelas}} {{ $dm->kode_jurusan}}<br>
+                                        </h3> 
+                                        <h3 style="color: black; font-weight: bold"> 
+                                        Scan : {{ \Carbon\Carbon::createFromTimestamp($dm->msk)->format('H:i:s') }}
+                                        </h3> 
+                                </div>
+                                <div style="width: 25%">
+                                    <img src="{{ asset('img/siswa/' . $dm->fotosis) }}" alt="Foto Scan Masuk" style="max-height: 200px">
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                <div class="tab-pane" id="pulang">
+                    <!-- Post -->
+                    @foreach ($sp as $dp)
+                        <div class="post">
+                            <div style="width: 100%; display: flex">
+                                <div style="width: 25%">
+                                    <img src="{{ asset('img/scan/pulang/' . $dp->foto) }}" alt="Foto Scan Pulang" style="width: 100%; max-height: 200px">
+                                </div>
+                                <div style="width: 35%; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                                        <h3 style="color: black; font-weight: bold">
+                                            {{ $dp->nama_siswa}}
+                                        </h3> 
+                                        <h3> 
+                                        {{ $dp->nama_kelas}} {{ $dp->kode_jurusan}}<br>
+                                        </h3> 
+                                        <h3 style="color: black; font-weight: bold"> 
+                                        Scan : {{ \Carbon\Carbon::createFromTimestamp($dp->plg)->format('H:i:s') }}
+                                        </h3> 
+                                </div>
+                                <div style="width: 25%">
+                                    <img src="{{ asset('img/siswa/' . $dp->fotosis) }}" alt="Foto Scan Pulang" style="max-height: 200px">
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+                <!-- /.post -->
         </div>
     </div>
 
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+    <!-- jQuery 3 -->
+    <script src="{{ asset('AdminLTE-2/bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <!-- Bootstrap 3.3.7 -->
+    <script src="{{ asset('AdminLTE-2/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <!-- FastClick -->
+    <script src="{{ asset('AdminLTE-2/bower_components/fastclick/lib/fastclick.js') }}"></script>
+    <!-- AdminLTE App -->
+    <script src="{{ asset('AdminLTE-2/dist/js/adminlte.min.js') }}"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="{{ asset('AdminLTE-2/dist/js/demo.js') }}"></script>
     <!-- Script untuk mengakses kamera dan menangkap gambar -->
     <script>
         const video = document.getElementById('video');
@@ -173,7 +244,7 @@
             const logoImg = new Image();
             logoImg.src = logo.src;
             logoImg.onload = function() {
-                context.drawImage(logoImg, 10, 70, 50, 50);
+                context.drawImage(logoImg, 10, 10, 50, 50);
 
                 // Draw the date/time text on the canvas
                 context.font = '16px Arial';
@@ -217,5 +288,41 @@
         // Call updateDateTime when the page is loaded
         updateDateTime();
     </script>
+
+    <!-- SCRIPT AUTO REFRESH
+    <script>
+        function refreshAt115() {
+            const now = new Date();
+            const schedule = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 13, 19, 0); // Set pukul 01:15:00 saat ini
+            let timeout = schedule.getTime() - now.getTime();
+            if (timeout < 0) {
+                timeout += 86400000; // Jika sudah melewati pukul 01:15 hari ini, atur untuk besok
+            }
+            setTimeout(function() {
+                location.reload(true); // True parameter untuk melakukan refresh dari server, bukan dari cache
+            }, timeout);
+        }
+
+        // Panggil fungsi refreshAt115 saat halaman pertama kali dimuat
+        refreshAt115();
+
+        // Update setiap menit untuk memeriksa apakah sudah pukul 01:15
+        setInterval(refreshAt115, 60000); // Setiap menit (60000 ms)
+    </script> -->
+    <script>
+    function executeAt132700() {
+        const now = new Date();
+        if (now.getHours() === 13 && now.getMinutes() === 49 && now.getSeconds() === 0) {
+            window.location.href = "{{ route('cek.alpa') }}";
+        }
+    }
+
+    // Panggil fungsi executeAt132700 saat halaman pertama kali dimuat
+    executeAt132700();
+
+    // Update setiap detik untuk memeriksa apakah sudah pukul 13:27:00
+    setInterval(executeAt132700, 1000); // Setiap detik (1000 ms)
+</script>
+
 </body>
 </html>

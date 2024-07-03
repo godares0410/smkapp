@@ -1,80 +1,355 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ asset('img/bank_soal/website/logo/_1702460950.png') }}" type="image/png">
+    <link rel="shortcut icon" href="{{ asset('img/bank_soal/website/logo/_1702460950.png') }}" type="image/png">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 2 | Log in</title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.7 -->
-    <link rel="stylesheet" href=" {{ asset('AdminLTE-2/bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href=" {{ asset('AdminLTE-2/bower_components/font-awesome/css/font-awesome.min.css') }}">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href=" {{ asset('AdminLTE-2/bower_components/Ionicons/css/ionicons.min.css') }}">
-    <!-- Theme style -->
-    <link rel="stylesheet" href=" {{ asset('AdminLTE-2/dist/css/AdminLTE.min.css') }}">
-    <!-- iCheck -->
-    <link rel="stylesheet" href=" {{ asset('AdminLTE-2/plugins/iCheck/square/blue.css') }}">
+    <title>Absen | {{ $siswa->nama_siswa}}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+        }
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
+        .containerz {
+            position: relative; /* Menambahkan posisi relatif */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid #ccc;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            width: 20%;
+            overflow: hidden;
+        }
 
-    <!-- Google Font -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+        .bg {
+            position: relative; /* Menjadikan posisi absolut */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: auto;
+            z-index: 1; /* Mengatur z-index lebih rendah agar berada di bawah gambar siswa */
+        }
+        .konten {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        z-index: 2;
+        top: 25%;
+        }
+        .siswa {
+        width: 30%;
+        /* top: 1%; */
+        border: 6px solid #0659b8; /* Border biru dengan ketebalan 4px */
+        border-radius: 8px; /* Lengkungan sudut 8px */
+        box-shadow: 0 0 10px rgba(0, 123, 255, 0.3); /* Shadow biru dengan opasitas */
+        }
+        .nama {
+        width: 90%;
+        z-index: 2;
+        margin-top: 5%;
+        font-family: 'Montserrat', sans-serif; /* Menggunakan font Montserrat */
+        color: #007bff; /* Warna teks biru (#007bff) */
+        font-size: 1.3rem;
+        font-weight: bold; /* Teks bold (tebal) */
+        text-align: center; /* Teks ditengahkan */
+        /* border: 1px solid black; */
+        }
+        .keterangan {
+        display: flex;
+        align-items: center; /* Vertikal */
+        justify-content: center; /* Horizontal */
+        text-align: center;
+        width: 60%;
+        z-index: 2;
+        border: 2px solid #cccccc; /* Border biru dengan ketebalan 4px */
+        background-color: #e3e3e3;
+        border-radius: 8px; /* Lengkungan sudut 8px */
+        box-shadow: 0 0 10px rgba(128, 128, 128, 0.3); /* Warna shadow abu-abu */
+        }
+        .ta {
+            padding: 2px;
+            font-weight:bold;
+        }
+        .ket {
+            margin-top : 5%;
+            padding: 2px;
+            font-weight:bold;
+        }
+        .pemb {
+            margin-top : 1%;
+            padding: 2px;
+            font-weight:bold;
+        }
+        .login-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('/img/website/bg/_1703127815.jpg');
+            background-size: cover;
+            background-position: center;
+            filter: blur(10px); /* Adjust the blur radius as needed */
+            z-index: -1;
+        }
+
+        .login-page .content {
+            position: relative;
+            z-index: 1; /* Ensure the content is above the blurred background */
+        }
+        @media (max-width: 1024px) {
+            .containerz {
+                width: 80%; /* Lebar 80% pada layar tablet */
+            }
+        }
+        @media (max-width: 600px) {
+            .containerz {
+                width: 100%; /* Lebar 100% pada layar kecil */
+            }
+        }
+    </style>
 </head>
-
 <body class="hold-transition login-page">
-    <div class="login-box">
-        <div class="login-logo">
-            <b>Cek Absen</b>
-        </div>
-        <!-- /.login-logo -->
-        <div class="login-box-body">
-            <p class="login-box-msg">{{ $siswa->nama_siswa }}</p>
-
-
-
-            <div class="social-auth-links text-center">
-                @if ($siswa->foto != null)
-                    <img src="{{ asset('img/siswa/' . $siswa->foto) }}" style="width: 50%" alt="">
-                    <br>
-                @else
-                    <img src="{{ asset('img/siswa/icon.jpg') }}" style="width: 50%; margin-top: 10px"
-                        alt="">
-                @endif
+    <div class="containerz">
+        <img class="bg" src="{{ asset('img/file/sws.svg') }}" alt="ID Image">
+        <div class="konten">
+            @if ($siswa->foto != null)
+                <img class="siswa" src="{{ asset('img/siswa/' . $siswa->foto) }}" alt="Foto Siswa">
+            @else
+                <img class="siswa" src="{{ asset('img/siswa/icon.jpg') }}" alt="Foto Default">
+            @endif
+            <div class="nama">{{ $siswa->nama_siswa }}
             </div>
-            <!-- /.social-auth-links -->
-
-            <a href="#">I forgot my password</a><br>
-            <a href="register.html" class="text-center">Register a new membership</a>
-
+            <h6 style="text-align: center">
+                Tahun Pelajaran 
+                @if($tapel && $tapel->nama_tapel)
+                    {{$tapel->nama_tapel}}
+                @else
+                    Belum Dipilih
+                @endif
+                <br>Semester 
+                @if($semester && $semester->nama_semester)
+                    {{$semester->nama_semester}}
+                @else
+                    Belum Dipilih
+                @endif
+            </h6>
+            
+            <div class="keterangan d-flex align-items-center justify-content-center">
+                <table style="width: 90%; text-align: left;">
+                    <tr>
+                        <th>Alpa</th>
+                        <th>:</th>
+                        <th>
+                        @if($harialpa != 0 && $jamalpa != 0)
+                        {{$harialpa}} hari, {{$jamalpa}} jam
+                        @elseif($harialpa != 0)
+                            {{$harialpa}} hari
+                        @elseif($jamalpa != 0)
+                            {{$jamalpa}} jam
+                        @else
+                            0
+                        @endif
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Ijin</th>
+                        <th>:</th>
+                        <th>
+                        @if($hariijin != 0 && $jamijin != 0)
+                        {{$hariijin}} hari, {{$jamijin}} jam
+                        @elseif($hariijin != 0)
+                            {{$hariijin}} hari
+                        @elseif($jamijin != 0)
+                            {{$jamijin}} jam
+                        @else
+                            0
+                        @endif
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Sakit</th>
+                        <th>:</th>
+                        <th>
+                        @if($harisakit != 0 && $jamsakit != 0)
+                        {{$harisakit}} hari, {{$jamsakit}} jam
+                        @elseif($harisakit != 0)
+                            {{$harisakit}} hari
+                        @elseif($jamsakit != 0)
+                            {{$jamsakit}} jam
+                        @else
+                            0
+                        @endif
+                        </th>
+                    </tr>
+                </table>
+            </div>  
+            <div class="ket">
+                Keterangan Hari Ini :
+            </div>  
+            <div class="d-flex justify-content-around">
+                <button type="button" class="btn btn-block btn-success btn-xs mx-2" data-bs-toggle="modal" data-bs-target="#masuk">
+                    <div style="font-size: 13px; padding: 0; margin-top: -10px;">Sudah Scan Masuk</div>
+                    <div style="font-size: 10px; padding: 0; margin: -5px;">(Cek Foto Scan)</div>
+                </button>
+                <button type="button" class="btn btn-block btn-success btn-xs mx-2" data-bs-toggle="modal" data-bs-target="#pulang">
+                    <div style="font-size: 13px; padding: 0; margin-top: -10px;">Sudah Scan Pulang</div>
+                    <div style="font-size: 10px; padding: 0; margin: -5px;">(Cek Foto Scan)</div>
+                </button>
+            </div>
+            <!-- <div class="d-flex justify-content-around">
+                <button type="button" class="btn btn-block btn-danger btn-xs mx-2" data-bs-toggle="modal" data-bs-target="#masuk">
+                    <div style="font-size: 13px; padding: 0; margin-top: -10px;">Belum Scan Masuk</div>
+                    <div style="font-size: 10px; padding: 0; margin: -5px;">(Siswa Belum Masuk)</div>
+                </button>
+                <button type="button" class="btn btn-block btn-danger btn-xs mx-2" data-bs-toggle="modal" data-bs-target="#pulang">
+                    <div style="font-size: 13px; padding: 0; margin-top: -10px;">Belum Scan Pulang</div>
+                    <div style="font-size: 10px; padding: 0; margin: -5px;">(Siswa Belum Pulang)</div>
+                </button>
+            </div> -->
+            <!-- <div class="pemb">
+                Informasi Pembayaran :
+            </div> 
+            <button type="button" class="btn btn-block btn-success btn-xs mx-2" data-bs-toggle="modal" data-bs-target="#bayar">
+                    <div style="font-size: 13px; padding: 0; margin-top: -10px;">Sisa Pelunasan : Rp. 2.500.000</div>
+                    <div style="font-size: 10px; padding: 0; margin: -5px;">(Lihat Bukti Pembayaran)</div>
+            </button> -->
         </div>
-        <!-- /.login-box-body -->
     </div>
-    <!-- /.login-box -->
-
-    <!-- jQuery 3 -->
-    <script src="{{ asset('AdminLTE-2/bower_components/jquery/dist/jquery.min.js') }}"></script>
-    <!-- Bootstrap 3.3.7 -->
-    <script src="{{ asset('AdminLTE-2/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-    <!-- iCheck -->
-    <script src="{{ asset('AdminLTE-2/plugins/iCheck/icheck.min.js') }}"></script>
+     <!-- Modal Masuk-->
+     <div class="modal fade" id="masuk" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Scan Masuk {{ $siswa->nama_siswa }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img class="siswa" src="{{ asset('img/scan/masuk/m1.jfif.jpg') }}" style="width: 100%" alt="Foto Siswa">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+     <!-- Modal -->
+     <div class="modal fade" id="pulang" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Scan Pulang {{ $siswa->nama_siswa }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img class="siswa" src="{{ asset('img/scan/pulang/p1.png.jpg') }}" style="width: 100%" alt="Foto Siswa">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+     <!-- Modal -->
+     <div class="modal fade" id="bayar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Bukti Pembayaran {{ $siswa->nama_siswa }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- <img class="siswa" src="{{ asset('img/scan/pulang/p1.png.jpg') }}" style="width: 100%" alt="Foto Siswa"> -->
+                    <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Jumlah</th>
+                            <th>Tanggal</th>
+                            <th>Guru Penerima</th>
+                            <th>Bukti</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Rp. 500.000</td>
+                            <td>10-Mei-2024</td>
+                            <td>Dewi Indrasari, S.Pd</td>
+                            <td><img src="{{ asset('img/pembayaran/p1.jfif') }}" style="width: 100%" alt="Foto Siswa"></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Rp. 300.000</td>
+                            <td>20-Mei-2024</td>
+                            <td>Hadi Supriyono, S.Pd</td>
+                            <td><img src="{{ asset('img/pembayaran/p2.jfif') }}" style="width: 100%" alt="Foto Siswa"></td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Rp. 200.000</td>
+                            <td>30-Mei-2024</td>
+                            <td>Dewi Indrasari, S.Pd</td>
+                            <td><img src="{{ asset('img/pembayaran/p3.jfif') }}" style="width: 100%" alt="Foto Siswa"></td>
+                        </tr>
+                    </tbody>
+                     </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
-        $(function() {
-            $('input').iCheck({
-                checkboxClass: 'icheckbox_square-blue',
-                radioClass: 'iradio_square-blue',
-                increaseArea: '20%' /* optional */
-            });
-        });
-    </script>
-</body>
+        // Get the modal
+        var modal = document.getElementById('masuk');
 
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+    <script>
+        // Get the modal
+        var modal = document.getElementById('pulang');
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+    <script>
+        // Get the modal
+        var modal = document.getElementById('bayar');
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+    <!-- Tautan ke Bootstrap JS (diletakkan sebelum tag penutup </body>) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

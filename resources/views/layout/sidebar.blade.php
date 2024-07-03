@@ -195,6 +195,9 @@
                             <li class="@yield('cetak_kartu-active')"><a href="{{ route('kartu.index') }}"><i
                                         class="fa fa-circle-o"></i>Kartu Peserta</a>
                             </li>
+                            <li class="@yield('cetak_ktp-active')"><a href="{{ route('ktp.index') }}"><i
+                                        class="fa fa-circle-o"></i>Kartu Tanda Pelajar</a>
+                            </li>
                             <li class="@yield('cetak_rekapabsen-active')"><a href="{{ route('rekapabsen.index') }}"><i
                                         class="fa fa-circle-o"></i>Rekap Absen</a>
                             </li>

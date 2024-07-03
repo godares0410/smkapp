@@ -15,6 +15,12 @@ class KartuController extends Controller
         $jurusan = Jurusan::all();
         return view('data_cetak.kartu_peserta.index', compact('kelas', 'jurusan'));
     }
+    public function ktp()
+    {
+        $kelas = Kelas::all();
+        $jurusan = Jurusan::all();
+        return view('data_cetak.kartu_peserta.indexktp', compact('kelas', 'jurusan'));
+    }
     // public function cetakkartu(Request $request)
     // {
     //     $kelas = $request->input('kelas');
@@ -51,6 +57,22 @@ class KartuController extends Controller
         ->get();
 
         return view('data_cetak.kartu_peserta.cetak', compact('siswa'));
+    }
+    public function cetakktp(Request $request)
+    {
+        $kelas = $request->input('kelas');
+        $jurusan = $request->input('jurusan');
+        $siswa = Siswa::select('siswa.*', 'kelas.nama_kelas', 'jurusan.nama_jurusan', 'sesi.nama_sesi', 'siswa_data.*')
+        ->join('kelas', 'kelas.id_kelas', '=', 'siswa.id_kelas')
+        ->join('jurusan', 'jurusan.id_jurusan', '=', 'siswa.id_jurusan')
+        ->join('siswa_sesi', 'siswa_sesi.id_siswa', '=', 'siswa.id_siswa')
+        ->join('sesi', 'siswa_sesi.id_sesi', '=', 'sesi.id_sesi')
+        ->join('siswa_data', 'siswa.id_siswa', '=', 'siswa_data.id_siswa')
+        ->where('siswa.id_kelas', $kelas)
+        ->where('siswa.id_jurusan', $jurusan)
+        ->get();
+
+        return view('data_cetak.kartu_peserta.ktp', compact('siswa'));
     }
 
 }

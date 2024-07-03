@@ -15,7 +15,11 @@
     @parent
     <li class="active">{{ ucwords($title) }}</li>
 @endsection
-
+<style>
+        .container { display: flex; }
+        .box { margin: 10px; padding: 10px; border: 1px solid #000; width: 200px; }
+        .selected { background-color: #d3d3d3; }
+    </style>
 @section('content')
     <!-- Main content -->
     <section class="content">
@@ -43,152 +47,62 @@
             </script>
         @endif
 
+        <h1>Pilih Guru dan Mapel</h1>
 
+@if (session('success'))
+    <div>{{ session('success') }}</div>
+@endif
 
-        <!-- Small boxes (Stat box) -->
-        <div class="box">
-            <div class="box-header with-border">
-                <h3 class="box-title">Data {{ ucwords($title) }}</h3>
-                <div class="pull-right">
-                </div>
-            </div>
-            <div class="box-body table-responsive">
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th style="width: 20px">No</th>
-                            <th class="col-sm-3">Nama Guru</th>
-                            <th class="text-center col-sm-3">X</th>
-                            <th class="text-center col-sm-3">XI</th>
-                            <th class="text-center col-sm-3">XII</th>
-                            <th class="text-center col-sm-3">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @php
-                            $counter = 1;
-                        @endphp
-                        @foreach ($guru as $data)
-                            <tr>
-                                <td>{{ $counter++ }}</td>
-                                <td>{{ $data->nama_guru }}</td>
-                                <td>
-                                    @foreach ($gurumapel as $mpl)
-                                        @if ($mpl->id_guru == $data->id_guru && $mpl->kelas_mapel == 'X')
-                                            {{-- {{ $mpl->id_guru }} --}}
-                                            <form class="btn btn-xs"
-                                                action="{{ route('guru_mapel.destroy', $mpl->id_mpl) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-xs btn-delete"
-                                                    style="background-color: #<?php echo substr(md5(rand()), 0, 6); ?>; display: flex; align-items: center; justify-content: center; border: 2px solid black; color: white; text-shadow: 0 0 2px black;"
-                                                    type="submit" id="delete-form">
-                                                    {{ $mpl->nama_mapel }} - {{ $mpl->jurusan_mapel }}
-                                                </button>
-                                            </form>
-                                        @endif
-                                    @endforeach
-                                </td>
-                                <td>
-                                    @foreach ($gurumapel as $mpl)
-                                        @if ($mpl->id_guru == $data->id_guru && $mpl->kelas_mapel == 'XI')
-                                            {{-- {{ $mpl->id_guru }} --}}
-                                            <form class="btn btn-xs"
-                                                action="{{ route('guru_mapel.destroy', $mpl->id_mpl) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-xs btn-delete"
-                                                    style="background-color: #<?php echo substr(md5(rand()), 0, 6); ?>; display: flex; align-items: center; justify-content: center; border: 2px solid black; color: white; text-shadow: 0 0 2px black;"
-                                                    type="submit" id="delete-form">
-                                                    {{ $mpl->nama_mapel }} - {{ $mpl->jurusan_mapel }}
-                                                </button>
-                                            </form>
-                                        @endif
-                                    @endforeach
-                                </td>
-                                <td>
-                                    @foreach ($gurumapel as $mpl)
-                                        @if ($mpl->id_guru == $data->id_guru && $mpl->kelas_mapel == 'XII')
-                                            {{-- {{ $mpl->id_guru }} --}}
-                                            <form class="btn btn-xs"
-                                                action="{{ route('guru_mapel.destroy', $mpl->id_mpl) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button class="btn btn-xs btn-delete"
-                                                    style="background-color: #<?php echo substr(md5(rand()), 0, 6); ?>; display: flex; align-items: center; justify-content: center; border: 2px solid black; color: white; text-shadow: 0 0 2px black;"
-                                                    type="submit" id="delete-form">
-                                                    {{ $mpl->nama_mapel }} - {{ $mpl->jurusan_mapel }}
-                                                </button>
-                                            </form>
-                                        @endif
-                                    @endforeach
-                                </td>
-                                <td class="text-center"><button type="button" class="btn btn-xs btn-success"
-                                        data-toggle="modal" data-target="#modalDetail{{ $data->id_guru }}">
-                                        <i class="fa fa-plus-circle"></i>
-                                        Tambah
-                                    </button></td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+<form method="POST" action="{{ route('guru_mapel.store') }}">
+    @csrf
+    <div class="container">
+        <div class="box" id="guruBox">
+            <h3>Guru</h3>
+            @foreach ($gurus as $guru)
+                <div class="guru" data-id="{{ $guru->id }}">{{ $guru->nama_guru }}</div>
+            @endforeach
+            <input type="hidden" name="nama_guru" id="selectedGuru">
         </div>
+        <div class="box" id="mapelBox">
+            <h3>Mapel</h3>
+            @foreach ($mapels as $mapel)
+                <div class="mapel" data-id="{{ $mapel->id }}">{{ $mapel->nama_mapel }}</div>
+            @endforeach
+            <input type="hidden" name="nama_mapel[]" id="selectedMapel">
+        </div>
+    </div>
+    <button type="submit">Simpan</button>
+</form>
+
+
+
     </section>
-    @includeIf('data_umum.guru_mapel.modal')
 @endsection
 
 
 @push('script')
-    <script>
-        $(document).ready(function() {
-            $('.table').DataTable()
-        })
-
-        $(document).ready(function() {
-            // ...
-
-            // Fungsi untuk membuka modal dan mengatur judul
-            function openModal(title) {
-                $('.modal-title').text(title);
-                // ...
-            }
-
-            // Menangkap event tombol dengan atribut data-target="#modalTambahjurusan"
-            $('button[data-target="#modalTambahJurusan"]').on('click', function() {
-                var title = "Tambah Jurusan";
-                openModal(title);
-            });
-            // Menangkap event tombol dengan atribut data-target="#modalImportJurusan"
-            $('button[data-target="#modalDetail"]').on('click', function() {
-                var title = "Tambah Mapel Kepada Guru";
-                openModal(title);
-            });
+<script>
+    document.querySelectorAll('.guru').forEach(guru => {
+        guru.addEventListener('click', () => {
+            document.querySelectorAll('.guru').forEach(g => g.classList.remove('selected'));
+            guru.classList.add('selected');
+            document.getElementById('selectedGuru').value = guru.dataset.id;
         });
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const deleteButtons = document.querySelectorAll('.btn-delete');
+    });
 
-            deleteButtons.forEach(function(button) {
-                button.addEventListener('click', function(event) {
-                    event.preventDefault(); // Menghentikan tindakan default dari tombol
-
-                    Swal.fire({
-                        title: 'Konfirmasi',
-                        text: 'Apakah Anda yakin ingin menghapus data ini?',
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonText: 'Ya, Hapus',
-                        cancelButtonText: 'Batal'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            button.closest('form')
-                                .submit(); // Submit form terdekat yang mengandung tombol yang diklik
-                        }
-                    });
-                });
-            });
+    document.querySelectorAll('.mapel').forEach(mapel => {
+        mapel.addEventListener('click', () => {
+            mapel.classList.toggle('selected');
+            updateSelectedMapel();
         });
-    </script>
+    });
+
+    function updateSelectedMapel() {
+        const selectedMapel = [];
+        document.querySelectorAll('.mapel.selected').forEach(mapel => {
+            selectedMapel.push(mapel.dataset.id);
+        });
+        document.getElementById('selectedMapel').value = JSON.stringify(selectedMapel);
+    }
+</script>
 @endpush

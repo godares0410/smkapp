@@ -52,22 +52,12 @@
             <div class="box-body table-responsive">
                 <form action="{{ route('cetak.kartu') }}" method="POST" target="_blank">
                     @csrf
-                    {{-- <div class="form-group">
-                        <label for="jenis">Jenis Ujian</label>
-                        <select class="form-control" id="jenis" name="jenis" required>
-                            @foreach ($jenis as $data)
-                                <option value="{{ $data->id_jenis }}" {{ $data->id_jenis == 113 ? 'selected' : '' }}>
-                                    {{ $data->nama_ujian }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div> --}}
 
                     <div class="form-group">
                         <label for="kelas">Kelas</label>
                         <select class="form-control" id="kelas" name="kelas" required>
                             @foreach ($kelas as $data)
-                                <option value="{{ $data->id_kelas }}" {{ $data->id_kelas == 3 ? 'selected' : '' }}>{{ $data->nama_kelas }}</option>
+                                <option value="{{ $data->id_kelas }}" {{ $data->id_kelas == 1 ? 'selected' : '' }}>{{ $data->nama_kelas }}</option>
                             @endforeach
                         </select>
                     </div>
