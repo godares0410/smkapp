@@ -96,10 +96,13 @@
             <!-- Kolom Kiri -->
                 
                 <!-- Kolom Tengah -->
-                <div class="col-md-6">
+                <div class="col-md-6" style="display: none;">
                     
                     <div class="border-red p-3 relative">
                         <h5>Foto Absensi</h5>
+                        <!-- <video id="video" width="100%" height="auto" autoplay>
+                            Your browser does not support the video tag.
+                        </video> -->
                         <video id="video" width="100%" height="auto" autoplay>
                             Your browser does not support the video tag.
                         </video>
@@ -110,8 +113,11 @@
                     <form id="absForm" action="{{ route('abs.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" id="screenshot" name="screenshot">
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <input type="text" class="form-control" id="idsiswa" name="idsiswa" style="color: white" autofocus>
+                        </div> -->
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="idsiswa" name="idsiswa" style="color: white;" autofocus>
                         </div>
                         <div class="card mt-4">
                             <div class="card-body">
@@ -125,8 +131,8 @@
             <div class="col-md-6">
             <div class="nav-tabs-custom" style="height: 100vh; overflow: scroll">
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#masuk" data-toggle="tab">Scan Masuk</a></li>
-              <li><a href="#pulang" data-toggle="tab">Scan Pulang</a></li>
+                <li id="tab-masuk"><a href="#masuk" data-toggle="tab">Scan Masuk</a></li>
+                <li id="tab-pulang"><a href="#pulang" data-toggle="tab">Scan Pulang</a></li>
             </ul>
             <div class="tab-content">
                 <div class="active tab-pane" id="masuk">
@@ -145,7 +151,7 @@
                                         {{ $dm->nama_kelas}} {{ $dm->kode_jurusan}}<br>
                                         </h3> 
                                         <h3 style="color: black; font-weight: bold"> 
-                                        Scan : {{ \Carbon\Carbon::createFromTimestamp($dm->msk)->format('H:i:s') }}
+                                        Scan : {{ \Carbon\Carbon::parse($dm->msk)->format('H:i:s') }}
                                         </h3> 
                                 </div>
                                 <div style="width: 25%">
@@ -171,7 +177,7 @@
                                         {{ $dp->nama_kelas}} {{ $dp->kode_jurusan}}<br>
                                         </h3> 
                                         <h3 style="color: black; font-weight: bold"> 
-                                        Scan : {{ \Carbon\Carbon::createFromTimestamp($dp->plg)->format('H:i:s') }}
+                                        Scan : {{ \Carbon\Carbon::parse($dp->plg)->format('H:i:s') }}
                                         </h3> 
                                 </div>
                                 <div style="width: 25%">
@@ -287,26 +293,38 @@
         updateDateTime();
     </script>
 
-    <!-- SCRIPT AUTO REFRESH
+    <!-- SCRIPT AUTO REFRESH -->
     <script>
-        function refreshAt115() {
-            const now = new Date();
-            const schedule = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 13, 19, 0); // Set pukul 01:15:00 saat ini
-            let timeout = schedule.getTime() - now.getTime();
-            if (timeout < 0) {
-                timeout += 86400000; // Jika sudah melewati pukul 01:15 hari ini, atur untuk besok
-            }
-            setTimeout(function() {
-                location.reload(true); // True parameter untuk melakukan refresh dari server, bukan dari cache
-            }, timeout);
+    function refreshAt730() {
+        const now = new Date();
+        const schedule730 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 7, 30, 0); // Set pukul 07:30:00 saat ini
+        let timeout730 = schedule730.getTime() - now.getTime();
+        if (timeout730 < 0) {
+            schedule730.setDate(schedule730.getDate() + 1); // Atur untuk refresh pukul 07:30 besok
+            timeout730 = schedule730.getTime() - now.getTime();
         }
+        setTimeout(function() {
+            location.reload(true); // Refresh halaman dari server, bukan dari cache
+        }, timeout730);
 
-        // Panggil fungsi refreshAt115 saat halaman pertama kali dimuat
-        refreshAt115();
+        const schedule1300 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 13, 0, 0); // Set pukul 13:00:00 saat ini
+        let timeout1300 = schedule1300.getTime() - now.getTime();
+        if (timeout1300 < 0) {
+            schedule1300.setDate(schedule1300.getDate() + 1); // Atur untuk refresh pukul 13:00 besok
+            timeout1300 = schedule1300.getTime() - now.getTime();
+        }
+        setTimeout(function() {
+            location.reload(true); // Refresh halaman dari server, bukan dari cache
+        }, timeout1300);
+    }
 
-        // Update setiap menit untuk memeriksa apakah sudah pukul 01:15
-        setInterval(refreshAt115, 60000); // Setiap menit (60000 ms)
-    </script> -->
+        // Panggil fungsi refreshAt730 saat halaman pertama kali dimuat
+        refreshAt730();
+
+        // Update setiap menit untuk memeriksa apakah sudah pukul 07:30
+        setInterval(refreshAt730, 60000); // Setiap menit (60000 ms)
+    </script>
+
     <script>
     function executeAt132700() {
         const now = new Date();
@@ -321,6 +339,49 @@
     // Update setiap detik untuk memeriksa apakah sudah pukul 13:27:00
     setInterval(executeAt132700, 1000); // Setiap detik (1000 ms)
 </script>
+
+<!-- Sembunyikan Scan -->
+<script>
+    function setActiveTab() {
+        const now = new Date();
+        const timezoneOffset = now.getTimezoneOffset(); // Get current timezone offset in minutes
+        const localTime = now.getTime() + (timezoneOffset * 60000); // Convert to local time in milliseconds
+
+        // Create a Date object for Indonesian WIB (UTC +7)
+        const indonesiaTime = new Date(localTime + (7 * 3600000)); // Add 7 hours in milliseconds
+
+        const hour = indonesiaTime.getHours();
+        const minutes = indonesiaTime.getMinutes();
+
+        // Check if current time is between 07:30 and 12:59 (7:30 AM to 12:59 PM)
+        if ((hour === 7 && minutes >= 30) || (hour > 7 && hour < 13)) {
+            document.querySelector('.col-md-6').style.display = 'none';
+        } else {
+            document.querySelector('.col-md-6').style.display = 'block';
+        }
+        // Rest of your setActiveTab function for handling active tab based on time
+        // Example logic for setting active tab for Scan Masuk or Scan Pulang
+        if (hour >= 13 && hour <= 23) {
+            document.getElementById('tab-masuk').classList.remove('active');
+            document.getElementById('tab-pulang').classList.add('active');
+            document.getElementById('masuk').classList.remove('active');
+            document.getElementById('pulang').classList.add('active');
+        } else {
+            document.getElementById('tab-masuk').classList.add('active');
+            document.getElementById('tab-pulang').classList.remove('active');
+            document.getElementById('masuk').classList.add('active');
+            document.getElementById('pulang').classList.remove('active');
+        }
+    }
+
+    // Call setActiveTab when the page is loaded
+    setActiveTab();
+
+    // Update every minute to check and set active tab
+    setInterval(setActiveTab, 60000); // Check every minute (60000 ms)
+</script>
+
+
 
 </body>
 </html>

@@ -261,7 +261,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <img class="siswa" src="{{ asset('img/scan/masuk/' . $masuk->foto) }}" style="width: 100%" alt="Foto Siswa">
+                    @if($masuk && $masuk->foto != null)
+                        <img class="siswa" src="{{ asset('img/scan/masuk/' . $masuk->foto) }}" style="width: 100%" alt="Foto Siswa">
+                    @else
+                        Tidak Ada Foto
+                    @endif
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -278,7 +282,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <img class="siswa" src="{{ asset('img/scan/pulang/' . $pulang->foto) }}" style="width: 100%" alt="Foto Siswa">
+                    @if($pulang && $pulang->foto != null)
+                        <img class="siswa" src="{{ asset('img/scan/pulang/' . $pulang->foto) }}" style="width: 100%" alt="Foto Siswa">
+                    @else
+                        Tidak Ada Foto
+                    @endif
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -286,17 +295,16 @@
             </div>
         </div>
     </div>
-     <!-- Modal -->
-     <div class="modal fade" id="bayar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
+     <!-- Main Modal -->
+<div class="modal fade" id="bayar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
             <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Bukti Pembayaran {{ $siswa->nama_siswa }}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- <img class="siswa" src="{{ asset('img/scan/pulang/p1.png.jpg') }}" style="width: 100%" alt="Foto Siswa"> -->
-                    <table class="table table-bordered table-striped">
+                <h5 class="modal-title" id="exampleModalLabel">Bukti Pembayaran {{ $siswa->nama_siswa }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-striped text-center" style="width: 100%;">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -307,32 +315,39 @@
                         </tr>
                     </thead>
                     <tbody>
+                    @php
+                        $counter = 1;
+                    @endphp
+                    @foreach($pembayaran as $data)
                         <tr>
-                            <td>1</td>
-                            <td>Rp. 500.000</td>
-                            <td>10-Mei-2024</td>
-                            <td>Dewi Indrasari, S.Pd</td>
-                            <td><img src="{{ asset('img/pembayaran/p1.jfif') }}" style="width: 100%" alt="Foto Siswa"></td>
+                            <td style="width: 5%">{{ $counter++ }}</td>
+                            <td style="width: 15%">Rp. {{ number_format($data->jumlah, 0, ',', '.') }}</td>
+                            <td style="width: 20%">{{ \Carbon\Carbon::parse($data->created_at)->locale('id')->translatedFormat('d-F-Y') }}</td>
+                            <td style="width: 15%">{{ $data->nama_guru }}</td>
+                            <td style="width: 35%">
+                                <img src="{{ asset('img/pembayaran/' . $data->foto) }}" style="width: 100%; cursor: pointer;" alt="Foto Siswa" onclick="showImageModal(this.src)">
+                            </td>
                         </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Rp. 300.000</td>
-                            <td>20-Mei-2024</td>
-                            <td>Hadi Supriyono, S.Pd</td>
-                            <td><img src="{{ asset('img/pembayaran/p2.jfif') }}" style="width: 100%" alt="Foto Siswa"></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Rp. 200.000</td>
-                            <td>30-Mei-2024</td>
-                            <td>Dewi Indrasari, S.Pd</td>
-                            <td><img src="{{ asset('img/pembayaran/p3.jfif') }}" style="width: 100%" alt="Foto Siswa"></td>
-                        </tr>
+                    @endforeach
                     </tbody>
-                     </table>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+    <!-- Image Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel">Foto Bukti Pembayaran</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <div class="modal-body text-center">
+                    <img id="enlargedImage" src="" style="width: 100%;" alt="Foto Bukti Pembayaran">
                 </div>
             </div>
         </div>
@@ -370,6 +385,14 @@
             }
         }
     </script>
+    <script>
+    function showImageModal(src) {
+        var enlargedImage = document.getElementById('enlargedImage');
+        enlargedImage.src = src;
+        var imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+        imageModal.show();
+    }
+</script>
     <!-- Tautan ke Bootstrap JS (diletakkan sebelum tag penutup </body>) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

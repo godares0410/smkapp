@@ -19,26 +19,26 @@
         }
 
         .col {
-            padding: 2mm;
+            padding: 1.25mm;
             border: 0.5px solid rgba(128, 128, 128, 0.5); /* Warna abu-abu dengan transparansi 50% */
             box-sizing: border-box;
             border-radius: 8px; /* Anda bisa menyesuaikan nilai ini untuk mengubah tingkat kelengkungan sudut */
-            margin-bottom: 1px;
+            margin-bottom: 8px;
         }
         .colz {
-            padding: 2mm;
-            border: 0.5px solid rgba(128, 128, 128, 0.1); /* Warna abu-abu dengan transparansi 20% */
+            padding: 1.25mm;
+            border: 0.5px solid rgba(128, 128, 128, 0.5); /* Warna abu-abu dengan transparansi 20% */
             box-sizing: border-box;
             border-radius: 8px; /* Anda bisa menyesuaikan nilai ini untuk mengubah tingkat kelengkungan sudut */
-            margin-bottom: 1px;
+            margin-bottom: 8px;
         }
 
 
 
 
         .card {
-            height: 51.98mm;
-            width: 83.60mm;
+            height: 51.50mm;
+            width: 83.10mm;
             /* padding : 1mm; */
             /* border: 1px solid black; */
             overflow: hidden;
@@ -101,7 +101,6 @@
 
                             
                         </div>
-                        <div style="height: 70%;">
                             <div style="display: flex; flex-direction: row;">
                                 <div style="width: 20%;">
                                     @if ($data->foto != null)
@@ -154,22 +153,21 @@
                             </div>
                             <div style="display: flex;">
                                 <div style="width: 60%;">
-                                    <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG("$data->id_siswa", 'C128') }}" alt="QR Code" style="height: 30px; margin-left: 7px; margin-top: 20px" />
+                                    <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG("$data->id_siswa", 'C128') }}" alt="QR Code" style="height: 30px; margin-left: 7px; margin-top: 10px;" />
                                 </div>
-                                <div style="width: 40%; display: flex; align-items: center; flex-direction: column; justify-content: flex-end;">
-                                    <div style="font-size: 10px;">Kepala Sekolah</div>
-                                    <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('https://smksabilillah.sch.id/ks', 'QRCODE') }}" alt="QR Code" style="height: 30px;  margin-left: 7px" />
-                                    <div style="font-size: 10px;">Fachrur Rozi, S.Pd.I, M.Pd</div>
+                                <div style="width: 40%; display: flex; align-items: center; flex-direction: column;">
+                                    <div style="font-size: 7px; font-weight: bold;">Kepala Sekolah</div>
+                                    <img src="data:image/png;base64,{{ DNS2D::getBarcodePNG('https://smksabilillah.sch.id/ks', 'QRCODE') }}" alt="QR Code" style="height: 30px; margin-top: 2px; margin-bottom: 1px" />
+                                    <div style="font-size: 7px; font-weight: bold;">Fachrur Rozi, S.Pd.I, M.Pd</div>
                                 </div>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>
-            <div style="width: 30px; height:100px;">
-                <div style="width: 50%; height: 100%; black; border-right: 1px solid black;">
+            <div style="width: 30px; height:100px; display: flex">
+                <div style="width: 48%; height: 100%; black; border-right: 1px solid black; margin-right: 2%">
                 </div>
-                <div style="width: 50%; height: 100% black; border-left: 1px solid black;">
+                <div style="width: 48%; height: 100%; black; border-left: 1px solid black; margin-left: 2%">
                 </div>
             </div>
             <div class="colz">
@@ -187,7 +185,7 @@
                         </div>
                         <div style="height: 70%;">
                             <div style="display: flex; flex-direction: row;">
-                                <div style="width: 100%; padding: 5px">
+                                <div style="width: 100%; margin-left: 5px; margin-right: 5px">
                                     <table class="no-borderz">
                                         <tr>
                                             <td style="vertical-align: top;">1.</td>

@@ -32,14 +32,24 @@ class AbsenController extends Controller
         ->join('jurusan', 'siswa.id_jurusan', '=', 'jurusan.id_jurusan')
         ->whereDate('siswa_scan_masuk.created_at', $today)
         ->orderBy('id_siswa_scan_masuk', 'desc')
-        ->get();
+        ->get()
+        ->map(function ($item) {
+            // Convert the timestamp to Asia/Jakarta timezone
+            $item->msk = Carbon::parse($item->msk)->setTimezone('Asia/Jakarta');
+            return $item;
+        });
         $sp = SiswaScanPulang::select('siswa.nama_siswa', 'siswa_scan_pulang.*', 'siswa.foto as fotosis', 'kelas.nama_kelas', 'jurusan.kode_jurusan', 'siswa_scan_pulang.created_at as plg')
         ->join('siswa', 'siswa.id_siswa', '=', 'siswa_scan_pulang.id_siswa')
         ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
         ->join('jurusan', 'siswa.id_jurusan', '=', 'jurusan.id_jurusan')
         ->whereDate('siswa_scan_pulang.created_at', $today)
         ->OrderBy('id_siswa_scan_pulang','desc')
-        ->get();
+        ->get()
+        ->map(function ($item) {
+            // Convert the timestamp to Asia/Jakarta timezone
+            $item->plg = Carbon::parse($item->plg)->setTimezone('Asia/Jakarta');
+            return $item;
+        });;
         return view('absen.index', compact('sm', 'sp'));
     }
     public function pkl()
@@ -64,8 +74,8 @@ class AbsenController extends Controller
 
     // Define the time ranges in Asia/Jakarta timezone
     $masukStart = new \DateTime('07:00', new \DateTimeZone('Asia/Jakarta'));
-    $masukEnd = new \DateTime('21:30', new \DateTimeZone('Asia/Jakarta'));
-    $pulangStart = new \DateTime('12:00', new \DateTimeZone('Asia/Jakarta'));
+    $masukEnd = new \DateTime('17:30', new \DateTimeZone('Asia/Jakarta'));
+    $pulangStart = new \DateTime('07:00', new \DateTimeZone('Asia/Jakarta'));
     $pulangEnd = new \DateTime('13:30', new \DateTimeZone('Asia/Jakarta'));
 
     // Check if the current time is within the "Masuk" range
@@ -219,9 +229,10 @@ class AbsenController extends Controller
         $totalFormatted = 'Sisa Pembayaran : Rp. ' . number_format($total, 0, ',', '.');
 
         $pembayaran = Pembayaran::where('id_siswa', $id)
-            ->select('pembayaran.*')
-            ->first();
-        return view('siswa.cek_absen.index', compact('siswa', 'tapel', 'semester', 'harialpa', 'hariijin', 'harisakit', 'jamalpa', 'jamijin', 'jamsakit', 'masuk', 'pulang', 'totalFormatted', 'total'));
+            ->select('pembayaran.*', 'guru.nama_guru')
+            ->join('guru', 'guru.id_guru', '=', 'pembayaran.id_guru')
+            ->get();
+        return view('siswa.cek_absen.index', compact('siswa', 'tapel', 'semester', 'harialpa', 'hariijin', 'harisakit', 'jamalpa', 'jamijin', 'jamsakit', 'masuk', 'pulang', 'totalFormatted', 'total', 'pembayaran'));
     }
     // public function insertFromSiswa()
     // {
