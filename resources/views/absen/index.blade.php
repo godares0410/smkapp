@@ -63,38 +63,6 @@
         </div>
     @endif
 
-    @if (session('success'))
-    <script>
-        // console.log('Success message:', '{{ session('success') }}');
-        // // Atau tambahkan alert untuk memastikan nilai session
-        // alert('Success message: ' + '{{ session('success') }}');
-        
-        Swal.fire({
-            icon: 'success',
-            title: 'Berhasil!',
-            text: '{{ session('success') }}',
-            showConfirmButton: false,
-            timer: 1000 // Menutup pesan dalam 2.5 detik (2500ms)
-         }).then(function() {
-            document.getElementById('idsiswa').focus();
-        });
-    </script>
-@endif
-
-
-    @if (session('error'))
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Error!',
-                text: '{{ session('error') }}',
-                showConfirmButton: false,
-                timer: 1000 // Menutup pesan dalam 2.5 detik (2500ms)
-             }).then(function() {
-                document.getElementById('idsiswa').focus();
-            });
-        </script>
-    @endif
 
     <div class="container-fluid mt-4">
         <div class="row">
@@ -244,12 +212,16 @@
 
                 // Submit the form via AJAX
                 $.ajax({
+                    cache: false,
                     url: form.getAttribute('action'),
                     method: form.getAttribute('method'),
                     dataType: 'json',
                     data: $(form).serialize(),
                     success: function(response) {
                         if (response.success) {
+                            // Reset form setelah submit berhasil
+                            document.getElementById('absForm').reset();
+                            
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Berhasil!',
@@ -257,7 +229,8 @@
                                 showConfirmButton: false,
                                 timer: 1000
                             }).then(function() {
-                                location.reload(); // Refresh the page after the alert is closed
+                                // Focus back on input
+                                $('#idsiswa').focus();
                             });
                         } else if (response.error) {
                             Swal.fire({
@@ -267,7 +240,10 @@
                                 showConfirmButton: false,
                                 timer: 1000
                             }).then(function() {
-                                location.reload(); // Refresh the page after the alert is closed
+                                // Clear input value
+                                $('#idsiswa').val('');
+                                // Focus back on input
+                                $('#idsiswa').focus();
                             });
                         }
                     },
@@ -297,66 +273,92 @@
     </script>
     <script>
     $(document).ready(function() {
-        // Ketika form disubmit
-        $('#absForm').submit(function(event) {
-            event.preventDefault(); // Menghentikan aksi default form submission
+    $('#absForm').submit(function(event) {
+        event.preventDefault();
 
-            // Ambil nilai input
-            const idsiswa = $('#idsiswa').val();
+        const idsiswa = $('#idsiswa').val();
 
-            // Validasi idsiswa (misal: pastikan input berupa angka)
-            if (isNaN(idsiswa) || idsiswa.trim() === '') {
+        if (isNaN(idsiswa) || idsiswa.trim() === '') {
+            Swal.fire({
+                icon: 'error',
+                title: 'Absen gagal!',
+                text: 'Scan Gagal Silahkan Coba Lagi',
+                showConfirmButton: false,
+                timer: 1000
+            });
+            return;
+        }
+
+        let swalWithProgress = Swal.fire({
+            title: 'Processing',
+            html: '<div id="progress-bar" class="progress mt-3" style="width: 80%; margin: 10px auto;">' +
+                  '<div id="progress" class="progress-bar progress-bar-striped progress-bar-animated" ' +
+                  'role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">' +
+                  '</div></div>',
+            allowOutsideClick: false,
+            showCloseButton: false,
+            showCancelButton: false,
+            showConfirmButton: false,
+            didOpen: () => {
+                const formData = new FormData(document.getElementById('absForm'));
+                $.ajax({
+                    url: $(this).attr('action'),
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    timeout: 4000, // Set timeout to 4 seconds
+                    xhr: function() {
+                        const xhr = new window.XMLHttpRequest();
+                        xhr.upload.addEventListener('progress', function(e) {
+                            if (e.lengthComputable) {
+                                const percent = Math.round((e.loaded / e.total) * 100);
+                                $('#progress').attr('style', 'width: ' + percent + '%');
+                                $('#progress').text(percent + '%');
+                            }
+                        });
+                        return xhr;
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX Error:', error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: 'Terjadi kesalahan saat memproses permintaan. Silakan coba lagi.',
+                            showConfirmButton: false,
+                            timer: 1000
+                        }).then(function() {
+                            location.reload(); // Refresh the page after the alert is closed
+                        });
+                    }
+                });
+            }
+        });
+
+        // Handle timeout scenario
+        setTimeout(function() {
+            if (swalWithProgress.isOpen()) {
+                swalWithProgress.close(); // Close the "Processing" message
                 Swal.fire({
                     icon: 'error',
-                    title: 'Absen gagal!',
-                    text: 'Scan Gagal Silahkan Coba Lagi',
+                    title: 'Koneksi Tidak Stabil',
+                    text: 'Halaman akan dimuat ulang dalam 1 detik.',
                     showConfirmButton: false,
                     timer: 1000
                 }).then(function() {
-                    location.reload(); // Refresh halaman setelah alert ditutup
+                    location.reload(); // Refresh the page after the alert is closed
                 });
-                return;
             }
-
-            // Tampilkan SweetAlert progress
-            let swalWithProgress = Swal.fire({
-                title: 'Processing',
-                html: '<div id="progress-bar" class="progress mt-3" style="width: 80%; margin: 10px auto;">' +
-                      '<div id="progress" class="progress-bar progress-bar-striped progress-bar-animated" ' +
-                      'role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">' +
-                      '</div></div>',
-                allowOutsideClick: false,
-                showCloseButton: false,
-                showCancelButton: false,
-                showConfirmButton: false,
-                didOpen: () => {
-                    // Kirim data form menggunakan AJAX
-                    const formData = new FormData(document.getElementById('absForm'));
-                    $.ajax({
-                        url: $(this).attr('action'),
-                        type: 'POST',
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        xhr: function() {
-                            const xhr = new window.XMLHttpRequest();
-                            xhr.upload.addEventListener('progress', function(e) {
-                                if (e.lengthComputable) {
-                                    const percent = Math.round((e.loaded / e.total) * 100);
-                                    $('#progress').attr('style', 'width: ' + percent + '%');
-                                    $('#progress').text(percent + '%');
-                                    if (percent === 100) {
-                                        swalWithProgress.close(); // Tutup SweetAlert setelah selesai
-                                    }
-                                }
-                            });
-                            return xhr;
-                        },
-                    });
-                }
-            });
-        });
+        }, 4000); // 4 seconds timeout
     });
+});
+// After reload, set focus to element with ID 'idsiswa'
+$(document).ready(function() {
+    $('#idsiswa').focus();
+});
+</script>
+
+
 </script>
     <script>
         function fetchTime() {
@@ -448,7 +450,7 @@
         const minutes = indonesiaTime.getMinutes();
 
         // Check if current time is between 07:30 and 12:59 (7:30 AM to 12:59 PM)
-        if ((hour === 8 && minutes >= 30) || (hour > 7 && hour < 13)) {
+        if ((hour === 12 && minutes >= 30) || (hour > 12 && hour < 13)) {
             document.querySelector('.col-md-6').style.display = 'none';
         } else {
             document.querySelector('.col-md-6').style.display = 'block';

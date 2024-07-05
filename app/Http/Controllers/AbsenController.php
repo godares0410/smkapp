@@ -170,80 +170,88 @@ class AbsenController extends Controller
     // }
 
     public function store(Request $request)
-    {
-        // Decode the image from base64 format
-        $screenshot = $request->input('screenshot');
-        $image = str_replace('data:image/png;base64,', '', $screenshot);
-        $image = str_replace(' ', '+', $image);
-        $imageName = 'scan_' . time() . '.png';
-    
-        // Get the current time in Asia/Jakarta timezone
-        $currentTime = new \DateTime('now', new \DateTimeZone('Asia/Jakarta'));
-    
-        // Define the time ranges in Asia/Jakarta timezone
-        $masukStart = new \DateTime('00:00', new \DateTimeZone('Asia/Jakarta'));
-        $masukEnd = new \DateTime('08:30', new \DateTimeZone('Asia/Jakarta'));
-        $pulangStart = new \DateTime('13:00', new \DateTimeZone('Asia/Jakarta'));
-        $pulangEnd = new \DateTime('23:30', new \DateTimeZone('Asia/Jakarta'));
-    
-        // Determine whether it's "Masuk" or "Pulang"
-        if ($currentTime >= $masukStart && $currentTime <= $masukEnd) {
-            $table = 'siswa_scan_masuk';
-            $message = 'Absen Masuk Berhasil!';
-            $folder = 'masuk';
-            $startHour = '07:00';
-            $endHour = '07:30';
-        } elseif ($currentTime >= $pulangStart && $currentTime <= $pulangEnd) {
-            $table = 'siswa_scan_pulang';
-            $message = 'Absen Pulang Berhasil!';
-            $folder = 'pulang';
-            $startHour = '00:00';
-            $endHour = '23:30';
-        } else {
-            return response()->json(['error' => 'Scan Gagal, Lakukan Scan Sesuai Jam Berlaku']);
-        }
-    
-        // Check if id_siswa already exists
-        $exists = DB::table($table)
+{
+    // Decode the image from base64 format
+    $screenshot = $request->input('screenshot');
+    $image = str_replace('data:image/png;base64,', '', $screenshot);
+    $image = str_replace(' ', '+', $image);
+    $imageName = 'scan_' . time() . '.png';
+
+    // Get the current time in Asia/Jakarta timezone
+    $currentTime = new \DateTime('now', new \DateTimeZone('Asia/Jakarta'));
+
+    // Define the time ranges in Asia/Jakarta timezone
+    $masukStart = new \DateTime('00:00', new \DateTimeZone('Asia/Jakarta'));
+    $masukEnd = new \DateTime('17:30', new \DateTimeZone('Asia/Jakarta'));
+    $pulangStart = new \DateTime('15:00', new \DateTimeZone('Asia/Jakarta'));
+    $pulangEnd = new \DateTime('23:30', new \DateTimeZone('Asia/Jakarta'));
+
+    // Check if it's "Masuk" or "Pulang" based on current time
+    if ($currentTime >= $masukStart && $currentTime <= $masukEnd) {
+        $table = 'siswa_scan_masuk';
+        $message = 'Absen Masuk Berhasil!';
+        $folder = 'masuk';
+    } elseif ($currentTime >= $pulangStart && $currentTime <= $pulangEnd) {
+        $table = 'siswa_scan_pulang';
+        $message = 'Absen Pulang Berhasil!';
+        $folder = 'pulang';
+    } else {
+        return response()->json(['error' => 'Scan Gagal, Lakukan Scan Sesuai Jam Berlaku']);
+    }
+
+    // Check if id_siswa already exists in either siswa_scan_masuk or siswa_scan_pulang today
+    $existsMasuk = DB::table('siswa_scan_masuk')
                     ->where('id_siswa', $request->input('idsiswa'))
                     ->whereDate('created_at', Carbon::today())
                     ->exists();
-    
-        if ($exists) {
-            return response()->json(['error' => 'Sudah Scan ' . ($table == 'siswa_scan_masuk' ? 'Masuk' : 'Pulang') . ' Hari Ini']);
-        }
-    
-        // Set the directory for scans
-        $directory = public_path('img/scan/' . $folder);
-    
-        // Create directory if it doesn't exist
-        if (!file_exists($directory)) {
-            mkdir($directory, 0755, true); // 0755 is the default permission
-        }
-    
-        // Save the image to the directory
-        $imagePath = $directory . '/' . $imageName;
-        file_put_contents($imagePath, base64_decode($image));
-    
-        // Save the record to the respective table
-        DB::beginTransaction();
-    
-        try {
-            DB::table($table)->insert([
-                'id_siswa' => $request->input('idsiswa'),
-                'foto' => $imageName,
-                'created_at' => now(),  // assuming timestamps are managed by Eloquent/Query Builder
-                'updated_at' => now(),
-            ]);
-    
-            DB::commit();
 
-            return response()->json(['success' => $message]);
-        } catch (\Exception $e) {
-            DB::rollback();
-            return response()->json(['error' => 'Gagal menyimpan absen, coba lagi.']);
+    $existsPulang = DB::table('siswa_scan_pulang')
+                    ->where('id_siswa', $request->input('idsiswa'))
+                    ->whereDate('created_at', Carbon::today())
+                    ->exists();
+
+    // Handle the case if already scanned
+    if ($existsMasuk || $existsPulang) {
+        if ($existsMasuk) {
+            return response()->json(['error' => 'Sudah Scan Masuk Hari Ini']);
+        } else {
+            return response()->json(['error' => 'Sudah Scan Pulang Hari Ini']);
         }
     }
+
+    // Set the directory for scans
+    $directory = public_path('img/scan/' . $folder);
+
+    // Create directory if it doesn't exist
+    if (!file_exists($directory)) {
+        mkdir($directory, 0755, true); // 0755 is the default permission
+    }
+
+    // Save the image to the directory
+    $imagePath = $directory . '/' . $imageName;
+    file_put_contents($imagePath, base64_decode($image));
+
+    // Save the record to the respective table using transaction
+    DB::beginTransaction();
+
+    try {
+        DB::table($table)->insert([
+            'id_siswa' => $request->input('idsiswa'),
+            'foto' => $imageName,
+            'created_at' => now(),  // assuming timestamps are managed by Eloquent/Query Builder
+            'updated_at' => now(),
+        ]);
+
+        DB::commit();
+
+        return response()->json(['success' => $message]);
+    } catch (\Exception $e) {
+        DB::rollback();
+        return response()->json(['error' => 'Gagal menyimpan absen, coba lagi.']);
+    }
+}
+
+
     
 
     public function pklstore(Request $request)
