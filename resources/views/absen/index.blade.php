@@ -7,6 +7,8 @@
     <link rel="shortcut icon" href="{{ asset('img/bank_soal/website/logo/_1702460950.png') }}" type="image/png">
     <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href=" {{ asset('AdminLTE-2/bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!-- Font Awesome -->
   <link rel="stylesheet" href=" {{ asset('AdminLTE-2/bower_components/font-awesome/css/font-awesome.min.css') }}">
   <!-- Ionicons -->
@@ -16,8 +18,6 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href=" {{ asset('AdminLTE-2/dist/css/skins/_all-skins.min.css') }}">
-    <!-- SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
      <style>
         .border-red {
             border: 2px solid red;
@@ -64,18 +64,23 @@
     @endif
 
     @if (session('success'))
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Berhasil!',
-                text: '{{ session('success') }}',
-                showConfirmButton: false,
-                timer: 1000 // Menutup pesan dalam 2.5 detik (2500ms)
-             }).then(function() {
-                document.getElementById('idsiswa').focus();
-            });
-        </script>
-    @endif
+    <script>
+        // console.log('Success message:', '{{ session('success') }}');
+        // // Atau tambahkan alert untuk memastikan nilai session
+        // alert('Success message: ' + '{{ session('success') }}');
+        
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: '{{ session('success') }}',
+            showConfirmButton: false,
+            timer: 1000 // Menutup pesan dalam 2.5 detik (2500ms)
+         }).then(function() {
+            document.getElementById('idsiswa').focus();
+        });
+    </script>
+@endif
+
 
     @if (session('error'))
         <script>
@@ -136,30 +141,7 @@
             </ul>
             <div class="tab-content">
                 <div class="active tab-pane" id="masuk">
-                    <!-- Post -->
-                    @foreach ($sm as $dm)
-                        <div class="post">
-                            <div style="width: 100%; display: flex">
-                                <div style="width: 25%">
-                                    <img src="{{ asset('img/scan/masuk/' . $dm->foto) }}" alt="Foto Scan Masuk" style="width: 100%; max-height: 200px">
-                                </div>
-                                <div style="width: 35%; display: flex; justify-content: center; align-items: center; flex-direction: column;">
-                                        <h3 style="color: black; font-weight: bold">
-                                            {{ $dm->nama_siswa}}
-                                        </h3> 
-                                        <h3> 
-                                        {{ $dm->nama_kelas}} {{ $dm->kode_jurusan}}<br>
-                                        </h3> 
-                                        <h3 style="color: black; font-weight: bold"> 
-                                        Scan : {{ \Carbon\Carbon::parse($dm->msk)->format('H:i:s') }}
-                                        </h3> 
-                                </div>
-                                <div style="width: 25%">
-                                    <img src="{{ asset('img/siswa/' . $dm->fotosis) }}" alt="Foto Scan Masuk" style="max-height: 200px">
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
+                    <!-- Konten untuk data scan masuk akan diperbarui oleh JavaScript -->
                 </div>
                 <div class="tab-pane" id="pulang">
                     <!-- Post -->
@@ -203,6 +185,7 @@
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('AdminLTE-2/dist/js/demo.js') }}"></script>
     <!-- Script untuk mengakses kamera dan menangkap gambar -->
+    <!-- Script untuk mengakses kamera dan menangkap gambar -->
     <script>
         const video = document.getElementById('video');
         const form = document.getElementById('absForm');
@@ -231,8 +214,8 @@
                     showConfirmButton: false,
                     timer: 1000
                 }).then(function() {
-                location.reload(); // Refresh the page after the alert is closed
-            });
+                    location.reload(); // Refresh the page after the alert is closed
+                });
                 return;
             }
 
@@ -259,11 +242,122 @@
                 const dataUrl = canvas.toDataURL('image/png');
                 screenshotInput.value = dataUrl;
 
-                // Submit the form
-                form.submit();
+                // Submit the form via AJAX
+                $.ajax({
+                    url: form.getAttribute('action'),
+                    method: form.getAttribute('method'),
+                    dataType: 'json',
+                    data: $(form).serialize(),
+                    success: function(response) {
+                        if (response.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Berhasil!',
+                                text: response.success,
+                                showConfirmButton: false,
+                                timer: 1000
+                            }).then(function() {
+                                location.reload(); // Refresh the page after the alert is closed
+                            });
+                        } else if (response.error) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error!',
+                                text: response.error,
+                                showConfirmButton: false,
+                                timer: 1000
+                            }).then(function() {
+                                location.reload(); // Refresh the page after the alert is closed
+                            });
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX Error:', error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: 'Terjadi kesalahan saat memproses permintaan. Silakan coba lagi.',
+                            showConfirmButton: false,
+                            timer: 1000
+                        }).then(function() {
+                            location.reload(); // Refresh the page after the alert is closed
+                        });
+                    }
+                });
             };
         });
+
+        // Update the date/time element every second
+        setInterval(function() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZone: 'Asia/Jakarta' };
+            const formattedDateTime = now.toLocaleDateString('id-ID', options);
+            datetimeElement.textContent = formattedDateTime;
+        }, 1000);
     </script>
+    <script>
+    $(document).ready(function() {
+        // Ketika form disubmit
+        $('#absForm').submit(function(event) {
+            event.preventDefault(); // Menghentikan aksi default form submission
+
+            // Ambil nilai input
+            const idsiswa = $('#idsiswa').val();
+
+            // Validasi idsiswa (misal: pastikan input berupa angka)
+            if (isNaN(idsiswa) || idsiswa.trim() === '') {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Absen gagal!',
+                    text: 'Scan Gagal Silahkan Coba Lagi',
+                    showConfirmButton: false,
+                    timer: 1000
+                }).then(function() {
+                    location.reload(); // Refresh halaman setelah alert ditutup
+                });
+                return;
+            }
+
+            // Tampilkan SweetAlert progress
+            let swalWithProgress = Swal.fire({
+                title: 'Processing',
+                html: '<div id="progress-bar" class="progress mt-3" style="width: 80%; margin: 10px auto;">' +
+                      '<div id="progress" class="progress-bar progress-bar-striped progress-bar-animated" ' +
+                      'role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">' +
+                      '</div></div>',
+                allowOutsideClick: false,
+                showCloseButton: false,
+                showCancelButton: false,
+                showConfirmButton: false,
+                didOpen: () => {
+                    // Kirim data form menggunakan AJAX
+                    const formData = new FormData(document.getElementById('absForm'));
+                    $.ajax({
+                        url: $(this).attr('action'),
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        xhr: function() {
+                            const xhr = new window.XMLHttpRequest();
+                            xhr.upload.addEventListener('progress', function(e) {
+                                if (e.lengthComputable) {
+                                    const percent = Math.round((e.loaded / e.total) * 100);
+                                    $('#progress').attr('style', 'width: ' + percent + '%');
+                                    $('#progress').text(percent + '%');
+                                    if (percent === 100) {
+                                        swalWithProgress.close(); // Tutup SweetAlert setelah selesai
+                                    }
+                                }
+                            });
+                            return xhr;
+                        },
+                    });
+                }
+            });
+        });
+    });
+</script>
     <script>
         function fetchTime() {
             fetch('https://worldtimeapi.org/api/ip')
@@ -307,7 +401,7 @@
             location.reload(true); // Refresh halaman dari server, bukan dari cache
         }, timeout730);
 
-        const schedule1300 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 13, 0, 0); // Set pukul 13:00:00 saat ini
+        const schedule1300 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 13, 30, 0); // Set pukul 13:00:00 saat ini
         let timeout1300 = schedule1300.getTime() - now.getTime();
         if (timeout1300 < 0) {
             schedule1300.setDate(schedule1300.getDate() + 1); // Atur untuk refresh pukul 13:00 besok
@@ -354,7 +448,7 @@
         const minutes = indonesiaTime.getMinutes();
 
         // Check if current time is between 07:30 and 12:59 (7:30 AM to 12:59 PM)
-        if ((hour === 7 && minutes >= 30) || (hour > 7 && hour < 13)) {
+        if ((hour === 8 && minutes >= 30) || (hour > 7 && hour < 13)) {
             document.querySelector('.col-md-6').style.display = 'none';
         } else {
             document.querySelector('.col-md-6').style.display = 'block';
@@ -380,6 +474,52 @@
     // Update every minute to check and set active tab
     setInterval(setActiveTab, 60000); // Check every minute (60000 ms)
 </script>
+
+<script>
+    function fetchMasukData() {
+        $.ajax({
+            url: "{{ route('absen.masuk') }}",
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                $('#masuk .post').remove(); // Menghapus semua elemen dengan class .post di dalam #masuk
+
+                response.forEach(function(dm) {
+                    var html = `
+                        <div class="post">
+                            <div style="width: 100%; display: flex">
+                                <div style="width: 25%">
+                                    <img src="{{ asset('img/scan/masuk/') }}/${dm.foto}" alt="Foto Scan Masuk" style="width: 100%; max-height: 200px">
+                                </div>
+                                <div style="width: 35%; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                                    <h3 style="color: black; font-weight: bold">${dm.nama_siswa}</h3>
+                                    <h3>${dm.nama_kelas} ${dm.kode_jurusan}<br></h3>
+                                    <h3 style="color: black; font-weight: bold">Scan : ${dm.msk}</h3>
+                                </div>
+                                <div style="width: 25%">
+                                    <img src="{{ asset('img/siswa/') }}/${dm.fotosis}" alt="Foto Siswa" style="max-height: 200px">
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    $('#masuk').append(html); // Menambahkan HTML baru ke dalam #masuk
+                });
+
+                // Panggil kembali fetchMasukData setelah menambahkan data baru
+                fetchMasukData(); // Ini akan membuatnya terus memanggil dirinya sendiri
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching data:', error);
+                // Jika ada error, tunggu sebelum memanggil kembali
+                setTimeout(fetchMasukData, 10000); // Coba lagi setelah 10 detik
+            }
+        });
+    }
+
+    // Panggil fetchMasukData untuk pertama kali
+    fetchMasukData();
+</script>
+
 
 
 

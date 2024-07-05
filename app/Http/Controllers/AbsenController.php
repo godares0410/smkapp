@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use Carbon\Carbon;
 
 class AbsenController extends Controller
@@ -53,6 +54,27 @@ class AbsenController extends Controller
         });;
         return view('absen.index', compact('sm', 'sp'));
     }
+    
+    public function getScanMasukData()
+    {
+        $today = Carbon::now()->format('Y-m-d');
+    
+        $sm = SiswaScanMasuk::select('siswa.nama_siswa', 'siswa_scan_masuk.*', 'siswa.foto as fotosis', 'kelas.nama_kelas', 'jurusan.kode_jurusan', 'siswa_scan_masuk.created_at as msk')
+            ->join('siswa', 'siswa.id_siswa', '=', 'siswa_scan_masuk.id_siswa')
+            ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+            ->join('jurusan', 'siswa.id_jurusan', '=', 'jurusan.id_jurusan')
+            ->whereDate('siswa_scan_masuk.created_at', $today)
+            ->orderBy('id_siswa_scan_masuk', 'desc')
+            ->get()
+            ->map(function ($item) {
+                // Convert the timestamp to Asia/Jakarta timezone
+                $item->msk = Carbon::parse($item->msk)->setTimezone('Asia/Jakarta')->format('H:i:s');
+                return $item;
+            });
+    
+        return response()->json($sm);
+    }
+
     public function pkl()
     {
         $idSiswa = Auth::guard('siswa')->user()->id_siswa;
@@ -74,7 +96,7 @@ class AbsenController extends Controller
     //     $currentHourMinute = $currentTime->format('H:i');
 
     //     // Define the time ranges in Asia/Jakarta timezone
-    //     $masukStart = new \DateTime('07:00', new \DateTimeZone('Asia/Jakarta'));
+    //     $masukStart = new \DateTime('00:00', new \DateTimeZone('Asia/Jakarta'));
     //     $masukEnd = new \DateTime('07:30', new \DateTimeZone('Asia/Jakarta'));
     //     $pulangStart = new \DateTime('07:00', new \DateTimeZone('Asia/Jakarta'));
     //     $pulangEnd = new \DateTime('23:30', new \DateTimeZone('Asia/Jakarta'));
@@ -149,66 +171,80 @@ class AbsenController extends Controller
 
     public function store(Request $request)
     {
-        // Set timezone to Asia/Jakarta (WIB - Western Indonesian Time)
-        date_default_timezone_set('Asia/Jakarta');
-
         // Decode the image from base64 format
         $screenshot = $request->input('screenshot');
         $image = str_replace('data:image/png;base64,', '', $screenshot);
         $image = str_replace(' ', '+', $image);
         $imageName = 'scan_' . time() . '.png';
-
-        // Get current time in Asia/Jakarta timezone
-        $currentTime = Carbon::now('Asia/Jakarta');
-
-        // Define time ranges in Asia/Jakarta timezone
-        $masukStart = Carbon::createFromTime(0, 0, 0, 'Asia/Jakarta');
-        $masukEnd = Carbon::createFromTime(7, 30, 0, 'Asia/Jakarta');
-        $pulangStart = Carbon::createFromTime(13, 0, 0, 'Asia/Jakarta');
-        $pulangEnd = Carbon::createFromTime(14, 0, 0, 'Asia/Jakarta');
-
-        // Determine which table and directory to use based on current time
+    
+        // Get the current time in Asia/Jakarta timezone
+        $currentTime = new \DateTime('now', new \DateTimeZone('Asia/Jakarta'));
+    
+        // Define the time ranges in Asia/Jakarta timezone
+        $masukStart = new \DateTime('00:00', new \DateTimeZone('Asia/Jakarta'));
+        $masukEnd = new \DateTime('08:30', new \DateTimeZone('Asia/Jakarta'));
+        $pulangStart = new \DateTime('13:00', new \DateTimeZone('Asia/Jakarta'));
+        $pulangEnd = new \DateTime('23:30', new \DateTimeZone('Asia/Jakarta'));
+    
+        // Determine whether it's "Masuk" or "Pulang"
         if ($currentTime >= $masukStart && $currentTime <= $masukEnd) {
-            $modelClass = SiswaScanMasuk::class;
-            $scanType = 'Masuk';
-            $directory = public_path('img/scan/masuk');
+            $table = 'siswa_scan_masuk';
+            $message = 'Absen Masuk Berhasil!';
+            $folder = 'masuk';
+            $startHour = '07:00';
+            $endHour = '07:30';
         } elseif ($currentTime >= $pulangStart && $currentTime <= $pulangEnd) {
-            $modelClass = SiswaScanPulang::class;
-            $scanType = 'Pulang';
-            $directory = public_path('img/scan/pulang');
+            $table = 'siswa_scan_pulang';
+            $message = 'Absen Pulang Berhasil!';
+            $folder = 'pulang';
+            $startHour = '00:00';
+            $endHour = '23:30';
         } else {
-            return redirect()->back()->with('error', 'Scan Gagal, Lakukan Scan Sesuai Jam Berlaku');
+            return response()->json(['error' => 'Scan Gagal, Lakukan Scan Sesuai Jam Berlaku']);
         }
-
-        // Check if id_siswa already exists in the appropriate table for today
-        $exists = $modelClass::where('id_siswa', $request->input('idsiswa'))
-                             ->whereDate('created_at', Carbon::today())
-                             ->exists();
-
+    
+        // Check if id_siswa already exists
+        $exists = DB::table($table)
+                    ->where('id_siswa', $request->input('idsiswa'))
+                    ->whereDate('created_at', Carbon::today())
+                    ->exists();
+    
         if ($exists) {
-            return redirect()->back()->with('error', 'Sudah Scan ' . $scanType . ' Hari Ini');
+            return response()->json(['error' => 'Sudah Scan ' . ($table == 'siswa_scan_masuk' ? 'Masuk' : 'Pulang') . ' Hari Ini']);
         }
-
-        // Ensure directory exists, create if it doesn't
+    
+        // Set the directory for scans
+        $directory = public_path('img/scan/' . $folder);
+    
+        // Create directory if it doesn't exist
         if (!file_exists($directory)) {
-            mkdir($directory, 0755, true);
+            mkdir($directory, 0755, true); // 0755 is the default permission
         }
-
-        // Save the image to the directory using Laravel Storage
+    
+        // Save the image to the directory
         $imagePath = $directory . '/' . $imageName;
-        Storage::put($imagePath, base64_decode($image));
+        file_put_contents($imagePath, base64_decode($image));
+    
+        // Save the record to the respective table
+        DB::beginTransaction();
+    
+        try {
+            DB::table($table)->insert([
+                'id_siswa' => $request->input('idsiswa'),
+                'foto' => $imageName,
+                'created_at' => now(),  // assuming timestamps are managed by Eloquent/Query Builder
+                'updated_at' => now(),
+            ]);
+    
+            DB::commit();
 
-        // Save the record to the appropriate table within a database transaction
-        DB::transaction(function () use ($request, $modelClass, $imageName) {
-            $abs = new $modelClass();
-            $abs->id_siswa = $request->input('idsiswa');
-            $abs->foto = $imageName;
-            $abs->save();
-        });
-
-        return redirect()->back()->with('success', 'Absen ' . $scanType . ' Berhasil!');
+            return response()->json(['success' => $message]);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(['error' => 'Gagal menyimpan absen, coba lagi.']);
+        }
     }
-
+    
 
     public function pklstore(Request $request)
     {

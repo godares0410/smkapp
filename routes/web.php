@@ -69,6 +69,8 @@ Route::resource('ks', KSController::class);
 Route::resource('upload', UploadController::class);
 Route::post('/upload/file', [UploadController::class, 'fileupload'])->name('upload.file');
 Route::get('/absen/siswa/{id}', [AbsenController::class, 'cari']);
+Route::get('/absen/masuk', [AbsenController::class, 'getScanMasukData'])->name('absen.masuk');
+
 
 
 
