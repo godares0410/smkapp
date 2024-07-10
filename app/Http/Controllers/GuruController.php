@@ -89,4 +89,17 @@ class GuruController extends Controller
             return redirect()->route('guru.index')->with('error', 'Terjadi kesalahan saat mengimpor data: ' . $e->getMessage());
         }
     }
+    public function absen()
+    {
+        $kelas = Auth::guard('guru')->user()->walas->id_kelas;
+        $jurusan = Auth::guard('guru')->user()->walas->id_jurusan;
+        $absen = SiswaAbsen::all();
+        $siswa = Siswa::select('siswa.*', 'kelas.nama_kelas', 'jurusan.nama_jurusan')
+        ->where('siswa.id_kelas', $kelas)
+        ->where('siswa.id_jurusan', $jurusan)
+        ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+        ->join('jurusan', 'siswa.id_jurusan', '=', 'jurusan.id_jurusan')
+        ->get();
+        return view('guru.absen.index', compact('siswa', 'absen'));
+    }
 }

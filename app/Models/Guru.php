@@ -29,4 +29,9 @@ class Guru extends Model implements Authenticatable
     {
         return $this->hasMany(Gurumapel::class, 'id_guru', 'id_guru');
     }
+    public function walas()
+    {
+        return $this->hasOne(Walas::class, 'id_guru', 'id_guru');
+    }
+    
 }

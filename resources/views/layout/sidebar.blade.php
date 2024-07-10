@@ -59,6 +59,7 @@
                         <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                     </a>
                 </li>
+                <!-- SIDEBAR ADMIN -->
                 @if (auth('web')->check())
                     {{-- @unless (auth('siswa')->check()) --}}
                     <li class="@yield('data-umum') treeview">
@@ -237,6 +238,30 @@
                     </li>
                     @endif
                 @endif
+                <!-- SIDEBAR GURU -->
+                    @if (auth('guru')->check())
+                        @if (auth()->user()->walas)
+                        <li class="@yield('struktur') treeview">
+                            <a href="#">
+                                <i class="fa fa-edit"></i>
+                                <span>Kelas</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li class="@yield('struktur-active')"><a href="{{ route('guru.absen') }}"><i
+                                            class="fa fa-circle-o"></i>
+                                        Absen</a></li>
+                                <li class="@yield('laporan-active')"><a href="{{ route('siswas.absenlaporan') }}"><i
+                                            class="fa fa-circle-o"></i>
+                                        Laporan</a></li>
+                            </ul>   
+                        </li>
+                        @endif
+                    @endif
+
+                <!-- SIDEBAR SISWA -->
                 @if (auth('siswa')->check())
                     <li class="@yield('assesmen') treeview">
                         <a href="#">
@@ -274,7 +299,8 @@
                                     Laporan</a></li>
                         </ul>   
                     </li>
-                @endif
+                    @endif
+                   
                 @endif
         </section>
         <!-- /.sidebar -->

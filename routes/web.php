@@ -24,7 +24,7 @@ use App\Http\Controllers\TokenController;
 use App\Http\Controllers\UjianController;
 use App\Http\Controllers\DaftarController;
 use App\Http\Controllers\SiswasController;
-use App\Http\Controllers\AlokasiController;
+use App\Http\Controllers\AlokasiWaktuController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\MakananController;
 use App\Http\Controllers\WebsiteController;
@@ -175,8 +175,10 @@ Route::group(['middleware' => 'auth:web'], function () {
 });
 
 
-
-Route::get('/gurus', [GuruController::class, 'dashboard'])->name('guru.dashboard');
+Route::group(['middleware' => ['auth:guru']], function () {
+    Route::get('/gurus', [GuruController::class, 'dashboard'])->name('guru.dashboard');
+    Route::get('/absen', [GuruController::class, 'absen'])->name('guru.absen');
+});
 
 Route::middleware('auth.guru')->get('/login', function () {
     return view('login.login');
