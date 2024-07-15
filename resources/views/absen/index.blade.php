@@ -83,7 +83,7 @@
                         <p id="datetime" class="absolute"></p>
                     </div>
                     <br>
-                    <form id="absForm" action="{{ route('abs.store') }}" method="POST" enctype="multipart/form-data">
+                    <form id="absForm" action="{{ route('absensi.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" id="screenshot" name="screenshot">
                         <!-- <div class="form-group">
@@ -111,31 +111,8 @@
                 <div class="active tab-pane" id="masuk">
                     <!-- Konten untuk data scan masuk akan diperbarui oleh JavaScript -->
                 </div>
-                <div class="tab-pane" id="pulang">
-                    <!-- Post -->
-                    @foreach ($sp as $dp)
-                        <div class="post">
-                            <div style="width: 100%; display: flex">
-                                <div style="width: 25%">
-                                    <img src="{{ asset('img/scan/pulang/' . $dp->foto) }}" alt="Foto Scan Pulang" style="width: 100%; max-height: 200px">
-                                </div>
-                                <div style="width: 35%; display: flex; justify-content: center; align-items: center; flex-direction: column;">
-                                        <h3 style="color: black; font-weight: bold">
-                                            {{ $dp->nama_siswa}}
-                                        </h3> 
-                                        <h3> 
-                                        {{ $dp->nama_kelas}} {{ $dp->kode_jurusan}}<br>
-                                        </h3> 
-                                        <h3 style="color: black; font-weight: bold"> 
-                                        Scan : {{ \Carbon\Carbon::parse($dp->plg)->format('H:i:s') }}
-                                        </h3> 
-                                </div>
-                                <div style="width: 25%">
-                                    <img src="{{ asset('img/siswa/' . $dp->fotosis) }}" alt="Foto Scan Pulang" style="max-height: 200px">
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
+                <div class="active tab-pane" id="pulang">
+                   
                 </div>
                 <!-- /.post -->
         </div>
@@ -234,9 +211,22 @@
                             });
                         } else if (response.error) {
                             Swal.fire({
-                                icon: 'error',
-                                title: 'Error!',
+                                icon: 'success',
+                                title: 'Sudah!',
                                 text: response.error,
+                                showConfirmButton: false,
+                                timer: 1000
+                            }).then(function() {
+                                // Clear input value
+                                $('#idsiswa').val('');
+                                // Focus back on input
+                                $('#idsiswa').focus();
+                            });
+                        } else if (response.errorz) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal!',
+                                text: response.errorz,
                                 showConfirmButton: false,
                                 timer: 1000
                             }).then(function() {
@@ -450,7 +440,7 @@ $(document).ready(function() {
         const minutes = indonesiaTime.getMinutes();
 
         // Check if current time is between 07:30 and 12:59 (7:30 AM to 12:59 PM)
-        if ((hour === 12 && minutes >= 30) || (hour > 12 && hour < 13)) {
+        if ((hour === 07 && minutes >= 30) || (hour > 12 && hour < 13)) {
             document.querySelector('.col-md-6').style.display = 'none';
         } else {
             document.querySelector('.col-md-6').style.display = 'block';
@@ -521,7 +511,50 @@ $(document).ready(function() {
     // Panggil fetchMasukData untuk pertama kali
     fetchMasukData();
 </script>
+<script>
+    function fetchPulangData() {
+        $.ajax({
+            url: "{{ route('absen.pulang') }}",
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                $('#pulang .post').remove(); // Menghapus semua elemen dengan class .post di dalam #pulang
 
+                response.forEach(function(dm) {
+                    var html = `
+                        <div class="post">
+                            <div style="width: 100%; display: flex">
+                                <div style="width: 25%">
+                                    <img src="{{ asset('img/scan/pulang/') }}/${dm.foto}" alt="Foto Scan pulang" style="width: 100%; max-height: 200px">
+                                </div>
+                                <div style="width: 35%; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                                    <h3 style="color: black; font-weight: bold">${dm.nama_siswa}</h3>
+                                    <h3>${dm.nama_kelas} ${dm.kode_jurusan}<br></h3>
+                                    <h3 style="color: black; font-weight: bold">Scan : ${dm.plg}</h3>
+                                </div>
+                                <div style="width: 25%">
+                                    <img src="{{ asset('img/siswa/') }}/${dm.fotosis}" alt="Foto Siswa" style="max-height: 200px">
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    $('#pulang').append(html); // Menambahkan HTML baru ke dalam #pulang
+                });
+
+                // Panggil kembali fetchPulangData setelah menambahkan data baru
+                fetchPulangData(); // Ini akan membuatnya terus memanggil dirinya sendiri
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching data:', error);
+                // Jika ada error, tunggu sebelum memanggil kembali
+                setTimeout(fetchPulangData, 10000); // Coba lagi setelah 10 detik
+            }
+        });
+    }
+
+    // Panggil fetchPulangData untuk pertama kali
+    fetchPulangData();
+</script>
 
 
 

@@ -62,7 +62,7 @@ Route::resource('website', WebsiteController::class);
 Route::resource('daftar', DaftarController::class);
 Route::resource('ppdb', DaftarController::class);
 Route::resource('test', TestController::class);
-Route::resource('abs', AbsenController::class);
+Route::resource('absensi', AbsenController::class);
 Route::get('/cek-alpa', [AbsenController::class, 'insertFromSiswa'])->name('cek.alpa');
 
 Route::resource('ks', KSController::class);
@@ -70,6 +70,7 @@ Route::resource('upload', UploadController::class);
 Route::post('/upload/file', [UploadController::class, 'fileupload'])->name('upload.file');
 Route::get('/absen/siswa/{id}', [AbsenController::class, 'cari']);
 Route::get('/absen/masuk', [AbsenController::class, 'getScanMasukData'])->name('absen.masuk');
+Route::get('/absen/pulang', [AbsenController::class, 'getScanPulangData'])->name('absen.pulang');
 
 
 
@@ -176,8 +177,8 @@ Route::group(['middleware' => 'auth:web'], function () {
 
 
 Route::group(['middleware' => ['auth:guru']], function () {
-    Route::get('/gurus', [GuruController::class, 'dashboard'])->name('guru.dashboard');
-    Route::get('/absen', [GuruController::class, 'absen'])->name('guru.absen');
+    Route::get('/guru', [GuruController::class, 'dashboard'])->name('guru.dashboard');
+    Route::get('/absent', [GuruController::class, 'absen'])->name('guru.absen');
 });
 
 Route::middleware('auth.guru')->get('/login', function () {

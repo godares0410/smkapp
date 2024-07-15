@@ -43,6 +43,9 @@
             /* border: 1px solid black; */
             overflow: hidden;
         }
+        .balik {
+            transform: scaleX(-1);
+        }
 
         .no-border {
             margin-top: 5px;
@@ -86,7 +89,7 @@
     <div class="container">
         @foreach ($siswa as $data)
             <div class="col">
-                <div class="card" style="position: relative;">
+                <div class="card balik" style="position: relative;">
                     <img src="{{ asset('img/ktp/dpn.svg') }}" style="width: 100%; position: absolute; z-index: -1;" alt="">
                     <div style="height: 30%;">
                         <div style="display: flex; flex-direction: row; align-items: center;">
@@ -171,7 +174,7 @@
                 </div>
             </div>
             <div class="colz">
-                <div class="card" style="position: relative;">
+                <div class="card balik" style="position: relative;">
                     <img src="{{ asset('img/ktp/blk.svg') }}" style="width: 100%; position: absolute; z-index: -1;" alt="">
                     <div style="height: 30%;">
                         <div style="display: flex; flex-direction: row; align-items: center">

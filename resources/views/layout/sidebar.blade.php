@@ -76,9 +76,6 @@
                             <li class="@yield('siswa-active')"><a href="{{ route('siswa.index') }}"><i
                                         class="fa fa-circle-o"></i>
                                     Siswa</a></li>
-                            <li class="@yield('guru-active')"><a href="{{ route('guru.index') }}"><i
-                                        class="fa fa-circle-o"></i>
-                                    Guru</a></li>
                             <li class="@yield('mapel-active')"><a href="{{ route('mapel.index') }}"><i
                                         class="fa fa-circle-o"></i>
                                     Mapel</a></li>

@@ -24,7 +24,7 @@ use App\Http\Controllers\TokenController;
 use App\Http\Controllers\UjianController;
 use App\Http\Controllers\DaftarController;
 use App\Http\Controllers\SiswasController;
-use App\Http\Controllers\AlokasiController;
+use App\Http\Controllers\AlokasiWaktuController;
 use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\MakananController;
 use App\Http\Controllers\WebsiteController;
