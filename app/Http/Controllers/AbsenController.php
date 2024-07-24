@@ -54,6 +54,37 @@ class AbsenController extends Controller
         });;
         return view('absen.index', compact('sm', 'sp'));
     }
+    public function cekabsen()
+    {
+        $today = Carbon::now()->format('Y-m-d');
+
+        // Query untuk mengambil data scan masuk siswa dengan filter tanggal hari ini
+        $sm = SiswaScanMasuk::select('siswa.nama_siswa', 'siswa_scan_masuk.*', 'siswa.foto as fotosis', 'kelas.nama_kelas', 'jurusan.kode_jurusan', 'siswa_scan_masuk.created_at as msk')
+        ->join('siswa', 'siswa.id_siswa', '=', 'siswa_scan_masuk.id_siswa')
+        ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+        ->join('jurusan', 'siswa.id_jurusan', '=', 'jurusan.id_jurusan')
+        ->whereDate('siswa_scan_masuk.created_at', $today)
+        ->orderBy('id_siswa_scan_masuk', 'desc')
+        ->get()
+        ->map(function ($item) {
+            // Convert the timestamp to Asia/Jakarta timezone
+            $item->msk = Carbon::parse($item->msk)->setTimezone('Asia/Jakarta');
+            return $item;
+        });
+        $sp = SiswaScanPulang::select('siswa.nama_siswa', 'siswa_scan_pulang.*', 'siswa.foto as fotosis', 'kelas.nama_kelas', 'jurusan.kode_jurusan', 'siswa_scan_pulang.created_at as plg')
+        ->join('siswa', 'siswa.id_siswa', '=', 'siswa_scan_pulang.id_siswa')
+        ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
+        ->join('jurusan', 'siswa.id_jurusan', '=', 'jurusan.id_jurusan')
+        ->whereDate('siswa_scan_pulang.created_at', $today)
+        ->OrderBy('id_siswa_scan_pulang','desc')
+        ->get()
+        ->map(function ($item) {
+            // Convert the timestamp to Asia/Jakarta timezone
+            $item->plg = Carbon::parse($item->plg)->setTimezone('Asia/Jakarta');
+            return $item;
+        });;
+        return view('absen.cekabsen', compact('sm', 'sp'));
+    }
     
     public function getScanMasukData()
     {
@@ -73,6 +104,101 @@ class AbsenController extends Controller
             });
     
         return response()->json($sm);
+    }
+//     public function getCountMasukx()
+// {
+//     $today = Carbon::now()->format('Y-m-d');
+
+//     $count = SiswaScanMasuk::whereDate('siswa_scan_masuk.created_at', $today)
+//         ->join('siswa', 'siswa.id_siswa', '=', 'siswa_scan_masuk.id_siswa')
+//         ->where('siswa.id_kelas', 1) // Sesuaikan dengan id_kelas yang Anda inginkan
+//         ->count();
+
+//     return response()->json(['count' => $count]);
+// }
+    public function getCountMasukx()
+    {
+        $today = Carbon::now()->format('Y-m-d');
+
+        // Menghitung jumlah siswa yang sudah melakukan scan masuk pada kelas tertentu
+        $count_scan_masuk = SiswaScanMasuk::whereDate('siswa_scan_masuk.created_at', $today)
+            ->join('siswa', 'siswa.id_siswa', '=', 'siswa_scan_masuk.id_siswa')
+            ->where('siswa.id_kelas', 1) // Sesuaikan dengan id_kelas yang Anda inginkan
+            ->count();
+
+        // Menghitung jumlah total siswa pada kelas tertentu
+        $total_siswa = Siswa::where('id_kelas', 1) // Sesuaikan dengan id_kelas yang Anda inginkan
+            ->count();
+
+        // Menghitung jumlah siswa yang belum melakukan scan masuk
+        $count_belum_scan_masuk = $total_siswa - $count_scan_masuk;
+
+        return response()->json([
+                        'count' => $count_belum_scan_masuk,
+                        'masuk' => $count_scan_masuk]);
+    }
+    public function getCountMasukxi()
+    {
+        $today = Carbon::now()->format('Y-m-d');
+
+        // Menghitung jumlah siswa yang sudah melakukan scan masuk pada kelas tertentu
+        $count_scan_masuk = SiswaScanMasuk::whereDate('siswa_scan_masuk.created_at', $today)
+            ->join('siswa', 'siswa.id_siswa', '=', 'siswa_scan_masuk.id_siswa')
+            ->where('siswa.id_kelas', 2) // Sesuaikan dengan id_kelas yang Anda inginkan
+            ->count();
+
+        // Menghitung jumlah total siswa pada kelas tertentu
+        $total_siswa = Siswa::where('id_kelas', 2) // Sesuaikan dengan id_kelas yang Anda inginkan
+            ->count();
+
+        // Menghitung jumlah siswa yang belum melakukan scan masuk
+        $count_belum_scan_masuk = $total_siswa - $count_scan_masuk;
+
+        return response()->json([
+                        'count' => $count_belum_scan_masuk,
+                        'masuk' => $count_scan_masuk]);
+    }
+    public function getCountPulangx()
+    {
+        $today = Carbon::now()->format('Y-m-d');
+
+        // Menghitung jumlah siswa yang sudah melakukan scan pulang pada kelas tertentu
+        $count_scan_pulang = SiswaScanPulang::whereDate('siswa_scan_pulang.created_at', $today)
+            ->join('siswa', 'siswa.id_siswa', '=', 'siswa_scan_pulang.id_siswa')
+            ->where('siswa.id_kelas', 1) // Sesuaikan dengan id_kelas yang Anda inginkan
+            ->count();
+
+        // Menghitung jumlah total siswa pada kelas tertentu
+        $total_siswa = Siswa::where('id_kelas', 1) // Sesuaikan dengan id_kelas yang Anda inginkan
+            ->count();
+
+        // Menghitung jumlah siswa yang belum melakukan scan pulang
+        $count_belum_scan_pulang = $total_siswa - $count_scan_pulang;
+
+        return response()->json([
+                        'count' => $count_belum_scan_pulang,
+                        'pulang' => $count_scan_pulang]);
+    }
+    public function getCountPulangxi()
+    {
+        $today = Carbon::now()->format('Y-m-d');
+
+        // Menghitung jumlah siswa yang sudah melakukan scan pulang pada kelas tertentu
+        $count_scan_pulang = SiswaScanPulang::whereDate('siswa_scan_pulang.created_at', $today)
+            ->join('siswa', 'siswa.id_siswa', '=', 'siswa_scan_pulang.id_siswa')
+            ->where('siswa.id_kelas', 2) // Sesuaikan dengan id_kelas yang Anda inginkan
+            ->count();
+
+        // Menghitung jumlah total siswa pada kelas tertentu
+        $total_siswa = Siswa::where('id_kelas', 2) // Sesuaikan dengan id_kelas yang Anda inginkan
+            ->count();
+
+        // Menghitung jumlah siswa yang belum melakukan scan pulang
+        $count_belum_scan_pulang = $total_siswa - $count_scan_pulang;
+
+        return response()->json([
+                        'count' => $count_belum_scan_pulang,
+                        'pulang' => $count_scan_pulang]);
     }
     public function getScanPulangData()
     {

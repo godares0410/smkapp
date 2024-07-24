@@ -102,16 +102,16 @@
                 <button type="submit" class="btn" style="background-color: white" form="absForm"></button>
             </div>
             <div class="col-md-6">
-            <div class="nav-tabs-custom" style="height: 100vh; overflow: scroll">
-            <ul class="nav nav-tabs">
-                <li id="tab-masuk"><a href="#masuk" data-toggle="tab">Scan Masuk</a></li>
-                <li id="tab-pulang"><a href="#pulang" data-toggle="tab">Scan Pulang</a></li>
-            </ul>
-            <div class="tab-content">
-                <div class="active tab-pane" id="masuk">
-                    <!-- Konten untuk data scan masuk akan diperbarui oleh JavaScript -->
-                </div>
-                <div class="active tab-pane" id="pulang">
+                <div class="nav-tabs-custom" style="height: 100vh; overflow: scroll">
+                    <ul class="nav nav-tabs">
+                        <li id="tab-masuk"><a href="#masuk" data-toggle="tab">Scan Masuk</a></li>
+                        <li id="tab-pulang"><a href="#pulang" data-toggle="tab">Scan Pulang</a></li>
+                    </ul>
+                <div class="tab-content">
+                    <div class="active tab-pane" id="masuk">
+                        <!-- Konten untuk data scan masuk akan diperbarui oleh JavaScript -->
+                    </div>
+                    <div class="active tab-pane" id="pulang">
                    
                 </div>
                 <!-- /.post -->
@@ -440,7 +440,7 @@ $(document).ready(function() {
         const minutes = indonesiaTime.getMinutes();
 
         // Check if current time is between 07:30 and 12:59 (7:30 AM to 12:59 PM)
-        if ((hour === 07 && minutes >= 30) || (hour > 12 && hour < 13)) {
+        if ((hour === 07 && minutes >= 30) || (hour > 14 && hour < 23)) {
             document.querySelector('.col-md-6').style.display = 'none';
         } else {
             document.querySelector('.col-md-6').style.display = 'block';

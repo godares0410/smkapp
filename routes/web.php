@@ -63,6 +63,7 @@ Route::resource('daftar', DaftarController::class);
 Route::resource('ppdb', DaftarController::class);
 Route::resource('test', TestController::class);
 Route::resource('absensi', AbsenController::class);
+Route::get('/cek-absen', [AbsenController::class, 'cekabsen'])->name('cek.absen');
 Route::get('/cek-alpa', [AbsenController::class, 'insertFromSiswa'])->name('cek.alpa');
 
 Route::resource('ks', KSController::class);
@@ -70,6 +71,10 @@ Route::resource('upload', UploadController::class);
 Route::post('/upload/file', [UploadController::class, 'fileupload'])->name('upload.file');
 Route::get('/absen/siswa/{id}', [AbsenController::class, 'cari']);
 Route::get('/absen/masuk', [AbsenController::class, 'getScanMasukData'])->name('absen.masuk');
+Route::get('/absen/countmasukx', [AbsenController::class, 'getCountMasukx'])->name('count.masukx');
+Route::get('/absen/countmasukxi', [AbsenController::class, 'getCountMasukxi'])->name('count.masukxi');
+Route::get('/absen/countpulangx', [AbsenController::class, 'getCountPulangx'])->name('count.pulangx');
+Route::get('/absen/countpulangxi', [AbsenController::class, 'getCountPulangxi'])->name('count.pulangxi');
 Route::get('/absen/pulang', [AbsenController::class, 'getScanPulangData'])->name('absen.pulang');
 
 
