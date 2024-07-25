@@ -71,48 +71,41 @@
                     
                     <!-- Kolom Tengah -->
                     
-                <div class="col-md-6">
-                    <div class="nav-tabs-custom" style="height: 100vh; overflow: scroll">
-                        <ul class="nav nav-tabs">
-                            <li id="tab-masukz"><a href="#countmasuk" data-toggle="tab">Scan Masuk</a></li>
-                            <li id="tab-pulangz"><a href="#countpulang" data-toggle="tab">Scan Pulang</a></li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="active tab-pane" id="countmasuk">
-                                <h3 style="margin-left: 15px">
-                                    Kelas X
-                                </h3>
-                                <div class="col-lg-6 col-xs-6" id="x">
-                                </div>
-                                <div class="col-lg-6 col-xs-6" id="xt">
-                                </div>
-                                <h3 style="margin-left: 15px">
-                                    Kelas XI
-                                </h3>
-                                <div class="col-lg-6 col-xs-6" id="xi">
-                                </div>
-                                <div class="col-lg-6 col-xs-6" id="xit">
-                                </div>
-                            </div>
-                            <div class="active tab-pane" id="countpulang">
-                                <h3 style="margin-left: 15px">
-                                    Kelas X
-                                </h3>
-                                <div class="col-lg-6 col-xs-6" id="xp">
-                                </div>
-                                <div class="col-lg-6 col-xs-6" id="xpt">
-                                </div>
-                                <h3 style="margin-left: 15px">
-                                    Kelas XI
-                                </h3>
-                                <div class="col-lg-6 col-xs-6" id="xip">
-                                </div>
-                                <div class="col-lg-6 col-xs-6" id="xipt">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div class="col-md-6">
+    <div class="nav-tabs-custom" style="height: 100vh; overflow: scroll">
+        <ul class="nav nav-tabs">
+            <li id="tab-masukz"><a href="#countmasuk" data-toggle="tab">Scan Masuk</a></li>
+            <li id="tab-pulangz"><a href="#countpulang" data-toggle="tab">Scan Pulang</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="active tab-pane" id="countmasuk">
+                <h3 style="margin-left: 15px">Kelas X</h3>
+                <div class="row">
+                    <div class="col-lg-6 col-xs-6" id="x"></div>
+                    <div class="col-lg-6 col-xs-6" id="xt"></div>
                 </div>
+                <h3 style="margin-left: 15px">Kelas XI</h3>
+                <div class="row">
+                    <div class="col-lg-6 col-xs-6" id="xi"></div>
+                    <div class="col-lg-6 col-xs-6" id="xit"></div>
+                </div>
+            </div>
+            <div class="active tab-pane" id="countpulang">
+                <h3 style="margin-left: 15px">Kelas X</h3>
+                <div class="row">
+                    <div class="col-lg-6 col-xs-6" id="xp"></div>
+                    <div class="col-lg-6 col-xs-6" id="xpt"></div>
+                </div>
+                <h3 style="margin-left: 15px">Kelas XI</h3>
+                <div class="row">
+                    <div class="col-lg-6 col-xs-6" id="xip"></div>
+                    <div class="col-lg-6 col-xs-6" id="xipt"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
                 <div class="col-md-6">
                     <div class="nav-tabs-custom" style="height: 100vh; overflow: scroll">
                         <ul class="nav nav-tabs">
@@ -526,270 +519,6 @@ $(document).ready(function() {
     fetchMasukData();
 </script>
 <script>
-        function fetchScanMasukx() {
-            $.ajax({
-                url: "{{ route('count.masukx') }}",
-                method: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    $('#x').html(`
-                        <div class="small-box bg-green">
-                            <div class="inner">
-                                <h3>${response.masuk}</h3>
-                                <p>Siswa Scan Kelas X</p>
-                            </div>
-                            <div class="icon">
-                                <i class="fa fa-check-square"></i>
-                            </div>
-                        </div>
-                    `);
-                    
-                    // Panggil kembali fetchScanMasukx setelah menambahkan data baru
-                    setTimeout(fetchScanMasukx, 10000); // Panggil kembali setelah 10 detik
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching data:', error);
-                    // Jika ada error, tunggu sebelum memanggil kembali
-                    setTimeout(fetchScanMasukx, 10000); // Coba lagi setelah 10 detik
-                }
-            });
-        }
-
-        // Panggil fetchScanMasukx untuk pertama kali
-        fetchScanMasukx();
-</script>
-<script>
-        function fetchTidakScanMasukx() {
-            $.ajax({
-                url: "{{ route('count.masukx') }}",
-                method: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    $('#xt').html(`
-                        <div class="small-box bg-red">
-                            <div class="inner">
-                                <h3>${response.count}</h3>
-                                <p>Siswa Tidak Scan Kelas X</p>
-                            </div>
-                            <div class="icon">
-                                <i class="fa fa-close"></i>
-                            </div>
-                        </div>
-                    `);
-                    
-                    // Panggil kembali fetchTidakScanMasukx setelah menambahkan data baru
-                    setTimeout(fetchTidakScanMasukx, 10000); // Panggil kembali setelah 10 detik
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching data:', error);
-                    // Jika ada error, tunggu sebelum memanggil kembali
-                    setTimeout(fetchTidakScanMasukx, 10000); // Coba lagi setelah 10 detik
-                }
-            });
-        }
-
-        // Panggil fetchTidakScanMasukx untuk pertama kali
-        fetchTidakScanMasukx();
-</script>
-<script>
-        function fetchTidakScanMasukxi() {
-            $.ajax({
-                url: "{{ route('count.masukxi') }}",
-                method: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    $('#xi').html(`
-                        <div class="small-box bg-green">
-                            <div class="inner">
-                                <h3>${response.masuk}</h3>
-                                <p>Siswa Scan Kelas XI</p>
-                            </div>
-                            <div class="icon">
-                                <i class="fa fa-check-square"></i>
-                            </div>
-                        </div>
-                    `);
-                    
-                    // Panggil kembali fetchTidakScanMasukxi setelah menambahkan data baru
-                    setTimeout(fetchTidakScanMasukxi, 10000); // Panggil kembali setelah 10 detik
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching data:', error);
-                    // Jika ada error, tunggu sebelum memanggil kembali
-                    setTimeout(fetchTidakScanMasukxi, 10000); // Coba lagi setelah 10 detik
-                }
-            });
-        }
-
-        // Panggil fetchTidakScanMasukxi untuk pertama kali
-        fetchTidakScanMasukxi();
-</script>
-<script>
-        function fetchTidakScanMasukxi() {
-            $.ajax({
-                url: "{{ route('count.masukxi') }}",
-                method: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    $('#xit').html(`
-                        <div class="small-box bg-red">
-                            <div class="inner">
-                                <h3>${response.count}</h3>
-                                <p>Siswa Tidak Scan Kelas XI</p>
-                            </div>
-                            <div class="icon">
-                                <i class="fa fa-close"></i>
-                            </div>
-                        </div>
-                    `);
-                    
-                    // Panggil kembali fetchTidakScanMasukxi setelah menambahkan data baru
-                    setTimeout(fetchTidakScanMasukxi, 10000); // Panggil kembali setelah 10 detik
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching data:', error);
-                    // Jika ada error, tunggu sebelum memanggil kembali
-                    setTimeout(fetchTidakScanMasukxi, 10000); // Coba lagi setelah 10 detik
-                }
-            });
-        }
-
-        // Panggil fetchTidakScanMasukxi untuk pertama kali
-        fetchTidakScanMasukxi();
-</script>
-<script>
-        function fetchScanPulang() {
-            $.ajax({
-                url: "{{ route('count.pulangx') }}",
-                method: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    $('#xp').html(`
-                        <div class="small-box bg-green">
-                            <div class="inner">
-                                <h3>${response.pulang}</h3>
-                                <p>Siswa Scan Kelas X</p>
-                            </div>
-                            <div class="icon">
-                                <i class="fa fa-check-square"></i>
-                            </div>
-                        </div>
-                    `);
-                    
-                    // Panggil kembali fetchScanPulang setelah menambahkan data baru
-                    setTimeout(fetchScanPulang, 10000); // Panggil kembali setelah 10 detik
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching data:', error);
-                    // Jika ada error, tunggu sebelum memanggil kembali
-                    setTimeout(fetchScanPulang, 10000); // Coba lagi setelah 10 detik
-                }
-            });
-        }
-
-        // Panggil fetchScanPulang untuk pertama kali
-        fetchScanPulang();
-</script>
-<script>
-        function fetchTidakScanPulangx() {
-            $.ajax({
-                url: "{{ route('count.pulangx') }}",
-                method: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    $('#xpt').html(`
-                        <div class="small-box bg-red">
-                            <div class="inner">
-                                <h3>${response.count}</h3>
-                                <p>Siswa Tidak Scan Kelas X</p>
-                            </div>
-                            <div class="icon">
-                                <i class="fa fa-close"></i>
-                            </div>
-                        </div>
-                    `);
-                    
-                    // Panggil kembali fetchTidakScanPulangx setelah menambahkan data baru
-                    setTimeout(fetchTidakScanPulangx, 10000); // Panggil kembali setelah 10 detik
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching data:', error);
-                    // Jika ada error, tunggu sebelum memanggil kembali
-                    setTimeout(fetchTidakScanPulangx, 10000); // Coba lagi setelah 10 detik
-                }
-            });
-        }
-
-        // Panggil fetchTidakScanPulangx untuk pertama kali
-        fetchTidakScanPulangx();
-</script>
-<script>
-        function fetchTidakScanPulangxi() {
-            $.ajax({
-                url: "{{ route('count.pulangxi') }}",
-                method: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    $('#xip').html(`
-                        <div class="small-box bg-green">
-                            <div class="inner">
-                                <h3>${response.pulang}</h3>
-                                <p>Siswa Scan Kelas XI</p>
-                            </div>
-                            <div class="icon">
-                                <i class="fa fa-check-square"></i>
-                            </div>
-                        </div>
-                    `);
-                    
-                    // Panggil kembali fetchTidakScanPulangxi setelah menambahkan data baru
-                    setTimeout(fetchTidakScanPulangxi, 10000); // Panggil kembali setelah 10 detik
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching data:', error);
-                    // Jika ada error, tunggu sebelum memanggil kembali
-                    setTimeout(fetchTidakScanPulangxi, 10000); // Coba lagi setelah 10 detik
-                }
-            });
-        }
-
-        // Panggil fetchTidakScanPulangxi untuk pertama kali
-        fetchTidakScanPulangxi();
-</script>
-<script>
-        function fetchTidakScanPulangxi() {
-            $.ajax({
-                url: "{{ route('count.pulangxi') }}",
-                method: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    $('#xipt').html(`
-                        <div class="small-box bg-red">
-                            <div class="inner">
-                                <h3>${response.count}</h3>
-                                <p>Siswa Tidak Scan Kelas XI</p>
-                            </div>
-                            <div class="icon">
-                                <i class="fa fa-close"></i>
-                            </div>
-                        </div>
-                    `);
-                    
-                    // Panggil kembali fetchTidakScanPulangxi setelah menambahkan data baru
-                    setTimeout(fetchTidakScanPulangxi, 10000); // Panggil kembali setelah 10 detik
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching data:', error);
-                    // Jika ada error, tunggu sebelum memanggil kembali
-                    setTimeout(fetchTidakScanPulangxi, 10000); // Coba lagi setelah 10 detik
-                }
-            });
-        }
-
-        // Panggil fetchTidakScanPulangxi untuk pertama kali
-        fetchTidakScanPulangxi();
-</script>
-<script>
     function fetchPulangData() {
         $.ajax({
             url: "{{ route('absen.pulang') }}",
@@ -834,6 +563,62 @@ $(document).ready(function() {
     fetchPulangData();
 </script>
 
+<script>
+    function fetchData(url, targetId, type) {
+        $.ajax({
+            url: url,
+            method: 'GET',
+            dataType: 'json',
+            success: function(response) {
+                var iconClass, boxClass;
+
+                // Menentukan kelas ikon dan kelas kotak berdasarkan jenis data
+                if (type === 'masuk') {
+                    iconClass = 'fa fa-check-square';
+                    boxClass = 'bg-green';
+                } else if (type === 'count') {
+                    iconClass = 'fa fa-close';
+                    boxClass = 'bg-red';
+                } else if (type === 'pulang') {
+                    iconClass = 'fa fa-check-square';
+                    boxClass = 'bg-green';
+                }
+
+                $(targetId).html(`
+                    <div class="small-box ${boxClass}">
+                        <div class="inner">
+                            <h3>${response[type]}</h3>
+                            <p>${type === 'masuk' ? 'Siswa Scan' : 'Siswa Tidak Scan'} ${response[type]}</p>
+                        </div>
+                        <div class="icon">
+                            <i class="${iconClass}"></i>
+                        </div>
+                    </div>
+                `);
+
+                // Panggil kembali fetchData setelah menambahkan data baru
+                setTimeout(() => fetchData(url, targetId, type), 10000); // Panggil kembali setelah 10 detik
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching data:', error);
+                // Jika ada error, tunggu sebelum memanggil kembali
+                setTimeout(() => fetchData(url, targetId, type), 10000); // Coba lagi setelah 10 detik
+            }
+        });
+    }
+
+    // Panggil fetchData untuk pertama kali
+    $(document).ready(function() {
+        fetchData("{{ route('count.masukx') }}", "#x", "masuk");
+        fetchData("{{ route('count.masukx') }}", "#xt", "count");
+        fetchData("{{ route('count.masukxi') }}", "#xi", "masuk");
+        fetchData("{{ route('count.masukxi') }}", "#xit", "count");
+        fetchData("{{ route('count.pulangx') }}", "#xp", "pulang");
+        fetchData("{{ route('count.pulangx') }}", "#xpt", "count");
+        fetchData("{{ route('count.pulangxi') }}", "#xip", "pulang");
+        fetchData("{{ route('count.pulangxi') }}", "#xipt", "count");
+    });
+</script>
 
 
 </body>

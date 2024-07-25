@@ -105,17 +105,6 @@ class AbsenController extends Controller
     
         return response()->json($sm);
     }
-//     public function getCountMasukx()
-// {
-//     $today = Carbon::now()->format('Y-m-d');
-
-//     $count = SiswaScanMasuk::whereDate('siswa_scan_masuk.created_at', $today)
-//         ->join('siswa', 'siswa.id_siswa', '=', 'siswa_scan_masuk.id_siswa')
-//         ->where('siswa.id_kelas', 1) // Sesuaikan dengan id_kelas yang Anda inginkan
-//         ->count();
-
-//     return response()->json(['count' => $count]);
-// }
     public function getCountMasukx()
     {
         $today = Carbon::now()->format('Y-m-d');
@@ -225,94 +214,6 @@ class AbsenController extends Controller
         $idSiswa = Auth::guard('siswa')->user()->id_siswa;
         return view('absen.pkl', compact('idSiswa'));
     }
-    // public function store(Request $request)
-    // {
-    //     // Set the default timezone to Asia/Jakarta (WIB - Western Indonesian Time)
-    //     date_default_timezone_set('Asia/Jakarta');
-
-    //     // Decode the image from base64 format
-    //     $screenshot = $request->input('screenshot');
-    //     $image = str_replace('data:image/png;base64,', '', $screenshot);
-    //     $image = str_replace(' ', '+', $image);
-    //     $imageName = 'scan_' . time() . '.png';
-
-    //     // Get the current time in Asia/Jakarta timezone
-    //     $currentTime = new \DateTime('now', new \DateTimeZone('Asia/Jakarta'));
-    //     $currentHourMinute = $currentTime->format('H:i');
-
-    //     // Define the time ranges in Asia/Jakarta timezone
-    //     $masukStart = new \DateTime('00:00', new \DateTimeZone('Asia/Jakarta'));
-    //     $masukEnd = new \DateTime('07:30', new \DateTimeZone('Asia/Jakarta'));
-    //     $pulangStart = new \DateTime('07:00', new \DateTimeZone('Asia/Jakarta'));
-    //     $pulangEnd = new \DateTime('23:30', new \DateTimeZone('Asia/Jakarta'));
-
-    //     // Check if the current time is within the "Masuk" range
-    //     if ($currentTime >= $masukStart && $currentTime <= $masukEnd) {
-    //         // Check if id_siswa already exists in SiswaScanMasuk
-    //         $exists = SiswaScanMasuk::where('id_siswa', $request->input('idsiswa'))
-    //                                 ->whereDate('created_at', Carbon::today())
-    //                                 ->exists();
-
-    //         if ($exists) {
-    //             return redirect()->back()->with('error', 'Sudah Scan Masuk Hari Ini');
-    //         }
-
-    //         // Set the directory for "Masuk" scans
-    //         $directory = public_path('img/scan/masuk');
-
-    //         // Create directory if it doesn't exist
-    //         if (!file_exists($directory)) {
-    //             mkdir($directory, 0755, true); // 0755 is the default permission
-    //         }
-
-    //         // Save the image to the directory
-    //         $imagePath = $directory . '/' . $imageName;
-    //         file_put_contents($imagePath, base64_decode($image));
-
-    //         // Save the record to the SiswaScanMasuk table
-    //         $abs = new SiswaScanMasuk();
-    //         $abs->id_siswa = $request->input('idsiswa');
-    //         $abs->foto = $imageName;
-    //         $abs->save();
-
-    //         return redirect()->back()->with('success', 'Absen Masuk Berhasil!');
-    //     }
-
-    //     // Check if the current time is within the "Pulang" range
-    //     if ($currentTime >= $pulangStart && $currentTime <= $pulangEnd) {
-    //         // Check if id_siswa already exists in SiswaScanPulang
-    //         $exists = SiswaScanPulang::where('id_siswa', $request->input('idsiswa'))
-    //                                 ->whereDate('created_at', Carbon::today())
-    //                                 ->exists();
-
-    //         if ($exists) {
-    //             return redirect()->back()->with('error', 'Sudah Scan Pulang Hari Ini');
-    //         }
-
-    //         // Set the directory for "Pulang" scans
-    //         $directory = public_path('img/scan/pulang');
-
-    //         // Create directory if it doesn't exist
-    //         if (!file_exists($directory)) {
-    //             mkdir($directory, 0755, true); // 0755 is the default permission
-    //         }
-
-    //         // Save the image to the directory
-    //         $imagePath = $directory . '/' . $imageName;
-    //         file_put_contents($imagePath, base64_decode($image));
-
-    //         // Save the record to the SiswaScanPulang table
-    //         $abs = new SiswaScanPulang();
-    //         $abs->id_siswa = $request->input('idsiswa');
-    //         $abs->foto = $imageName;
-    //         $abs->save();
-
-    //         return redirect()->back()->with('success', 'Absen Pulang Berhasil!');
-    //     }
-
-    //     // If the current time does not match any range, return an error message
-    //     return redirect()->back()->with('error', 'Scan Gagal, Lakukan Scan Sesuai Jam Berlaku');
-    // }
 
     public function store(Request $request)
     {
@@ -328,7 +229,7 @@ class AbsenController extends Controller
         // Define the time ranges in Asia/Jakarta timezone
         $masukStart = new \DateTime('07:00', new \DateTimeZone('Asia/Jakarta'));
         $masukEnd = new \DateTime('07:45', new \DateTimeZone('Asia/Jakarta'));
-        $pulangStart = new \DateTime('13:00', new \DateTimeZone('Asia/Jakarta'));
+        $pulangStart = new \DateTime('12:00', new \DateTimeZone('Asia/Jakarta'));
         $pulangEnd = new \DateTime('14:30', new \DateTimeZone('Asia/Jakarta'));
     
         // Check if it's "Masuk" or "Pulang" based on current time
@@ -406,11 +307,6 @@ class AbsenController extends Controller
         }
     }
     
-
-
-
-    
-
     public function pklstore(Request $request)
     {
     // Decode the image from base64 format
@@ -515,143 +411,68 @@ class AbsenController extends Controller
             ->get();
         return view('siswa.cek_absen.index', compact('siswa', 'tapel', 'semester', 'harialpa', 'hariijin', 'harisakit', 'jamalpa', 'jamijin', 'jamsakit', 'masuk', 'pulang', 'totalFormatted', 'total', 'pembayaran'));
     }
-    // public function insertFromSiswa()
-    // {
-    //     // Set zona waktu Indonesia
-    //     date_default_timezone_set('Asia/Jakarta');
-
-    //     // Ambil semua id_siswa dari tabel siswa
-    //     $siswaIds = DB::table('siswa')->pluck('id_siswa')->toArray();
-
-    //     // Ambil id_siswa yang belum ada di tabel siswa_scan_pulang hari ini
-    //     $today = Carbon::now()->format('Y-m-d');
-    //     $siswaIdsAlpa = DB::table('siswa')
-    //                     ->whereNotIn('id_siswa', function ($query) use ($today) {
-    //                         $query->select('id_siswa')
-    //                               ->from('siswa_scan_pulang')
-    //                               ->whereDate('created_at', $today);
-    //                     })
-    //                     ->pluck('id_siswa')
-    //                     ->toArray();
-
-    //     // Insert ke dalam tabel siswa_alpa
-    //     foreach ($siswaIdsAlpa as $id_siswa) {
-    //         DB::table('siswa_alpa')->insert([
-    //             'id_siswa' => $id_siswa,
-    //             'created_at' => now(),
-    //             'updated_at' => now()
-    //         ]);
-    //     }
-
-    //     return response()->json([
-    //         'message' => 'Data berhasil dimasukkan ke dalam tabel siswa_alpa.',
-    //         'ids_inserted' => $siswaIdsAlpa
-    //     ], 200);
-    // }
-    
 
 
-// public function insertFromSiswa()
-// {
-//     // Set zona waktu Indonesia
-//     date_default_timezone_set('Asia/Jakarta');
+    public function insertFromSiswa()
+    {
+        // Set zona waktu Indonesia
+        date_default_timezone_set('Asia/Jakarta');
 
-//     // Ambil semua id_siswa dari tabel siswa
-//     $siswaIds = DB::table('siswa')->pluck('id_siswa')->toArray();
+        // Ambil semua id_siswa dari tabel siswa
+        $siswaIds = DB::table('siswa')->pluck('id_siswa')->toArray();
+        $tapel = Tapel::where('status', 1)
+        ->value('id_tapel');
+        $semester = Semester::where('status', 1)
+        ->value('id_semester');
 
-//     // Ambil id_siswa yang belum ada di tabel siswa_scan_pulang hari ini
-//     $today = Carbon::now()->format('Y-m-d');
-//     $siswaIdsAlpa = DB::table('siswa')
-//                     ->whereNotIn('id_siswa', function ($query) use ($today) {
-//                         $query->select('id_siswa')
-//                               ->from('siswa_scan_pulang')
-//                               ->whereDate('created_at', $today);
-//                     })
-//                     ->pluck('id_siswa')
-//                     ->toArray();
+        // Ambil id_siswa yang belum ada di tabel siswa_scan_pulang hari ini
+        $today = Carbon::now()->format('Y-m-d');
+        $siswaIdsAlpa = DB::table('siswa')
+                        ->whereNotIn('id_siswa', function ($query) use ($today) {
+                            $query->select('id_siswa')
+                                ->from('siswa_scan_pulang')
+                                ->whereRaw("DATE(created_at) = ?", [$today]); // Filter berdasarkan tanggal hari ini
+                        })
+                        ->orWhereNotIn('id_siswa', function ($query) use ($today) {
+                            $query->select('id_siswa')
+                                ->from('siswa_scan_masuk')
+                                ->whereRaw("DATE(created_at) = ?", [$today]); // Filter berdasarkan tanggal hari ini
+                        })
+                        ->pluck('id_siswa')
+                        ->toArray();
 
-//     // Insert ke dalam tabel siswa_alpa
-//     foreach ($siswaIdsAlpa as $id_siswa) {
-//         for ($jam_ke = 1; $jam_ke <= 8; $jam_ke++) {
-//             DB::table('siswa_alpa')->insert([
-//                 'id_siswa' => $id_siswa,
-//                 'keterangan' => 'A',
-//                 'jam_ke' => $jam_ke,
-//                 'created_at' => now(),
-//                 'updated_at' => now()
-//             ]);
-//         }
-//     }
-
-//     return response()->json([
-//         'message' => 'Data berhasil dimasukkan ke dalam tabel siswa_alpa.',
-//         'ids_inserted' => $siswaIdsAlpa
-//     ], 200);
-// }
-
-
-public function insertFromSiswa()
-{
-    // Set zona waktu Indonesia
-    date_default_timezone_set('Asia/Jakarta');
-
-    // Ambil semua id_siswa dari tabel siswa
-    $siswaIds = DB::table('siswa')->pluck('id_siswa')->toArray();
-    $tapel = Tapel::where('status', 1)
-    ->value('id_tapel');
-    $semester = Semester::where('status', 1)
-    ->value('id_semester');
-
-    // Ambil id_siswa yang belum ada di tabel siswa_scan_pulang hari ini
-    $today = Carbon::now()->format('Y-m-d');
-    $siswaIdsAlpa = DB::table('siswa')
-                    ->whereNotIn('id_siswa', function ($query) use ($today) {
-                        $query->select('id_siswa')
-                              ->from('siswa_scan_pulang')
-                              ->whereRaw("DATE(created_at) = ?", [$today]); // Filter berdasarkan tanggal hari ini
-                    })
-                    ->orWhereNotIn('id_siswa', function ($query) use ($today) {
-                        $query->select('id_siswa')
-                              ->from('siswa_scan_masuk')
-                              ->whereRaw("DATE(created_at) = ?", [$today]); // Filter berdasarkan tanggal hari ini
-                    })
-                    ->pluck('id_siswa')
-                    ->toArray();
-
-    // Insert ke dalam tabel siswa_alpa jika belum ada hari ini
-    $dataToInsert = [];
-    foreach ($siswaIdsAlpa as $id_siswa) {
-        // Cek apakah id_siswa sudah ada di tabel siswa_alpa untuk hari ini
-        $exists = DB::table('siswa_alpa')
-                    ->where('id_siswa', $id_siswa)
-                    ->whereDate('tanggal', $today)
-                    ->exists();
-                    
-        if (!$exists) {
-            for ($jam_ke = 1; $jam_ke <= 8; $jam_ke++) {
-                $dataToInsert[] = [
-                    'id_siswa' => $id_siswa,
-                    'keterangan' => 'A',
-                    'jam_ke' => $jam_ke,
-                    'tanggal' => $today,
-                    'id_tapel' => $tapel,
-                    'id_semester' => $semester,
-                    'created_at' => now(),
-                    'updated_at' => now()
-                ];
+        // Insert ke dalam tabel siswa_alpa jika belum ada hari ini
+        $dataToInsert = [];
+        foreach ($siswaIdsAlpa as $id_siswa) {
+            // Cek apakah id_siswa sudah ada di tabel siswa_alpa untuk hari ini
+            $exists = DB::table('siswa_alpa')
+                        ->where('id_siswa', $id_siswa)
+                        ->whereDate('tanggal', $today)
+                        ->exists();
+                        
+            if (!$exists) {
+                for ($jam_ke = 1; $jam_ke <= 8; $jam_ke++) {
+                    $dataToInsert[] = [
+                        'id_siswa' => $id_siswa,
+                        'keterangan' => 'A',
+                        'jam_ke' => $jam_ke,
+                        'tanggal' => $today,
+                        'id_tapel' => $tapel,
+                        'id_semester' => $semester,
+                        'created_at' => now(),
+                        'updated_at' => now()
+                    ];
+                }
             }
         }
+
+        // Insert data in batches
+        $chunks = array_chunk($dataToInsert, 1000);
+        foreach ($chunks as $chunk) {
+            DB::table('siswa_alpa')->insert($chunk);
+        }
+
+        return redirect()->back()->with('success', 'Sukses Rekap!');
     }
-
-    // Insert data in batches
-    $chunks = array_chunk($dataToInsert, 1000);
-    foreach ($chunks as $chunk) {
-        DB::table('siswa_alpa')->insert($chunk);
-    }
-
-    return redirect()->back()->with('success', 'Sukses Rekap!');
-}
-
-
 
 }

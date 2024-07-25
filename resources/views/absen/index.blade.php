@@ -393,7 +393,7 @@ $(document).ready(function() {
             location.reload(true); // Refresh halaman dari server, bukan dari cache
         }, timeout730);
 
-        const schedule1300 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 13, 30, 0); // Set pukul 13:00:00 saat ini
+        const schedule1300 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 11, 30, 0); // Set pukul 13:00:00 saat ini
         let timeout1300 = schedule1300.getTime() - now.getTime();
         if (timeout1300 < 0) {
             schedule1300.setDate(schedule1300.getDate() + 1); // Atur untuk refresh pukul 13:00 besok
@@ -414,7 +414,7 @@ $(document).ready(function() {
     <script>
     function executeAt132700() {
         const now = new Date();
-        if (now.getHours() === 13 && now.getMinutes() === 49 && now.getSeconds() === 0) {
+        if (now.getHours() === 12 && now.getMinutes() === 49 && now.getSeconds() === 0) {
             window.location.href = "{{ route('cek.alpa') }}";
         }
     }
@@ -447,7 +447,7 @@ $(document).ready(function() {
         }
         // Rest of your setActiveTab function for handling active tab based on time
         // Example logic for setting active tab for Scan Masuk or Scan Pulang
-        if (hour >= 13 && hour <= 23) {
+        if (hour >= 12 && hour <= 23) {
             document.getElementById('tab-masuk').classList.remove('active');
             document.getElementById('tab-pulang').classList.add('active');
             document.getElementById('masuk').classList.remove('active');
