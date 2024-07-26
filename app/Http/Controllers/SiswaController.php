@@ -24,7 +24,7 @@ class SiswaController extends Controller
         $siswa = Siswa::select('siswa.*', 'kelas.nama_kelas', 'jurusan.nama_jurusan', 'siswa_kartu.password as password_kartu')
             ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')
             ->join('jurusan', 'siswa.id_jurusan', '=', 'jurusan.id_jurusan')
-            ->join('siswa_kartu', 'siswa.id_siswa', '=', 'siswa_kartu.id_siswa_kartu')
+            ->join('siswa_kartu', 'siswa.id_siswa', '=', 'siswa_kartu.id_siswa')
             ->get();
         $kelas = Kelas::all();
         $jurusan = Jurusan::all();

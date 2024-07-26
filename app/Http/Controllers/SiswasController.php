@@ -41,16 +41,6 @@ class SiswasController extends Controller
             ->first();
 
         $today = Carbon::now();
-        // $ujian = JadwalUjian::select('jadwal_ujian.*', 'mapel.nama_mapel', 'kelas.nama_kelas', 'bank_ujian.*', 'sesi_jadwal_ujian.id_jadwal_ujian as ujian_id', 'sesi_jadwal_ujian.id_sesi', 'sesi_jadwal_ujian.jam_mulai', 'sesi_jadwal_ujian.jam_selesai', 'sesi.nama_sesi', 'jenis_ujian.id_jenis')
-        //     ->join('bank_ujian', 'bank_ujian.id_bank_ujian', '=', 'jadwal_ujian.id_bank_ujian')
-        //     ->join('mapel', 'mapel.id_mapel', '=', 'bank_ujian.id_mapel')
-        //     ->join('kelas', 'kelas.id_kelas', '=', 'bank_ujian.id_kelas')
-        //     ->join('jenis_ujian', 'jenis_ujian.id_jenis', '=', 'bank_ujian.id_jenis')
-        //     ->join('sesi_jadwal_ujian', 'sesi_jadwal_ujian.id_jadwal_ujian', '=', 'jadwal_ujian.id_jadwal_ujian')
-        //     ->join('sesi', 'sesi_jadwal_ujian.id_sesi', '=', 'sesi.id_sesi')
-        //     ->where('bank_ujian.id_kelas', $kelas)
-        //     ->get();
-
 
             $ujian = JadwalUjian::select('jadwal_ujian.*', 'mapel.nama_mapel', 'kelas.nama_kelas', 'bank_ujian.*', 'sesi_jadwal_ujian.id_jadwal_ujian as ujian_id', 'sesi_jadwal_ujian.id_sesi', 'alokasi_waktu.jam_mulai', 'alokasi_waktu.jam_selesai', 'sesi.nama_sesi', 'jenis_ujian.id_jenis')
             ->join('bank_ujian', 'bank_ujian.id_bank_ujian', '=', 'jadwal_ujian.id_bank_ujian')
