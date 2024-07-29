@@ -25,4 +25,8 @@ class Siswa extends Model implements Authenticatable
     {
         return $this->belongsTo(Jurusan::class);
     }
+    public function alpa()
+    {
+        return $this->hasOne(SiswaAlpa::class, 'id_siswa', 'id_siswa');
+    }
 }

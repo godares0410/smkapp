@@ -13,6 +13,8 @@ use App\Models\ScanMasuk;
 use App\Models\ScanPulang;
 use App\Models\Biaya;
 use App\Models\Pembayaran;
+use App\Models\Kelas;
+use App\Models\Jurusan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -83,7 +85,58 @@ class AbsenController extends Controller
             $item->plg = Carbon::parse($item->plg)->setTimezone('Asia/Jakarta');
             return $item;
         });;
-        return view('absen.cekabsen', compact('sm', 'sp'));
+        // Count jumlah siswa yang melakukan scan masuk dan scan pulang pada hari yang sama
+        $countSiswa = SiswaScanMasuk::join('siswa_scan_pulang', 'siswa_scan_masuk.id_siswa', '=', 'siswa_scan_pulang.id_siswa')
+        ->whereDate('siswa_scan_masuk.created_at', $today)
+        ->whereDate('siswa_scan_pulang.created_at', $today)
+        ->distinct('siswa_scan_masuk.id_siswa')
+        ->count('siswa_scan_masuk.id_siswa');
+        $tapel = Tapel::where('status', 1)
+            ->select('tahun_pelajaran.*')
+            ->first();
+        $semester = Semester::where('status', 1)
+        ->select('semester.*')
+        ->first();
+        $kelas = Kelas::all();
+        $jurusan = Jurusan::all();
+        $siswaabs = SiswaAlpa::join('siswa', 'siswa_alpa.id_siswa', '=', 'siswa.id_siswa')
+        ->join('kelas', 'siswa.id_kelas', '=', 'kelas.id_kelas')  // Jika perlu menghubungkan tabel kelas
+        ->join('jurusan', 'siswa.id_jurusan', '=', 'jurusan.id_jurusan')  // Jika perlu menghubungkan tabel jurusan
+        ->select(
+            'siswa.id_siswa',
+            'siswa.nama_siswa',
+            'siswa.id_kelas',
+            'siswa.id_jurusan',
+            'kelas.nama_kelas',   // Menambahkan nama kelas
+            'jurusan.nama_jurusan',  // Menambahkan nama jurusan
+            'siswa_alpa.keterangan'  // Menambahkan nama jurusan
+            )
+            ->whereDate('siswa_alpa.created_at', $today) // Menambahkan filter untuk hari ini
+            ->groupBy(
+                'siswa.id_siswa',
+                'siswa.nama_siswa',
+                'siswa.id_kelas',
+                'siswa.id_jurusan',
+                'kelas.nama_kelas',
+                'jurusan.nama_jurusan',
+                'siswa_alpa.keterangan'  // Menambahkan nama jurusan
+        )
+        ->orderBy('siswa.nama_siswa', 'asc')
+        ->get();
+        $jumlahSiswa = Siswa::count();
+         // Cek status kegiatan 'pkl'
+        $jumlahSiswaJPKL = Siswa::where('id_kelas', '!=', 3)->count();
+         $kegiatanStatus = DB::table('kegiatan')
+         ->where('nama_kegiatan', 'pkl')
+         ->value('status');
+        // Insert ke dalam tabel siswa_alpa berdasarkan status kegiatan
+        if ($kegiatanStatus === 0) {
+            $tidakMasuk = $jumlahSiswa - $countSiswa;
+        }
+        elseif ($kegiatanStatus === 1) {
+            $tidakMasuk = $jumlahSiswaJPKL - $countSiswa;
+        }
+        return view('absen.cekabsen', compact('sm', 'sp', 'tapel', 'semester', 'countSiswa', 'tidakMasuk', 'kelas', 'jurusan', 'siswaabs'));
     }
     
     public function getScanMasukData()
@@ -413,6 +466,67 @@ class AbsenController extends Controller
     }
 
 
+    // public function insertFromSiswa()
+    // {
+    //     // Set zona waktu Indonesia
+    //     date_default_timezone_set('Asia/Jakarta');
+
+    //     // Ambil semua id_siswa dari tabel siswa
+    //     $siswaIds = DB::table('siswa')->pluck('id_siswa')->toArray();
+    //     $tapel = Tapel::where('status', 1)
+    //     ->value('id_tapel');
+    //     $semester = Semester::where('status', 1)
+    //     ->value('id_semester');
+
+    //     // Ambil id_siswa yang belum ada di tabel siswa_scan_pulang hari ini
+    //     $today = Carbon::now()->format('Y-m-d');
+    //     $siswaIdsAlpa = DB::table('siswa')
+    //                     ->whereNotIn('id_siswa', function ($query) use ($today) {
+    //                         $query->select('id_siswa')
+    //                             ->from('siswa_scan_pulang')
+    //                             ->whereRaw("DATE(created_at) = ?", [$today]); // Filter berdasarkan tanggal hari ini
+    //                     })
+    //                     ->orWhereNotIn('id_siswa', function ($query) use ($today) {
+    //                         $query->select('id_siswa')
+    //                             ->from('siswa_scan_masuk')
+    //                             ->whereRaw("DATE(created_at) = ?", [$today]); // Filter berdasarkan tanggal hari ini
+    //                     })
+    //                     ->pluck('id_siswa')
+    //                     ->toArray();
+
+    //     // Insert ke dalam tabel siswa_alpa jika belum ada hari ini
+    //     $dataToInsert = [];
+    //     foreach ($siswaIdsAlpa as $id_siswa) {
+    //         // Cek apakah id_siswa sudah ada di tabel siswa_alpa untuk hari ini
+    //         $exists = DB::table('siswa_alpa')
+    //                     ->where('id_siswa', $id_siswa)
+    //                     ->whereDate('tanggal', $today)
+    //                     ->exists();
+                        
+    //         if (!$exists) {
+    //             for ($jam_ke = 1; $jam_ke <= 8; $jam_ke++) {
+    //                 $dataToInsert[] = [
+    //                     'id_siswa' => $id_siswa,
+    //                     'keterangan' => 'A',
+    //                     'jam_ke' => $jam_ke,
+    //                     'tanggal' => $today,
+    //                     'id_tapel' => $tapel,
+    //                     'id_semester' => $semester,
+    //                     'created_at' => now(),
+    //                     'updated_at' => now()
+    //                 ];
+    //             }
+    //         }
+    //     }
+
+    //     // Insert data in batches
+    //     $chunks = array_chunk($dataToInsert, 1000);
+    //     foreach ($chunks as $chunk) {
+    //         DB::table('siswa_alpa')->insert($chunk);
+    //     }
+
+    //     return redirect()->back()->with('success', 'Sukses Rekap!');
+    // }
     public function insertFromSiswa()
     {
         // Set zona waktu Indonesia
@@ -420,10 +534,8 @@ class AbsenController extends Controller
 
         // Ambil semua id_siswa dari tabel siswa
         $siswaIds = DB::table('siswa')->pluck('id_siswa')->toArray();
-        $tapel = Tapel::where('status', 1)
-        ->value('id_tapel');
-        $semester = Semester::where('status', 1)
-        ->value('id_semester');
+        $tapel = Tapel::where('status', 1)->value('id_tapel');
+        $semester = Semester::where('status', 1)->value('id_semester');
 
         // Ambil id_siswa yang belum ada di tabel siswa_scan_pulang hari ini
         $today = Carbon::now()->format('Y-m-d');
@@ -441,38 +553,90 @@ class AbsenController extends Controller
                         ->pluck('id_siswa')
                         ->toArray();
 
-        // Insert ke dalam tabel siswa_alpa jika belum ada hari ini
-        $dataToInsert = [];
-        foreach ($siswaIdsAlpa as $id_siswa) {
-            // Cek apakah id_siswa sudah ada di tabel siswa_alpa untuk hari ini
-            $exists = DB::table('siswa_alpa')
-                        ->where('id_siswa', $id_siswa)
-                        ->whereDate('tanggal', $today)
-                        ->exists();
-                        
-            if (!$exists) {
-                for ($jam_ke = 1; $jam_ke <= 8; $jam_ke++) {
-                    $dataToInsert[] = [
-                        'id_siswa' => $id_siswa,
-                        'keterangan' => 'A',
-                        'jam_ke' => $jam_ke,
-                        'tanggal' => $today,
-                        'id_tapel' => $tapel,
-                        'id_semester' => $semester,
-                        'created_at' => now(),
-                        'updated_at' => now()
-                    ];
+        // Cek status kegiatan 'pkl'
+        $kegiatanStatus = DB::table('kegiatan')
+                            ->where('nama_kegiatan', 'pkl')
+                            ->value('status');
+
+        // Insert ke dalam tabel siswa_alpa berdasarkan status kegiatan
+        if ($kegiatanStatus === 1) {
+            // Jika status kegiatan = 1, lakukan pengecualian untuk id_kelas = 3
+            $dataToInsert = [];
+            foreach ($siswaIdsAlpa as $id_siswa) {
+                // Cek id_kelas (misalnya, ambil dari tabel siswa atau tabel lain yang sesuai)
+                $id_kelas = DB::table('siswa')
+                            ->where('id_siswa', $id_siswa)
+                            ->value('id_kelas');
+
+                // Lanjutkan jika id_kelas bukan 3
+                if ($id_kelas != 3) {
+                    // Cek apakah id_siswa sudah ada di tabel siswa_alpa untuk hari ini
+                    $exists = DB::table('siswa_alpa')
+                                ->where('id_siswa', $id_siswa)
+                                ->whereDate('created_at', $today)
+                                ->exists();
+                                
+                    if (!$exists) {
+                        for ($jam_ke = 1; $jam_ke <= 8; $jam_ke++) {
+                            $dataToInsert[] = [
+                                'id_siswa' => $id_siswa,
+                                'keterangan' => 'A',
+                                'jam_ke' => $jam_ke,
+                                'tanggal' => $today,
+                                'id_tapel' => $tapel,
+                                'id_semester' => $semester,
+                                'created_at' => now(),
+                                'updated_at' => now()
+                            ];
+                        }
+                    }
                 }
             }
-        }
 
-        // Insert data in batches
-        $chunks = array_chunk($dataToInsert, 1000);
-        foreach ($chunks as $chunk) {
-            DB::table('siswa_alpa')->insert($chunk);
-        }
+            // Insert data in batches
+            $chunks = array_chunk($dataToInsert, 1000);
+            foreach ($chunks as $chunk) {
+                DB::table('siswa_alpa')->insert($chunk);
+            }
 
-        return redirect()->back()->with('success', 'Sukses Rekap!');
+            return redirect()->back()->with('success', 'Sukses Rekap!');
+        } elseif ($kegiatanStatus === 0) {
+            // Jika status kegiatan = 0, insert semua tanpa pengecualian
+            $dataToInsert = [];
+            foreach ($siswaIdsAlpa as $id_siswa) {
+                // Cek apakah id_siswa sudah ada di tabel siswa_alpa untuk hari ini
+                $exists = DB::table('siswa_alpa')
+                            ->where('id_siswa', $id_siswa)
+                            ->whereDate('tanggal', $today)
+                            ->exists();
+                            
+                if (!$exists) {
+                    for ($jam_ke = 1; $jam_ke <= 8; $jam_ke++) {
+                        $dataToInsert[] = [
+                            'id_siswa' => $id_siswa,
+                            'keterangan' => 'A',
+                            'jam_ke' => $jam_ke,
+                            'tanggal' => $today,
+                            'id_tapel' => $tapel,
+                            'id_semester' => $semester,
+                            'created_at' => now(),
+                            'updated_at' => now()
+                        ];
+                    }
+                }
+            }
+
+            // Insert data in batches
+            $chunks = array_chunk($dataToInsert, 1000);
+            foreach ($chunks as $chunk) {
+                DB::table('siswa_alpa')->insert($chunk);
+            }
+
+            return redirect()->back()->with('success', 'Sukses Rekap!');
+        } else {
+            return redirect()->back()->with('error', 'Status kegiatan tidak dikenali.');
+        }
     }
+
 
 }

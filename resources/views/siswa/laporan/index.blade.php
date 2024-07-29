@@ -56,16 +56,16 @@
             <div class="box box-info col-md-6">
               <div class="container mt-5">
   <div class="row">
-@php
-    $today = \Carbon\Carbon::now()->timezone('Asia/Jakarta')->format('Y-m-d');
-    $carbonTanggalMulai = \Carbon\Carbon::createFromFormat('Y-m-d', $today);
-    $bulanIndonesia = [
-        1 => 'Januari', 2 => 'Februari', 3 => 'Maret',
-        4 => 'April', 5 => 'Mei', 6 => 'Juni',
-        7 => 'Juli', 8 => 'Agustus', 9 => 'September',
-        10 => 'Oktober', 11 => 'November', 12 => 'Desember',
-    ];
-@endphp
+            @php
+                $today = \Carbon\Carbon::now()->timezone('Asia/Jakarta')->format('Y-m-d');
+                $carbonTanggalMulai = \Carbon\Carbon::createFromFormat('Y-m-d', $today);
+                $bulanIndonesia = [
+                    1 => 'Januari', 2 => 'Februari', 3 => 'Maret',
+                    4 => 'April', 5 => 'Mei', 6 => 'Juni',
+                    7 => 'Juli', 8 => 'Agustus', 9 => 'September',
+                    10 => 'Oktober', 11 => 'November', 12 => 'Desember',
+                ];
+            @endphp
     <div class="col-md-6">
       <div class="mb-3">
         <label for="exampleTextarea" class="form-label">Laporan Kelas</label>

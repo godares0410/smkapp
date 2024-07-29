@@ -7,8 +7,6 @@
     <link rel="shortcut icon" href="{{ asset('img/bank_soal/website/logo/_1702460950.png') }}" type="image/png">
     <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href=" {{ asset('AdminLTE-2/bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
-  <!-- SweetAlert2 -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!-- Font Awesome -->
   <link rel="stylesheet" href=" {{ asset('AdminLTE-2/bower_components/font-awesome/css/font-awesome.min.css') }}">
   <!-- Ionicons -->
@@ -16,8 +14,10 @@
   <!-- Theme style -->
   <link rel="stylesheet" href=" {{ asset('AdminLTE-2/dist/css/AdminLTE.min.css') }}">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
+  folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href=" {{ asset('AdminLTE-2/dist/css/skins/_all-skins.min.css') }}">
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
      <style>
         .border-red {
             border: 2px solid red;
@@ -63,6 +63,29 @@
         </div>
     @endif
 
+    @if (session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: '{{ session('success') }}',
+                showConfirmButton: false,
+                timer: 1000 // Menutup pesan dalam 2.5 detik (2500ms)
+             });
+        </script>
+    @endif
+
+    @if (session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: '{{ session('error') }}',
+                showConfirmButton: false,
+                timer: 1000 // Menutup pesan dalam 2.5 detik (2500ms)
+             });
+        </script>
+    @endif
 
     <div class="container-fluid">
         <div class="content" style="background-color: gray">
@@ -100,6 +123,82 @@
                 <div class="row">
                     <div class="col-lg-6 col-xs-6" id="xip"></div>
                     <div class="col-lg-6 col-xs-6" id="xipt"></div>
+                </div>
+                @php
+                    $today = \Carbon\Carbon::now()->timezone('Asia/Jakarta')->format('Y-m-d');
+                    $carbonTanggalMulai = \Carbon\Carbon::createFromFormat('Y-m-d', $today);
+                    $bulanIndonesia = [
+                        1 => 'Januari', 2 => 'Februari', 3 => 'Maret',
+                        4 => 'April', 5 => 'Mei', 6 => 'Juni',
+                        7 => 'Juli', 8 => 'Agustus', 9 => 'September',
+                        10 => 'Oktober', 11 => 'November', 12 => 'Desember',
+                    ];
+                @endphp
+                <div class="row">
+                    <div class="box-body pad">
+                    <label for="exampleTextarea" class="form-label">Laporan Kelas</label>
+                    <textarea class="form-control" id="exampleTextarea" style="width: 100%; height: 30vh; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; font-family: 'Ubuntu', sans-serif;" readonly>
+📑 LAPORAN KELAS HARIAN 📑
+
+📚 Tahun Pelajaran : {{ $tapel->nama_tapel}}
+📖 Semester             : {{ $semester->nama_semester}}
+===========================
+🗓️ Tanggal :  {{ $carbonTanggalMulai->format('d') }}-{{ $bulanIndonesia[$carbonTanggalMulai->format('n')] }}-{{ $carbonTanggalMulai->format('Y') }}
+-----------------------------------------------------
+        🖊️ CATATAN HARIAN 🖊️
+-----------------------------------------------------
+Siswa Hadir            : {{ $countSiswa }}
+Siswa Tidak Hadir : {{ $tidakMasuk }}
+@php
+    $counter = 1;
+@endphp
+@if ( $tidakMasuk > 0)
+@foreach($kelas as $kelasData)
+    @foreach($jurusan as $jurusanData)
+        @php
+            // Filter siswa berdasarkan id_kelas dan id_jurusan
+            $filteredSiswa = $siswaabs->filter(function($siswa) use ($kelasData, $jurusanData) {
+                return $siswa->id_kelas == $kelasData->id_kelas && $siswa->id_jurusan == $jurusanData->id_jurusan;
+            });
+            
+            // Set icon berdasarkan id_jurusan
+            $icon = 'null';  // Default icon value
+            if ($jurusanData->id_jurusan == 1) {
+                $icon = '🖥️'; 
+            }
+            elseif ($jurusanData->id_jurusan == 2) {
+                $icon = '🩺';  // Example icon for a specific jurusan
+            }
+            elseif ($jurusanData->id_jurusan == 3) {
+                $icon = '🏍️';  // Example icon for a specific jurusan
+            }
+        @endphp
+
+@if($filteredSiswa->isNotEmpty())
+{{ $icon }} Kelas {{ $kelasData->nama_kelas }} - {{ $jurusanData->nama_jurusan }} {{ $icon }}
+-----------------------------------------------------
+| No | Nama Siswa
+-----------------------------------------------------
+@php $counter = 1; @endphp
+@foreach($filteredSiswa as $siswa)
+| {{ $counter++ }} | {{ ucwords(strtolower($siswa->nama_siswa)) }} *({{$siswa->keterangan}})*
+@endforeach
+-----------------------------------------------------
+@endif
+@endforeach
+@endforeach
+@endif
+                    </textarea>
+                    <br>
+                    @if ($countSiswa == 0)
+                        <a href="{{ route('cek.alpa') }}" class="btn btn-danger">Input Absen</a>
+                    @else
+                        <a href="{{ route('cek.alpa') }}" class="btn btn-success">Input Absen Ulang</a>
+                    @endif
+                    @if ($siswaabs->count() !== 0)
+                        <button onclick="copyToClipboard()" class="btn btn-primary">Copy</button>
+                    @endif
+                    </div>
                 </div>
             </div>
         </div>
@@ -588,7 +687,7 @@ $(document).ready(function() {
                     <div class="small-box ${boxClass}">
                         <div class="inner">
                             <h3>${response[type]}</h3>
-                            <p>${type === 'masuk' ? 'Siswa Scan' : 'Siswa Tidak Scan'} ${response[type]}</p>
+                            <p>${type === 'masuk' ? 'Siswa Scan' : 'Siswa Tidak Scan'}</p>
                         </div>
                         <div class="icon">
                             <i class="${iconClass}"></i>
@@ -620,6 +719,30 @@ $(document).ready(function() {
     });
 </script>
 
+<script>
+
+    function copyToClipboard() {
+    /* Get the text area element */
+    var textarea = document.getElementById("exampleTextarea");
+
+    /* Select the text in the text area */
+    textarea.select();
+
+    /* Copy the selected text to the clipboard */
+    document.execCommand("copy");
+
+    /* Deselect the text area */
+    textarea.setSelectionRange(0, 0);
+
+    Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil!',
+                    text: 'Absen Berhasil Disalin',
+                    showConfirmButton: false,
+                    timer: 2500 // Menutup pesan dalam 1 detik (1000ms)
+                });
+  }
+    </script>
 
 </body>
 </html>
