@@ -49,6 +49,9 @@
         #video {
         transform: scaleX(-1); /* Flip horizontally */
         }
+        #laporan {
+            display: none;
+        }
 
     </style>
 </head>
@@ -135,7 +138,7 @@
                     ];
                 @endphp
                 <div class="row">
-                    <div class="box-body pad">
+                    <div class="box-body pad" id="laporan">
                     <label for="exampleTextarea" class="form-label">Laporan Kelas</label>
                     <textarea class="form-control" id="exampleTextarea" style="width: 100%; height: 30vh; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; font-family: 'Ubuntu', sans-serif;" readonly>
 📑 LAPORAN KELAS HARIAN 📑
@@ -533,45 +536,48 @@ $(document).ready(function() {
 
 <!-- Sembunyikan Scan -->
 <script>
-    function setActiveTab() {
-        const now = new Date();
-        const timezoneOffset = now.getTimezoneOffset(); // Get current timezone offset in minutes
-        const localTime = now.getTime() + (timezoneOffset * 60000); // Convert to local time in milliseconds
+        function setActiveTab() {
+            const now = new Date();
+            const timezoneOffset = now.getTimezoneOffset(); // Get current timezone offset in minutes
+            const localTime = now.getTime() + (timezoneOffset * 60000); // Convert to local time in milliseconds
 
-        // Create a Date object for Indonesian WIB (UTC +7)
-        const indonesiaTime = new Date(localTime + (7 * 3600000)); // Add 7 hours in milliseconds
+            // Create a Date object for Indonesian WIB (UTC +7)
+            const indonesiaTime = new Date(localTime + (7 * 3600000)); // Add 7 hours in milliseconds
 
-        const hour = indonesiaTime.getHours();
-        const minutes = indonesiaTime.getMinutes();
-        // Rest of your setActiveTab function for handling active tab based on time
-        // Example logic for setting active tab for Scan Masuk or Scan Pulang
-        if (hour >= 13 && hour <= 23) {
-            document.getElementById('tab-masuk').classList.remove('active');
-            document.getElementById('tab-pulang').classList.add('active');
-            document.getElementById('masuk').classList.remove('active');
-            document.getElementById('pulang').classList.add('active');
-            document.getElementById('tab-masukz').classList.remove('active');
-            document.getElementById('tab-pulangz').classList.add('active');
-            document.getElementById('countmasuk').classList.remove('active');
-            document.getElementById('countpulang').classList.add('active');
-        } else {
-            document.getElementById('tab-masuk').classList.add('active');
-            document.getElementById('tab-pulang').classList.remove('active');
-            document.getElementById('masuk').classList.add('active');
-            document.getElementById('pulang').classList.remove('active');
-            document.getElementById('tab-masukz').classList.add('active');
-            document.getElementById('tab-pulangz').classList.remove('active');
-            document.getElementById('countmasuk').classList.add('active');
-            document.getElementById('countpulang').classList.remove('active');
+            const hour = indonesiaTime.getHours();
+            const minutes = indonesiaTime.getMinutes();
+
+            if (hour >= 13 && hour <= 23) {
+                // Set active tab and content for "Pulang"
+                document.getElementById('tab-masuk').classList.remove('active');
+                document.getElementById('tab-pulang').classList.add('active');
+                document.getElementById('masuk').classList.remove('active');
+                document.getElementById('pulang').classList.add('active');
+                document.getElementById('tab-masukz').classList.remove('active');
+                document.getElementById('tab-pulangz').classList.add('active');
+                document.getElementById('countmasuk').classList.remove('active');
+                document.getElementById('countpulang').classList.add('active');
+                document.getElementById('laporan').style.display = 'block'; // Corrected
+            } else {
+                // Set active tab and content for "Masuk"
+                document.getElementById('tab-masuk').classList.add('active');
+                document.getElementById('tab-pulang').classList.remove('active');
+                document.getElementById('masuk').classList.add('active');
+                document.getElementById('pulang').classList.remove('active');
+                document.getElementById('tab-masukz').classList.add('active');
+                document.getElementById('tab-pulangz').classList.remove('active');
+                document.getElementById('countmasuk').classList.add('active');
+                document.getElementById('countpulang').classList.remove('active');
+                document.getElementById('laporan').style.display = 'none'; // Ensure hidden
+            }
         }
-    }
 
-    // Call setActiveTab when the page is loaded
-    setActiveTab();
+        // Call setActiveTab when the page is loaded
+        setActiveTab();
 
-    // Update every minute to check and set active tab
-    setInterval(setActiveTab, 60000); // Check every minute (60000 ms)
-</script>
+        // Update every minute to check and set active tab
+        setInterval(setActiveTab, 60000); // Check every minute (60000 ms)
+    </script>
 
 <script>
     function fetchMasukData() {
@@ -743,6 +749,32 @@ $(document).ready(function() {
                 });
   }
     </script>
+<script>
+        function getJakartaTime() {
+            const options = { timeZone: 'Asia/Jakarta', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+            const formatter = new Intl.DateTimeFormat('id-ID', options);
+            const parts = formatter.formatToParts(new Date());
+            const hour = parseInt(parts.find(part => part.type === 'hour').value, 10);
+            const minute = parseInt(parts.find(part => part.type === 'minute').value, 10);
+            return { hour, minute };
+        }
 
+        function checkTime() {
+            const laporanElement = document.getElementById('laporan');
+            const { hour, minute } = getJakartaTime();
+
+            if ((hour > 13 || (hour === 13 && minute >= 30)) && hour <= 23) {
+                laporanElement.style.display = 'block';
+            } else {
+                laporanElement.style.display = 'none';
+            }
+        }
+
+        // Panggil fungsi untuk mengecek waktu saat halaman dimuat
+        checkTime();
+
+        // Untuk memastikan elemen di-update jika jam berubah saat halaman tetap terbuka
+        setInterval(checkTime, 60000); // Cek setiap 60 detik
+    </script>
 </body>
 </html>

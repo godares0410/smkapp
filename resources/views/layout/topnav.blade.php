@@ -30,7 +30,7 @@
                                     <!-- start message -->
                                     <a href="#">
                                         <div class="pull-left">
-                                            <img src="{{ asset('AdminLTE-2/dist/img/user2-160x160.jpg') }}"
+                                        <img src="{{ asset('img/guru/foto.jpg') }}" class="img-circle" alt="User Image">
                                                 class="img-circle" alt="User Image">
                                         </div>
                                         <h4>
@@ -44,7 +44,7 @@
                                 <li>
                                     <a href="#">
                                         <div class="pull-left">
-                                            <img src="{{ asset('AdminLTE-2/dist/img/user3-128x128.jpg') }}"
+                                        <img src="{{ asset('img/guru/foto.jpg') }}" class="img-circle" alt="User Image">
                                                 class="img-circle" alt="User Image">
                                         </div>
                                         <h4>
@@ -70,7 +70,7 @@
                                 <li>
                                     <a href="#">
                                         <div class="pull-left">
-                                            <img src="{{ asset('AdminLTE-2/dist/img/user3-128x128.jpg') }}"
+                                        <img src="{{ asset('img/guru/foto.jpg') }}" class="img-circle" alt="User Image">
                                                 class="img-circle" alt="User Image">
                                         </div>
                                         <h4>
@@ -230,8 +230,6 @@
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        {{-- <img src="{{ asset('AdminLTE-2/dist/img/user2-160x160.jpg') }}" class="user-image"
-                            alt="User Image"> --}}
                             @if (auth('siswa')->check())
                             @if(auth('siswa')->user()->foto != null)
                                     <img src="{{ asset('img/siswa/' . auth('siswa')->user()->foto) }}" style="width: 25px; height: 25px; border-radius: 50%; object-fit: cover;" alt="User Image">
@@ -240,7 +238,8 @@
                                 @endif
                             @endif
                             @if (auth('web')->check())
-                                <img src="{{ asset('AdminLTE-2/dist/img/user2-160x160.jpg') }}" class="user-image" alt="User Image">
+                                <!-- <img src="{{ asset('AdminLTE-2/dist/img/user2-160x160.jpg') }}" class="user-image" alt="User Image"> -->
+                                <img src="{{ asset('img/guru/foto.jpg') }}" class="user-image" alt="User Image">
                             @endif
                         @if (auth('web')->check())
                             <span class="hidden-xs">{{ auth('web')->user()->name }}</span>

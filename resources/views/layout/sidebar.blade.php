@@ -13,7 +13,8 @@
                     @endif
                 @endif
                 @if (auth('web')->check())
-                    <img src="{{ asset('AdminLTE-2/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image">
+                    <img src="{{ asset('img/guru/foto.jpg') }}" class="img-circle" alt="User Image">
+                    <!-- <img src="{{ asset('AdminLTE-2/dist/img/user2-160x160.jpg') }}" class="img-circle" alt="User Image"> -->
                 @endif
                 </div>
                 <div class="pull-left info">
