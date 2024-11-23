@@ -19,6 +19,11 @@ use App\Models\SesiJadwalUjian;
 use App\Models\SiswaAbsen;
 use App\Models\SiswaData;
 use App\Models\SiswaScanMasuk;
+use App\Models\SiswaScanPulang;
+use App\Models\Tapel;
+use App\Models\Semester;
+use App\Models\ScanMasuk;
+use App\Models\ScanPulang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -62,6 +67,7 @@ class SiswasController extends Controller
     }
     public function dashboard()
     {
+        $today = Carbon::now()->format('Y-m-d');
         $idSiswa = Auth::guard('siswa')->user()->id_siswa;
         $idKelas = Auth::guard('siswa')->user()->id_kelas;
         $now = now()->setTimezone('Asia/Jakarta'); // Ambil waktu sekarang dengan zona waktu Jakarta
@@ -69,12 +75,23 @@ class SiswasController extends Controller
             ->where('id_siswa', $idSiswa)
             ->whereDate('created_at', $now->toDateString()) // Membandingkan tanggal
             ->get(); // Eksekusi query untuk mendapatkan hasil
+        $absp = SiswaScanPulang::select('created_at')
+            ->where('id_siswa', $idSiswa)
+            ->whereDate('created_at', $now->toDateString()) // Membandingkan tanggal
+            ->get(); // Eksekusi query untuk mendapatkan hasil
         
         // Ambil tanggal dari hasil query
         $tanggalAbsen = $abs->isNotEmpty() ? $abs[0]->created_at->format('Y-m-d') : null;
-        
+        $masuk = ScanMasuk::where('id_siswa', $idSiswa)
+        ->whereDate('created_at', $today)
+        ->select('siswa_scan_masuk.*')
+        ->first();
+        $pulang = ScanPulang::where('id_siswa', $idSiswa)
+        ->whereDate('created_at', $today)
+        ->select('siswa_scan_pulang.*')
+        ->first();
 
-        return view('siswa.dashboard', compact('abs', 'idKelas'));
+        return view('siswa.dashboard', compact('abs', 'idKelas', 'masuk', 'pulang', 'absp'));
     }
     public function mengerjakan(Request $request)
     {
@@ -328,6 +345,8 @@ public function absens(Request $request, $id)
     $siswa = SiswaAbsen::where('id_siswa', $id)
     ->whereDate('tanggal', Carbon::now('Asia/Jakarta')->toDateString())
     ->delete();
+    $tapel = Tapel::where('status', 1)->value('id_tapel');
+    $semester = Semester::where('status', 1)->value('id_semester');
     $keterangan = $request->input('keterangan');
     $selectedJam = $request->input('jam', []);
 
@@ -337,6 +356,8 @@ public function absens(Request $request, $id)
         $absen->keterangan = $keterangan;
         $absen->jam_ke = $jam;
         $absen->tanggal = Carbon::now('Asia/Jakarta');
+        $absen->id_tapel = $tapel;
+        $absen->id_semester = $semester;
         $absen->save();
     }
     return redirect()->back()->with('success', 'Absen berhasil diubah');

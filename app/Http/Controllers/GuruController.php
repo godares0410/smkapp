@@ -4,17 +4,29 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Guru;
+use App\Models\Jabatan;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\GuruImport;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
+
 
 class GuruController extends Controller
 {
     public function index()
     {
-        $guru = Guru::all();
+        $guru = Guru::leftJoin('jabatan', 'jabatan.id_jabatan', '=', 'guru.id_jabatan')
+        ->leftJoin('walas', 'walas.id_guru', '=', 'guru.id_guru')
+        ->leftJoin('kelas', 'walas.id_kelas', '=', 'kelas.id_kelas')
+        ->leftJoin('jurusan', 'walas.id_jurusan', '=', 'jurusan.id_jurusan')
+        ->select(
+            'guru.*',
+            DB::raw('CASE WHEN guru.id_jabatan IS NULL THEN "guru" ELSE jabatan.nama_jabatan END AS nama_jabatan'), 'kelas.nama_kelas', 'jurusan.kode_jurusan'
+        )
+        ->orderBy('guru.nama_guru', 'asc')
+        ->get();
         return view('data_umum.guru.index', compact('guru'));
     }
     public function dashboard()

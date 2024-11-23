@@ -74,6 +74,9 @@
                         <ul class="treeview-menu">
                             <li class="@yield('tapel-active')"><a href="#"><i class="fa fa-circle-o"></i>
                                     Tahun Pelajaran</a></li>
+                            <li class="@yield('guru-active')"><a href="{{ route('guru.index') }}"><i
+                                        class="fa fa-circle-o"></i>
+                                    Guru</a></li>
                             <li class="@yield('siswa-active')"><a href="{{ route('siswa.index') }}"><i
                                         class="fa fa-circle-o"></i>
                                     Siswa</a></li>

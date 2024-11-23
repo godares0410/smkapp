@@ -120,11 +120,11 @@
                                             <td>:</td>
                                             <td>{{ $data->password }}</td>
                                         </tr>
-                                        <tr>
+                                        {{-- <tr>
                                             <td>Tempat / Sesi</td>
                                             <td>:</td>
                                             <td>{{ $data->nama_ruang }} / {{ $data->nama_sesi }}</td>
-                                        </tr>
+                                        </tr> --}}
                                     </table>
                                 </div>
                             </div>

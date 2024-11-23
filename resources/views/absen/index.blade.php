@@ -348,8 +348,6 @@ $(document).ready(function() {
 });
 </script>
 
-
-</script>
     <script>
         function fetchTime() {
             fetch('https://worldtimeapi.org/api/ip')
@@ -447,7 +445,7 @@ $(document).ready(function() {
         }
         // Rest of your setActiveTab function for handling active tab based on time
         // Example logic for setting active tab for Scan Masuk or Scan Pulang
-        if (hour >= 12 && hour <= 23) {
+        if (hour >= 9 && hour <= 23) {
             document.getElementById('tab-masuk').classList.remove('active');
             document.getElementById('tab-pulang').classList.add('active');
             document.getElementById('masuk').classList.remove('active');

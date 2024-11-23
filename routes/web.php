@@ -64,6 +64,7 @@ Route::resource('ppdb', DaftarController::class);
 Route::resource('test', TestController::class);
 Route::resource('absensi', AbsenController::class);
 Route::get('/cek-absen', [AbsenController::class, 'cekabsen'])->name('cek.absen');
+Route::get('/fotoabsen', [AbsenController::class, 'fotoabsen'])->name('cek.fotoabsen');
 Route::get('/cek-alpa', [AbsenController::class, 'insertFromSiswa'])->name('cek.alpa');
 
 Route::resource('ks', KSController::class);
@@ -76,6 +77,8 @@ Route::get('/absen/countmasukxi', [AbsenController::class, 'getCountMasukxi'])->
 Route::get('/absen/countpulangx', [AbsenController::class, 'getCountPulangx'])->name('count.pulangx');
 Route::get('/absen/countpulangxi', [AbsenController::class, 'getCountPulangxi'])->name('count.pulangxi');
 Route::get('/absen/pulang', [AbsenController::class, 'getScanPulangData'])->name('absen.pulang');
+Route::get('/absen/masukpkl', [AbsenController::class, 'getScanMasukDataPKL'])->name('absen.masukpkl');
+Route::get('/absen/pulangpkl', [AbsenController::class, 'getScanPulangDataPKL'])->name('absen.pulangpkl');
 
 
 
@@ -182,7 +185,7 @@ Route::group(['middleware' => 'auth:web'], function () {
 
 
 Route::group(['middleware' => ['auth:guru']], function () {
-    Route::get('/guru', [GuruController::class, 'dashboard'])->name('guru.dashboard');
+    Route::get('/gurulogin', [GuruController::class, 'dashboard'])->name('guru.dashboard');
     Route::get('/absent', [GuruController::class, 'absen'])->name('guru.absen');
 });
 
@@ -194,8 +197,10 @@ Route::middleware('auth.guru')->get('/login', function () {
 
 // Route::group(['middleware' => 'auth:siswa'], function () {
 Route::group(['middleware' => ['auth:siswa', 'checkUserStatus']], function () {
-    Route::get('/pkl', [AbsenController::class, 'pkl'])->name('siswa.pkl');
-    Route::post('/pkl/input', [AbsenController::class, 'pklstore'])->name('pkl.absen');
+    Route::get('/pklmasuk', [AbsenController::class, 'pklmasuk'])->name('siswa.pklmasuk');
+    Route::get('/pklpulang', [AbsenController::class, 'pklpulang'])->name('siswa.pklpulang');
+    Route::post('/pkl/inputmasuk', [AbsenController::class, 'pklstoremasuk'])->name('pkl.absenmasuk');
+    Route::post('/pkl/inputpulang', [AbsenController::class, 'pklstorepulang'])->name('pkl.absenpulang');
     Route::get('/menu', [SiswasController::class, 'dashboard'])->name('siswa.dashboard');
     Route::get('/assesmen', [SiswasController::class, 'index'])->name('siswas.index');
     Route::get('/absen', [SiswasController::class, 'absen'])->name('siswas.absen');

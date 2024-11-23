@@ -94,7 +94,7 @@
                     
                     <!-- Kolom Tengah -->
                     
-                    <div class="col-md-6">
+                    <div class="col-md-6" style="display:none">
     <div class="nav-tabs-custom" style="height: 100vh; overflow: scroll">
         <ul class="nav nav-tabs">
             <li id="tab-masukz"><a href="#countmasuk" data-toggle="tab">Scan Masuk</a></li>
@@ -212,20 +212,52 @@ Siswa Tidak Hadir : {{ $tidakMasuk }}
                             <li id="tab-pulang"><a href="#pulang" data-toggle="tab">Scan Pulang</a></li>
                         </ul>
                         <div class="tab-content">
-                            <div class="active tab-pane" id="masuk">
-                                <!-- Konten untuk data scan masuk akan diperbarui oleh JavaScript -->
-                            </div>
-                            <div class="active tab-pane" id="pulang">
-                                <!-- Konten untuk data scan masuk akan diperbarui oleh JavaScript -->
-                            </div>
+                           <div class="active tab-pane" id="masuk">
+    <input type="text" id="searchMasuk" placeholder="Cari Siswa Scan Masuk" onkeyup="filterMasuk()" style="margin-bottom: 20px">
+    <!-- Konten untuk data scan masuk akan diperbarui oleh JavaScript -->
+</div>
+<div class="active tab-pane" id="pulang">
+    <input type="text" id="searchPulang" placeholder="Cari Siswa Scan Pulang" onkeyup="filterPulang()" style="margin-bottom: 20px">
+    <!-- Konten untuk data scan pulang akan diperbarui oleh JavaScript -->
+</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
+<!-- Modal Masuk-->
+<div class="modal fade" id="masukModal" tabindex="-1" aria-labelledby="masukModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="masukModalLabel">Scan Masuk</h5>
+            </div>
+            <div class="modal-body">
+                <img id="masukModalImg" style="width: 100%" alt="Foto Siswa">
+            </div>
+            {{-- <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div> --}}
+        </div>
+    </div>
+</div>
+<!-- Modal Pulang -->
+<div class="modal fade" id="pulangModal" tabindex="-1" aria-labelledby="pulangModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pulangModalLabel">Scan Pulang</h5>
+            </div>
+            <div class="modal-body">
+                <img id="pulangModalImg" style="width: 100%" alt="Foto Siswa">
+            </div>
+            {{-- <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div> --}}
+        </div>
+    </div>
+</div>
     <!-- jQuery 3 -->
     <script src="{{ asset('AdminLTE-2/bower_components/jquery/dist/jquery.min.js') }}"></script>
     <!-- Bootstrap 3.3.7 -->
@@ -452,7 +484,6 @@ $(document).ready(function() {
     $('#idsiswa').focus();
 });
 </script>
-
     <script>
         function fetchTime() {
             fetch('https://worldtimeapi.org/api/ip')
@@ -575,56 +606,62 @@ $(document).ready(function() {
     </script>
 
 <script>
-    function fetchMasukData() {
-        $.ajax({
-            url: "{{ route('absen.masuk') }}",
-            method: 'GET',
-            dataType: 'json',
-            success: function(response) {
+    let lastUpdateMasuk = Date.now();
+let lastUpdatePulang = Date.now();
+
+function fetchMasukData() {
+    $.ajax({
+        url: "{{ route('absen.masukpkl') }}",
+        method: 'GET',
+        dataType: 'json',
+        data: { since: lastUpdateMasuk }, // Kirim timestamp terakhir
+        success: function(response) {
+            const now = Date.now();
+            if (response.length > 0) {
                 $('#masuk .post').remove(); // Menghapus semua elemen dengan class .post di dalam #masuk
 
-                response.forEach(function(dm) {
-                    var html = `
-                        <div class="post">
-                            <div style="width: 100%; display: flex">
-                                <div style="width: 25%">
-                                    <img src="{{ asset('img/scan/masuk/') }}/${dm.foto}" alt="Foto Scan Masuk" style="width: 100%; max-height: 200px">
+               response.forEach(function(dm) {
+                        var html = `
+                            <div class="post">
+                                <div style="width: 100%; display: flex">
+                                     <div style="width: 25%">
+                                    <img src="{{ asset('img/scan/masuk/') }}/${dm.foto}" alt="Foto Scan Masuk" style="width: 100%; max-height: 200px" class="scan-image" data-foto="{{ asset('img/scan/masuk/') }}/${dm.foto}">
                                 </div>
-                                <div style="width: 35%; display: flex; justify-content: center; align-items: center; flex-direction: column; padding: 10px">
-                                    <h3 style="color: black; font-weight: bold; text-align: center">${dm.nama_siswa}</h3>
-                                    <h3>${dm.nama_kelas} ${dm.kode_jurusan}<br></h3>
-                                    <h3 style="color: black; font-weight: bold">Scan : ${dm.msk}</h3>
-                                </div>
-                                <div style="width: 25%">
-                                    <img src="{{ asset('img/siswa/') }}/${dm.fotosis}" alt="Foto Siswa" style="max-height: 200px">
+                                    <div style="width: 50%; display: flex; justify-content: center; align-items: center; flex-direction: column; padding: 10px">
+                                        <h5 style="color: black; font-weight: bold; text-align: center">${dm.nama_siswa}</h5>
+                                        <h5>${dm.nama_kelas} ${dm.kode_jurusan}<br></h5>
+                                        <h5 style="color: black; font-weight: bold">Scan : ${dm.msk}</h5>
+                                    </div>
+                                    <div style="width: 25%">
+                                        <img src="{{ asset('img/siswa/') }}/${dm.fotosis}" alt="Foto Siswa" style="max-width: 80px">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    `;
-                    $('#masuk').append(html); // Menambahkan HTML baru ke dalam #masuk
-                });
+                        `;
+                        $('#masuk').append(html); // Menambahkan HTML baru ke dalam #masuk
+                    });
 
-                // Panggil kembali fetchMasukData setelah menambahkan data baru
-                fetchMasukData(); // Ini akan membuatnya terus memanggil dirinya sendiri
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching data:', error);
-                // Jika ada error, tunggu sebelum memanggil kembali
-                setTimeout(fetchMasukData, 10000); // Coba lagi setelah 10 detik
-            }
-        });
-    }
+                    lastUpdateMasuk = now; // Update timestamp
+                }
 
-    // Panggil fetchMasukData untuk pertama kali
-    fetchMasukData();
-</script>
-<script>
-    function fetchPulangData() {
-        $.ajax({
-            url: "{{ route('absen.pulang') }}",
-            method: 'GET',
-            dataType: 'json',
-            success: function(response) {
+            setTimeout(fetchMasukData, 10000); // Coba lagi setelah 10 detik
+        },
+        error: function(xhr, status, error) {
+            console.error('Error fetching data:', error);
+            setTimeout(fetchMasukData, 10000); // Coba lagi setelah 10 detik
+        }
+    });
+}
+
+function fetchPulangData() {
+    $.ajax({
+        url: "{{ route('absen.pulangpkl') }}",
+        method: 'GET',
+        dataType: 'json',
+        data: { since: lastUpdatePulang }, // Kirim timestamp terakhir
+        success: function(response) {
+            const now = Date.now();
+            if (response.length > 0) {
                 $('#pulang .post').remove(); // Menghapus semua elemen dengan class .post di dalam #pulang
 
                 response.forEach(function(dm) {
@@ -632,35 +669,51 @@ $(document).ready(function() {
                         <div class="post">
                             <div style="width: 100%; display: flex">
                                 <div style="width: 25%">
-                                    <img src="{{ asset('img/scan/pulang/') }}/${dm.foto}" alt="Foto Scan pulang" style="width: 100%; max-height: 200px">
-                                </div>
-                                <div style="width: 35%; display: flex; justify-content: center; align-items: center; flex-direction: column; padding: 10px">
-                                    <h3 style="color: black; font-weight: bold; text-align: center">${dm.nama_siswa}</h3>
-                                    <h3>${dm.nama_kelas} ${dm.kode_jurusan}<br></h3>
-                                    <h3 style="color: black; font-weight: bold">Scan : ${dm.plg}</h3>
+    <img src="{{ asset('img/scan/pulang/') }}/${dm.foto}" alt="Foto Scan Pulang" style="width: 100%; max-height: 200px" class="scan-image-pulang" data-foto="{{ asset('img/scan/pulang/') }}/${dm.foto}">
+</div>
+
+                                <div style="width: 50%; display: flex; justify-content: center; align-items: center; flex-direction: column; padding: 10px">
+                                    <h5 style="color: black; font-weight: bold; text-align: center">${dm.nama_siswa}</h5>
+                                    <h5>${dm.nama_kelas} ${dm.kode_jurusan}<br></h5>
+                                    <h5 style="color: black; font-weight: bold">Scan : ${dm.plg}</h5>
                                 </div>
                                 <div style="width: 25%">
-                                    <img src="{{ asset('img/siswa/') }}/${dm.fotosis}" alt="Foto Siswa" style="max-height: 200px">
+                                    <img src="{{ asset('img/siswa/') }}/${dm.fotosis}" alt="Foto Siswa" style="max-width: 80px">
                                 </div>
                             </div>
                         </div>
                     `;
                     $('#pulang').append(html); // Menambahkan HTML baru ke dalam #pulang
                 });
-
-                // Panggil kembali fetchPulangData setelah menambahkan data baru
-                fetchPulangData(); // Ini akan membuatnya terus memanggil dirinya sendiri
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching data:', error);
-                // Jika ada error, tunggu sebelum memanggil kembali
-                setTimeout(fetchPulangData, 10000); // Coba lagi setelah 10 detik
+                
+                lastUpdatePulang = now; // Update timestamp
             }
-        });
-    }
 
-    // Panggil fetchPulangData untuk pertama kali
-    fetchPulangData();
+            setTimeout(fetchPulangData, 10000); // Coba lagi setelah 10 detik
+        },
+        error: function(xhr, status, error) {
+            console.error('Error fetching data:', error);
+            setTimeout(fetchPulangData, 10000); // Coba lagi setelah 10 detik
+        }
+    });
+}
+
+// Panggil fetchMasukData dan fetchPulangData untuk pertama kali
+fetchMasukData();
+fetchPulangData();
+ // Event listener for image clicks
+    $(document).on('click', '.scan-image', function() {
+        const imgSrc = $(this).data('foto');
+        $('#masukModalImg').attr('src', imgSrc);
+        $('#masukModal').modal('show');
+    });
+
+     // Event listener for image clicks (pulang)
+    $(document).on('click', '.scan-image-pulang', function() {
+        const imgSrc = $(this).data('foto');
+        $('#pulangModalImg').attr('src', imgSrc);
+        $('#pulangModal').modal('show');
+    });
 </script>
 
 <script>
@@ -770,6 +823,36 @@ $(document).ready(function() {
 
         // Untuk memastikan elemen di-update jika jam berubah saat halaman tetap terbuka
         setInterval(checkTime, 60000); // Cek setiap 60 detik
+    </script>
+    <script>
+    function filterMasuk() {
+    const input = document.getElementById('searchMasuk').value.toLowerCase();
+    const posts = document.querySelectorAll('#masuk .post');
+    
+    posts.forEach(post => {
+        const name = post.querySelector('h5').textContent.toLowerCase();
+        if (name.includes(input)) {
+            post.style.display = '';
+        } else {
+            post.style.display = 'none';
+        }
+    });
+}
+
+function filterPulang() {
+    const input = document.getElementById('searchPulang').value.toLowerCase();
+    const posts = document.querySelectorAll('#pulang .post');
+    
+    posts.forEach(post => {
+        const name = post.querySelector('h5').textContent.toLowerCase();
+        if (name.includes(input)) {
+            post.style.display = '';
+        } else {
+            post.style.display = 'none';
+        }
+    });
+}
+
     </script>
 </body>
 </html>

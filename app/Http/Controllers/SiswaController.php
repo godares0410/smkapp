@@ -32,12 +32,17 @@ class SiswaController extends Controller
     }
     public function dashboard()
     {
+        $today = Carbon::now()->format('Y-m-d');
         $idSiswa = Auth::guard('siswa')->user()->id_siswa;
         $abs = SiswaMasuk::select('created_at')
                         ->where('id_siswa', $idSiswa)
+                        ->where('created_at', $today)
                         ->get(); // Eksekusi query untuk mendapatkan hasil
-
-        return view('siswa.dashboard', compact('abs'));
+        $masuk = ScanMasuk::where('id_siswa', $idSiswa)
+        ->whereDate('created_at', $today)
+        ->select('siswa_scan_masuk.*')
+        ->first();
+        return view('siswa.dashboard', compact('abs', 'masuk'));
     }
     public function store(Request $request)
     {
